@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
-import Login from "./Login";
+// import Login from "./Login";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -27,7 +27,7 @@ export default function Social() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [imageFile, setImageFile] = useState(null);
-	const [user, setUser] = useState(null);
+	// const [user, setUser] = useState(null);
 	const [isOpen, setIsOpen] = useState(false);
 	let activeUser = "";
 
@@ -54,10 +54,10 @@ export default function Social() {
 		firestore.collection("posts.text").onSnapshot(() => {
 		window.scrollTo(0, 0); //document.body.scrollHeight
 		});
-		const unsubscribe = auth.onAuthStateChanged((user) => {
-			setUser(user);
-		  });
-		  return unsubscribe;
+		// const unsubscribe = auth.onAuthStateChanged((user) => {
+		// 	setUser(user);
+		//   });
+		//   return unsubscribe;
 	}, []);
 	
 	const handleLogout = async () => {
@@ -68,9 +68,9 @@ export default function Social() {
 		}
 	};
 	
-	if (!user) {
-		return <Login />;
-	}
+	// if (!user) {
+	// 	return <Login />;
+	// }
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -79,9 +79,9 @@ export default function Social() {
 			const imageFile = event.target.elements.imageFile.files[0];
 			const storageRef = storage.ref().child(`images/${imageFile.name}`);
 			await storageRef.put(imageFile);
-
-			imageUrl = await storageRef.getDownloadURL();
-		}
+            
+                imageUrl = await storageRef.getDownloadURL();
+            }
 
 		firestore.collection("posts").add({
 			text,
