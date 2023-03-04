@@ -1,0 +1,59 @@
+html{
+    font-family: 'Montserrat',sans-serif;
+    color: #766032;
+    background-color: rgb(230, 221, 220);
+}
+h1{
+    font-size: 70px;
+    font-family: Snell Roundhand, cursive;
+    margin: -15px;
+    position: relative;
+    top: 0%;
+}
+.last{
+    margin-bottom: 10px;
+}
+.login.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  }
+  
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn {
+    margin-top: 20px;
+    border: 2px solid #766032;
+    color: #766032;
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .btn:hover{
+    background-color: #766032;
+    color: white;
+  }
+  .form-control{
+    margin: 10px;
+    background-color: transparent;
+    color: #766032;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #766032;
+    border-radius: 5px;
+    width: 60vw;
+    height: 3vh;
+  }
+  .form-control::placeholder{
+    text-align: center;
+  }
+  .est{
+    margin-top: 5vh;
+  }
