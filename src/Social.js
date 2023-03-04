@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
+import './Social.css';
 // import Login from "./Login";
 
 const firebaseConfig = {
@@ -18,9 +19,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const storage = firebase.storage();
-const auth = firebase.auth(firebase.initializeApp(firebaseConfig));
+// const auth = firebase.auth(firebase.initializeApp(firebaseConfig));
 
-export default function Social() {
+export default function Social(props) {
 	const [text, setText] = useState("");
 	const [sortBy, setSortBy] = useState("createdAt");
 	const [posts, setPosts] = useState([]);
@@ -28,12 +29,9 @@ export default function Social() {
 	const [error, setError] = useState(null);
 	const [imageFile, setImageFile] = useState(null);
 	// const [user, setUser] = useState(null);
-	const [isOpen, setIsOpen] = useState(false);
-	let activeUser = "";
+	// const [isOpen, setIsOpen] = useState(false);
+	let activeUser = props.name;
 
-	if(firebase.auth().currentUser?.displayName){
-		activeUser = firebase.auth().currentUser?.displayName;
-	}
 	useEffect(() => {
 		console.log(sortBy)
 		setLoading(true);
@@ -41,8 +39,10 @@ export default function Social() {
 		  .orderBy(sortBy, "desc")
 		  .onSnapshot(snapshot => {
 			const updatedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-			setPosts(updatedPosts);
-			setLoading(false);
+			setTimeout(() => { // add delay here
+				setPosts(updatedPosts);
+				setLoading(false);
+			  }, 4000);
 		  }, error => {
 			setError(error);
 			setLoading(false);
@@ -60,13 +60,6 @@ export default function Social() {
 		//   return unsubscribe;
 	}, []);
 	
-	const handleLogout = async () => {
-		try {
-		  await auth.signOut();
-		} catch (error) {
-		  console.log(error);
-		}
-	};
 	
 	// if (!user) {
 	// 	return <Login />;
@@ -74,6 +67,10 @@ export default function Social() {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		if(!text && !imageFile){
+			alert("Please enter a memory!");
+			return;
+		}
 		let imageUrl = null; 
 		if(imageFile){
 			const imageFile = event.target.elements.imageFile.files[0];
@@ -81,8 +78,7 @@ export default function Social() {
 			await storageRef.put(imageFile);
             
                 imageUrl = await storageRef.getDownloadURL();
-            }
-
+        }
 		firestore.collection("posts").add({
 			text,
 			imageUrl,
@@ -120,7 +116,7 @@ export default function Social() {
 			<div className={`fullscreen-${loading}`}>
 				<div className='innerSpin'>
 					{/* <img src={Floating} alt='Astronat' className='loadImg'/> */}
-                    <p>Loading...</p>
+                    <p>Share the fun photos and memories that you have of the loving couple! Disclaimer: please keep them appropriate!</p>
 				</div>
 			</div>
 		)
@@ -131,22 +127,16 @@ export default function Social() {
 	}
 	return (
 		<div className="body">
-			<div className="dropdown-menu">
-				<button className="submit" onClick={() => setIsOpen(!isOpen)}>{isOpen ? "X" : "Menu"}</button>
-				{isOpen && (
-					<div className="dropdown-content">
-						<select value={sortBy} className="dropdown-item" onChange={(e) => setSortBy(e.target.value)}>
-							<option value="createdAt">Sort by Date</option>
-							<option value="likes">Sort by Popularity</option>
-							<option value="creator">{activeUser}'s Posts</option>
-						</select>
-						<button className="dropdown-item" onClick={() => handleLogout()}>Logout</button>
-					</div>
-				)}
+			<div>
+				<select value={sortBy} className="dropdown-item" onChange={(e) => setSortBy(e.target.value)}>
+					<option value="createdAt">Sort by Date</option>
+					<option value="likes">Sort by Popularity</option>
+					<option value="creator">{activeUser}'s Posts</option>
+				</select>
 			</div>
-			<p className="welcoming">Welcome {activeUser}</p>
+			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
-				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Post Something!"/>
+				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Post A Memory!"/>
 				<input type="file" className="imgInput" name="imageFile" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])}/>
 				<button className="submit postBtn" type="submit">Post</button>
 			</form>
@@ -154,7 +144,7 @@ export default function Social() {
 				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}>
 					<p className="creator">{post.creator}</p>
 					{post.imageUrl && (
-						<img src={post.imageUrl} alt="Uploaded by user" style={{ maxWidth: "70%", maxHeight: "300px", objectFit:"contain", marginLeft:"15%" }}/>
+						<img src={post.imageUrl} alt="Uploaded by user" className="img" style={{ maxWidth: "70%", maxHeight: "300px", objectFit:"contain", marginLeft:"15%" }}/>
 					)}
 					<p>{post.text}</p>
 					<div className="likes">
