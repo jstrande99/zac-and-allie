@@ -10,7 +10,12 @@ export default function Login(props){
 
     }
     function HandleSubmit(){
-        props.setName(props.firstName + " " + props.lastName);
+        if(props.firstName && props.lastName){
+            props.setName(props.firstName + " " + props.lastName);
+        }else{
+            alert("Please Fill Out Name Fields");
+            return;
+        }
     }
     return (
         <div className="login body">
