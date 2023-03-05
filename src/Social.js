@@ -4,7 +4,6 @@ import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
 import './Social.css';
-// import Login from "./Login";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -28,8 +27,6 @@ export default function Social(props) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [imageFile, setImageFile] = useState(null);
-	// const [user, setUser] = useState(null);
-	// const [isOpen, setIsOpen] = useState(false);
 	let activeUser = props.name;
 
 	useEffect(() => {
@@ -42,7 +39,7 @@ export default function Social(props) {
 			setTimeout(() => { // add delay here
 				setPosts(updatedPosts);
 				setLoading(false);
-			  }, 4000);
+			  }, 3000);
 		  }, error => {
 			setError(error);
 			setLoading(false);
@@ -54,16 +51,7 @@ export default function Social(props) {
 		firestore.collection("posts.text").onSnapshot(() => {
 		window.scrollTo(0, 0); //document.body.scrollHeight
 		});
-		// const unsubscribe = auth.onAuthStateChanged((user) => {
-		// 	setUser(user);
-		//   });
-		//   return unsubscribe;
 	}, []);
-	
-	
-	// if (!user) {
-	// 	return <Login />;
-	// }
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -115,7 +103,6 @@ export default function Social(props) {
 		return (
 			<div className={`fullscreen-${loading}`}>
 				<div className='innerSpin'>
-					{/* <img src={Floating} alt='Astronat' className='loadImg'/> */}
                     <p>Share the fun photos and memories that you have of the loving couple! Disclaimer: please keep them appropriate!</p>
 				</div>
 			</div>
@@ -144,9 +131,9 @@ export default function Social(props) {
 				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}>
 					<p className="creator">{post.creator}</p>
 					{post.imageUrl && (
-						<img src={post.imageUrl} alt="Uploaded by user" className="img" style={{ maxWidth: "70%", maxHeight: "300px", objectFit:"contain", marginLeft:"15%" }}/>
+						<img src={post.imageUrl} alt="Uploaded by user" className="img" style={{ maxWidth: "100%", maxHeight: "300px", objectFit:"contain" }}/>
 					)}
-					<p>{post.text}</p>
+					<p>{post.text ? post.text : <br/>}</p>
 					<div className="likes">
 						<button onClick={() => handleLike(post)} className="btn likeBTN"> {post.likes} Likes</button>
 					</div>
