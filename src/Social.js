@@ -38,16 +38,16 @@ export default function Social(props) {
 		  .orderBy(sortBy, "desc")
 		  .onSnapshot(snapshot => {
 			const updatedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-			setTimeout(() => { // add delay here
+			// setTimeout(() => { // add delay here
 				setPosts(updatedPosts);
 				setLoading(false);
-			  }, 3000);
+			//   }, 3000);
 		  }, error => {
 			setError(error);
 			setLoading(false);
 		  });
 		return unsubscribe;
-	  }, [sortBy]);
+	  }, []);
 
 	useEffect(() => {
 		firestore.collection("posts.text").onSnapshot(() => {
