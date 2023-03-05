@@ -1,8 +1,6 @@
 .body {
-    font-family: Arial, sans-serif;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 25px;
+    font-family: 'Montserrat',sans-serif;
+    color: #766032;
 }
 form {
     display: flex;
@@ -21,7 +19,6 @@ form {
     border: 2px solid #ccc;
     border-radius: 10px;
     margin-bottom: 10px;
-    width: 98%;
 }
 .textBox::placeholder{
     text-align: center;
@@ -36,7 +33,7 @@ form {
     cursor: pointer;
     width: 25%;
     position: relative;
-    left: 80%;
+    left: 75%;
     text-align: center;
 }
 .submit:hover {
@@ -86,7 +83,7 @@ form {
     transform: translateX(-50%);
     padding: 5px;
     background-color: transparent;
-    color: black;
+    color: #766032;
     border-radius: 5px;
     font-size: 14px;
     font-family: Arial;
@@ -103,7 +100,7 @@ form {
 } 
 .dropdown-item {
     display: block;
-    width: 40%;
+    width: 26%;
     padding: 8px 16px;
     text-align: center;
     background-color: transparent;
@@ -111,7 +108,7 @@ form {
     border: 1px solid #766032;
     border-radius: 10px;
     position: relative;
-    left: 65%;
+    left: 74%;
 
 }
 .dropdown-item:hover {
