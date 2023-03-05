@@ -31,6 +31,7 @@ export default function Login(props){
             </form>
             <button type="submit" className="btn" onClick={HandleSubmit} >Share the Love</button>
             <h2 className="est">EST. 2023</h2>
+            <p className="about">Sign in to post about the happy couple!</p>
         </div>
     );
 };

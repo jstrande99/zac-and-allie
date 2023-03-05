@@ -102,7 +102,7 @@ export default function Social(props) {
 	if (loading) {
 		return (
 			<div className={`fullscreen-${loading}`}>
-				<div className='innerSpin'>
+				<div className='innerLoading'>
                     <p>Share the fun photos and memories that you have of the loving couple! Disclaimer: please keep them appropriate!</p>
 				</div>
 			</div>

@@ -127,3 +127,13 @@ option{
     top: '100%';
     left: 0;
 }
+.fullscreen-true{
+    align-items: center;
+    text-align: center;
+    height: 90vh;
+}
+.innerLoading{
+    align-items: center;
+    position: relative;
+    top: 45%;
+}
