@@ -18,16 +18,18 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const storage = firebase.storage();
-// const auth = firebase.auth(firebase.initializeApp(firebaseConfig));
 
 export default function Social(props) {
 	const [text, setText] = useState("");
-	const [sortBy, setSortBy] = useState("createdAt");
+	const sortBy = 'createdAt';
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [imageFiles, setImageFiles] = useState([]);
-	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+	const [clickedImg, setClickedImg] = useState(0); 
+	const [clickedImgIndex, setClickedImgIndex] = useState(0);
+	const [createPost, setCreatePost] = useState("Post");
+	const [isDisabled, setIsDisabled] = useState(false);
 	let activeUser = props.name;
 
 	useEffect(() => {
@@ -59,7 +61,8 @@ export default function Social(props) {
 			alert("Please enter a memory or select an image!");
 			return;
 		}
-	
+		setCreatePost("Posting...");
+		setIsDisabled(true);
 		let imageUrls = [];
 		if(imageFiles.length > 0){
 			for(let i = 0; i < imageFiles.length; i++){
@@ -75,36 +78,18 @@ export default function Social(props) {
 			text,
 			imageUrls,
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-			likes: 0,
 			creator: activeUser,
 		}).then((docRef) => {
 			docRef.set({ id: docRef.id }, { merge: true });
 		});
 		setText("");
 		setImageFiles([]);
+		setCreatePost("Post");
+		setIsDisabled(false);
 	};
 	
 	const handleImageChange = (event) => {
 		setImageFiles(event.target.files);
-	};
-
-	const handleLike = async (post) => {
-		const postRef = firestore.collection("posts").doc(post.id);
-		const doc = await postRef.get();
-		if (doc.exists) {
-			if(post.clientLike && post.clientLike.includes(activeUser)){
-				return;
-			}
-			if(post.creator === activeUser){
-				return;
-			}
-			postRef.update({
-				likes: post.likes + 1,
-				clientLike: firebase.firestore.FieldValue.arrayUnion(activeUser) 
-			});
-		} else {
-			console.log("Document does not exist!");
-		}
 	};
   
 	if (loading) {
@@ -120,34 +105,35 @@ export default function Social(props) {
 	if (error) {
 		return <div>Error: {error.message}</div>;
 	}
+	const handleClick = (index, len) => {
+		if (clickedImg === index) {
+		  setClickedImgIndex((clickedImgIndex + 1) % len); 
+		} else {
+		  setClickedImg(index); 
+		  setClickedImgIndex(1); 
+		}
+	  };
 	return (
 		<div className="body">
-			<div>
-				<select value={sortBy} className="dropdown-item" onChange={(e) => setSortBy(e.target.value)}>
-					<option value="createdAt">Sort by Date</option>
-					<option value="likes">Sort by Popularity</option>
-					<option value="creator">{activeUser}'s Posts</option>
-				</select>
-			</div>
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
 				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Post A Memory!"/>
 				<input type="file" className="imgInput" name="imageFile" accept="image/*" onChange={handleImageChange} multiple/>
-				<button className="submit postBtn" type="submit">Post</button>
+				<button className="submit postBtn" type="submit" disabled={isDisabled}>{createPost}</button>
 			</form>
 			{posts.map((post, index) => (
-				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''} onClick={() => setCurrentImageIndex((currentImageIndex + 1)%post.imageUrls.length)}>
+				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''} onClick={() => handleClick(index, post.imageUrls.length)}>
 					<p className="creator">{post.creator}</p>
 					<div className="imgClick" >
-						{post.imageUrls && post.imageUrls.length > 0 && (
-							<img src={post.imageUrls[currentImageIndex]} alt={`Uploaded by ${post.creator}`} className="img" style={{ maxWidth: "100%", maxHeight: "300px", objectFit:"contain" }}/>
+						{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
+							<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
-						<p className="indicator">{currentImageIndex + 1} of {post.imageUrls.length}</p>
+						{post.imageUrls && post.imageUrls.length > 0 && clickedImg !== index && (
+							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
+						)}
 					</div>
-					<p>{post.text ? post.text : <br/>}</p>
-					<div className="likes">
-						<button onClick={() => handleLike(post)} className="btn likeBTN"> {post.likes} Likes</button>
-					</div>
+					<p className="indicator">{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}</p>
+					<p className="textPost">{post.text}</p>
 				</div>
 			))}
 		</div>

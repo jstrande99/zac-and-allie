@@ -115,9 +115,17 @@ form {
     background-color: #766032;
     color: white;
 }
-img{
+.img{
     position: relative;
     top: -5px;
+    max-width: 90vw;
+    max-height: 55vh; 
+    object-fit: contain;
+}
+.imgClick{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 select{
     position: relative;
@@ -138,5 +146,8 @@ option{
     top: 45%;
 }
 .indicator{
+    text-align: center;
+}
+.textPost{
     text-align: center;
 }
