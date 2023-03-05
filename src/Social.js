@@ -26,11 +26,11 @@ export default function Social(props) {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [imageFile, setImageFile] = useState(null);
+	const [imageFiles, setImageFiles] = useState([]);
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	let activeUser = props.name;
 
 	useEffect(() => {
-		console.log(sortBy)
 		setLoading(true);
 		const unsubscribe = firestore.collection("posts")
 		  .orderBy(sortBy, "desc")
@@ -55,21 +55,25 @@ export default function Social(props) {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		if(!text && !imageFile){
-			alert("Please enter a memory!");
+		if(!text && !imageFiles.length){
+			alert("Please enter a memory or select an image!");
 			return;
 		}
-		let imageUrl = null; 
-		if(imageFile){
-			const imageFile = event.target.elements.imageFile.files[0];
-			const storageRef = storage.ref().child(`images/${imageFile.name}`);
-			await storageRef.put(imageFile);
-            
-                imageUrl = await storageRef.getDownloadURL();
-        }
+	
+		let imageUrls = [];
+		if(imageFiles.length > 0){
+			for(let i = 0; i < imageFiles.length; i++){
+				const imageFile = imageFiles[i];
+				const storageRef = storage.ref().child(`images/${imageFile.name}`);
+				await storageRef.put(imageFile);
+				const imageUrl = await storageRef.getDownloadURL();
+				imageUrls.push(imageUrl);
+			}
+		}
+
 		firestore.collection("posts").add({
 			text,
-			imageUrl,
+			imageUrls,
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 			likes: 0,
 			creator: activeUser,
@@ -77,7 +81,11 @@ export default function Social(props) {
 			docRef.set({ id: docRef.id }, { merge: true });
 		});
 		setText("");
-		setImageFile(null);
+		setImageFiles([]);
+	};
+	
+	const handleImageChange = (event) => {
+		setImageFiles(event.target.files);
 	};
 
 	const handleLike = async (post) => {
@@ -124,15 +132,18 @@ export default function Social(props) {
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
 				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Post A Memory!"/>
-				<input type="file" className="imgInput" name="imageFile" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])}/>
+				<input type="file" className="imgInput" name="imageFile" accept="image/*" onChange={handleImageChange} multiple/>
 				<button className="submit postBtn" type="submit">Post</button>
 			</form>
 			{posts.map((post, index) => (
-				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}>
+				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''} onClick={() => setCurrentImageIndex((currentImageIndex + 1)%post.imageUrls.length)}>
 					<p className="creator">{post.creator}</p>
-					{post.imageUrl && (
-						<img src={post.imageUrl} alt="Uploaded by user" className="img" style={{ maxWidth: "100%", maxHeight: "300px", objectFit:"contain" }}/>
-					)}
+					<div className="imgClick" >
+						{post.imageUrls && post.imageUrls.length > 0 && (
+							<img src={post.imageUrls[currentImageIndex]} alt={`Uploaded by ${post.creator}`} className="img" style={{ maxWidth: "100%", maxHeight: "300px", objectFit:"contain" }}/>
+						)}
+						<p className="indicator">{currentImageIndex + 1} of {post.imageUrls.length}</p>
+					</div>
 					<p>{post.text ? post.text : <br/>}</p>
 					<div className="likes">
 						<button onClick={() => handleLike(post)} className="btn likeBTN"> {post.likes} Likes</button>

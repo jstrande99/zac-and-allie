@@ -137,3 +137,6 @@ option{
     position: relative;
     top: 45%;
 }
+.indicator{
+    text-align: center;
+}
