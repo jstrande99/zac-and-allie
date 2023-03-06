@@ -33,10 +33,14 @@ export default function Social(props) {
 	const [clickedImgIndex, setClickedImgIndex] = useState(0);
 	const [createPost, setCreatePost] = useState("Post");
 	const [isDisabled, setIsDisabled] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 	let activeUser = props.name;
 
 	useEffect(() => {
 		setLoading(true);
+		if(activeUser === "Zac Strande" || activeUser === "Allie Strande" || activeUser === "Jordan Strande"){
+			setIsAdmin(true);
+		}
 		const unsubscribe = firestore.collection("posts")
 		  .orderBy(sortBy, "desc")
 		  .onSnapshot(snapshot => {
@@ -50,7 +54,7 @@ export default function Social(props) {
 			setLoading(false);
 		  });
 		return unsubscribe;
-	  }, []);
+	  }, [activeUser]);
 
 	useEffect(() => {
 		firestore.collection("posts.text").onSnapshot(() => {
@@ -142,6 +146,16 @@ export default function Social(props) {
 		}
 	  };
 
+	  const handleDelete = async (postId) => {
+		if(isAdmin){
+			try {
+				await firestore.collection("posts").doc(postId).delete();
+			  } catch (error) {
+				console.error("Error removing document: ", error);
+			  }
+		}
+	  };
+
 	return (
 		<div className="body">
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
@@ -163,6 +177,7 @@ export default function Social(props) {
 					</div>
 					<p className="indicator">{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}</p>
 					<p className="textPost">{post.text}</p>
+					{ isAdmin && (<button className="deleteBtn" onClick={() => handleDelete(post.id)}>Delete</button>)}
 				</div>
 			))}
 		</div>
