@@ -34,6 +34,7 @@ export default function Social(props) {
 	const [createPost, setCreatePost] = useState("Post");
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
+	const [currentUsers, setCurrentUsers] = useState(0);
 	let activeUser = props.name;
 
 	useEffect(() => {
@@ -41,14 +42,18 @@ export default function Social(props) {
 		if(activeUser === "Zac Strande" || activeUser === "Allie Strande" || activeUser === "Jordan Strande"){
 			setIsAdmin(true);
 		}
+		firestore.collection("users").doc(activeUser.toLowerCase()).set({
+			user: activeUser
+		});
+		firestore.collection('users').get().then(snap => setCurrentUsers(snap.size));
 		const unsubscribe = firestore.collection("posts")
 		  .orderBy(sortBy, "desc")
 		  .onSnapshot(snapshot => {
 			const updatedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-			// setTimeout(() => { // add delay here
+			setTimeout(() => { // add delay here
 				setPosts(updatedPosts);
 				setLoading(false);
-			//   }, 3000);
+			  }, 4000);
 		  }, error => {
 			setError(error);
 			setLoading(false);
@@ -127,7 +132,8 @@ export default function Social(props) {
 		return (
 			<div className={`fullscreen-${loading}`}>
 				<div className='innerLoading'>
-                    <p>Share the fun photos and memories that you have of the loving couple! Disclaimer: please keep them appropriate!</p>
+					<h2 className="loadTtl">Allie & Zac</h2>
+                    <p>Share the fun photos and memories that you have of the loving couple and the special night!<br/><br/>Please keep them appropriate!</p>
 				</div>
 			</div>
 		)
@@ -158,9 +164,10 @@ export default function Social(props) {
 
 	return (
 		<div className="body">
+			<p className="welcoming">Active Users: {currentUsers}</p>
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
-				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Post A Memory!"/>
+				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Write to the happy couple..."/>
 				<input type="file" className="imgInput" name="imageFile" accept="image/* image/heic" onChange={handleImageChange} multiple/>
 				<button className="submit postBtn" type="submit" disabled={isDisabled}>{createPost}</button>
 			</form>
@@ -175,8 +182,8 @@ export default function Social(props) {
 							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
 					</div>
-					<p className="indicator">{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}</p>
-					<p className="textPost">{post.text}</p>
+					{post.imageUrls.length !== 0 && (<p className="indicator">{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}</p>)}
+					{post.text && <p className="textPost">{post.text}</p>}
 					{ isAdmin && (<button className="deleteBtn" onClick={() => handleDelete(post.id)}>Delete</button>)}
 				</div>
 			))}
