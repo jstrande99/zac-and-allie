@@ -39,7 +39,7 @@ export default function Social(props) {
 
 	useEffect(() => {
 		setLoading(true);
-		if(activeUser === "Zac Strande" || activeUser === "Allie Strande" || activeUser === "Jordan Strande"){
+		if(activeUser === "Zac Strande" || activeUser === "Allie Strande" || activeUser === "Jordan Strande" || activeUser === "Dae Judd"){
 			setIsAdmin(true);
 		}
 		firestore.collection("users").doc(activeUser.toLowerCase()).set({
