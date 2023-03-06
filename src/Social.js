@@ -164,7 +164,7 @@ export default function Social(props) {
 
 	return (
 		<div className="body">
-			<p className="welcoming">Active Users: {currentUsers}</p>
+			{isAdmin && (<p className="welcoming">Active Users: {currentUsers}</p>)}
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
 				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Write to the happy couple..."/>
@@ -184,7 +184,7 @@ export default function Social(props) {
 					</div>
 					{post.imageUrls.length !== 0 && (<p className="indicator">{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}</p>)}
 					{post.text && <p className="textPost">{post.text}</p>}
-					{ isAdmin && (<button className="deleteBtn" onClick={() => handleDelete(post.id)}>Delete</button>)}
+					{ isAdmin && (<button className="deleteBtn submit" onClick={() => handleDelete(post.id)}>Delete</button>)}
 				</div>
 			))}
 		</div>
