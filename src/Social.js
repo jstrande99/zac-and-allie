@@ -3,6 +3,9 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
+import imageCompression from 'browser-image-compression';
+import heic2any from "heic2any";
+
 import './Social.css';
 
 const firebaseConfig = {
@@ -61,16 +64,40 @@ export default function Social(props) {
 			alert("Please enter a memory or select an image!");
 			return;
 		}
+
 		setCreatePost("Posting...");
 		setIsDisabled(true);
 		let imageUrls = [];
+
+		const options = {
+			maxSizeMB: 1,
+			maxWidthOrHeight: 1920
+		  }
 		if(imageFiles.length > 0){
 			for(let i = 0; i < imageFiles.length; i++){
-				const imageFile = imageFiles[i];
-				const storageRef = storage.ref().child(`images/${imageFile.name}`);
-				await storageRef.put(imageFile);
-				const imageUrl = await storageRef.getDownloadURL();
-				imageUrls.push(imageUrl);
+				let imageFile = imageFiles[i];
+				let fileName = imageFile.name;
+				let actualName = fileName.split('.')[0];
+				const ext = fileName.split('.').pop().toLowerCase();
+
+				if (ext === 'heic') {
+					setCreatePost("Converting...");
+					const jpegBlob = await heic2any({ blob: imageFile });
+					const jpegFile = new File([jpegBlob], `${actualName}.jpeg`, { type: 'image/jpeg' });
+					imageFile = jpegFile;
+				} 
+
+				try {
+					setCreatePost("Compressing...");
+					const compressedFile = await imageCompression(imageFile, options);
+					console.log(compressedFile.size/1024/1024);
+					const storageRef = storage.ref().child(`images/${compressedFile.name}`);
+					await storageRef.put(compressedFile);
+					const imageUrl = await storageRef.getDownloadURL();
+					imageUrls.push(imageUrl);
+				  } catch (error) {
+					console.log(error);
+				  }
 			}
 		}
 
@@ -105,20 +132,22 @@ export default function Social(props) {
 	if (error) {
 		return <div>Error: {error.message}</div>;
 	}
+
 	const handleClick = (index, len) => {
 		if (clickedImg === index) {
 		  setClickedImgIndex((clickedImgIndex + 1) % len); 
 		} else {
 		  setClickedImg(index); 
-		  setClickedImgIndex(1); 
+		  setClickedImgIndex(0); 
 		}
 	  };
+
 	return (
 		<div className="body">
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
 				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Post A Memory!"/>
-				<input type="file" className="imgInput" name="imageFile" accept="image/*" onChange={handleImageChange} multiple/>
+				<input type="file" className="imgInput" name="imageFile" accept="image/* image/heic" onChange={handleImageChange} multiple/>
 				<button className="submit postBtn" type="submit" disabled={isDisabled}>{createPost}</button>
 			</form>
 			{posts.map((post, index) => (
