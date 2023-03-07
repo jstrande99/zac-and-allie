@@ -165,9 +165,9 @@ export default function Social(props) {
 
 	return (
 		<div className="body">
-			<Link to='/Gallery' className="nav-links">
+			{isAdmin && (<Link to='/Gallery' className="nav-links">
                 <button className="submit gal"> View Gallery</button>
-            </Link>
+            </Link>)}
 			{isAdmin && (<p className="welcoming">Active Users: {currentUsers}</p>)}
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
