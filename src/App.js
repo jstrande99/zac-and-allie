@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Login from './Login';
 import Social from './Social';
 import Name from './Name';
+import Gallery from './Gallery';
 
 function App() {
   // const [user, setUser] = useState(null);
@@ -24,6 +25,7 @@ function App() {
         {/* <Route path="/" element={user ? <Social /> : <Navigate to="/login" />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} /> */}
         <Route path='/' element={name ? <Social name={name} /> : < Name firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName} name={name} setName={setName}/> } />
+        <Route path='/Gallery' element={<Gallery/>}/>
       </Routes>
     </Router>
 

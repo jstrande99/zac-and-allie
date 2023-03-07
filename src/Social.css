@@ -155,3 +155,8 @@ option{
     font-size: 70px;
     font-family: Snell Roundhand, cursive;
 }
+.gal{
+    position: relative;
+    left: 0%;
+    width: 100%;
+}
