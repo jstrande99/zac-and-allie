@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.rowDiv{
+    flex: 1 0 33.33%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.gallery{
+    width: 100%;
+}
+.fullscreen-image{
+    width: 96vw;
+}
