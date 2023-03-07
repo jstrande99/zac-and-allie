@@ -18,44 +18,44 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
 export default function Gallery(){
-  const [images, setImages] = useState([]);
-  const [showImage, setShowImage] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
+    const [images, setImages] = useState([]);
+    const [showImage, setShowImage] = useState(false);
+    const [selectedImage, setSelectedImage] = useState("");
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      const storageRef = storage.ref();
-      const imageUrls = [];
+    useEffect(() => {
+        const fetchImages = async () => {
+        const storageRef = storage.ref();
+        const imageUrls = [];
 
-      const imageList = await storageRef.child('images').listAll();
+        const imageList = await storageRef.child('images').listAll();
 
-      imageList.items.forEach((item) => {
-        item.getDownloadURL().then((url) => {
-          imageUrls.push(url);
-          setImages([...imageUrls]);
+        imageList.items.forEach((item) => {
+            item.getDownloadURL().then((url) => {
+            imageUrls.push(url);
+            setImages([...imageUrls]);
+            });
         });
-      });
-    };
+        };
 
-    fetchImages();
-  }, []);
+        fetchImages();
+    }, []);
 
-  const handleFullImage = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setShowImage(true);
-  }
-  return (
-    <div className="container">
-        {showImage && (
-        <div className="fullscreen-container" onClick={() => setShowImage(false)}>
-          <img src={selectedImage} alt="fullscreen" className="fullscreen-image" />
+    const handleFullImage = (imageUrl) => {
+        setSelectedImage(imageUrl);
+        setShowImage(true);
+    }
+    return (
+        <div className="container">
+            {showImage && (
+            <div className="fullscreen-container" onClick={() => setShowImage(false)}>
+            <img src={selectedImage} alt="fullscreen" className="fullscreen-image" />
+            </div>
+        )}
+        {images.map((imageUrl, index) => (
+            <div key={index} className="rowDiv" onClick={() => handleFullImage(imageUrl)}>
+            <img src={imageUrl} alt={`Images ${index}`} className='gallery'/>
+            </div>
+        ))}
         </div>
-      )}
-      {images.map((imageUrl, index) => (
-        <div key={index} className="rowDiv" onClick={() => handleFullImage(imageUrl)}>
-          <img src={imageUrl} alt={`Images ${index}`} className='gallery'/>
-        </div>
-      ))}
-    </div>
-  );
+    );
 };
