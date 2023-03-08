@@ -37,12 +37,15 @@ export default function Social(props) {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [currentUsers, setCurrentUsers] = useState(0);
 	let activeUser = props.name;
-
+	
 	useEffect(() => {
+		const adminNames = ["zac strande", "allie strande", "jordan strande", "dae judd", "bill strande", "charlotte strande"];
 		setLoading(true);
-		if(activeUser === "Zac Strande" || activeUser === "Allie Strande" || activeUser === "Jordan Strande" || activeUser === "Dae Judd"){
-			setIsAdmin(true);
-		}
+		adminNames.forEach((user) => {
+			if(activeUser.toLowerCase() === user){
+				setIsAdmin(true);
+			}
+		})
 		firestore.collection("users").doc(activeUser.toLowerCase()).set({
 			user: activeUser
 		});
