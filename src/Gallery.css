@@ -12,6 +12,8 @@
 }
 .fullscreen-image{
     width: 96vw;
+    height: 100vh;
+    object-fit: contain;
 }
 .fullscreen-container{
     position: fixed;
