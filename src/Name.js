@@ -23,10 +23,10 @@ export default function Login(props){
                 <h1>The</h1>
                 <h1 className="last">Strandes</h1>
                 <div className="form-group">
-                    <input type="text" className="form-control" onChange={HandleFirstName} placeholder="Firstname" required/>
+                    <input type="text" className="form-control" onChange={HandleFirstName} placeholder="First Name" required/>
                 </div>
                 <div className="form-group">
-                    <input type="text" className="form-control" onChange={HandleLastName} placeholder="Lastname" required/>
+                    <input type="text" className="form-control" onChange={HandleLastName} placeholder="Last Name" required/>
                 </div>
             </form>
             <button type="submit" className="btn" onClick={HandleSubmit} >Share the Love</button>
