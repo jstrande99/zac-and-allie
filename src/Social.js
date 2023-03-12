@@ -182,6 +182,7 @@ export default function Social(props) {
 				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''} onClick={() => handleClick(index, post.imageUrls.length)}>
 					<p className="creator">{post.creator}</p>
 					<div className="imgClick" >
+						{post.imageUrls && post.imageUrls.length > 1 && (<h1 className="nextBtn">&#8250;</h1>)}
 						{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
 							<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
