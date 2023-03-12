@@ -1,6 +1,4 @@
 html{
     background-color: rgb(230, 221, 220);
     color: #766032;
-    padding-left: constant(safe-area-inset-left);
-    padding-right: constant(safe-area-inset-right);
 }
