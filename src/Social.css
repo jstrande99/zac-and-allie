@@ -160,3 +160,19 @@ option{
     left: 0%;
     width: 100%;
 }
+.nextBtn{
+    font-family: 'Montserrat';
+    position: absolute;
+    right: 5%;
+    top: 35%;
+    font-size: 80px;
+    z-index: 99;
+    color: #766032;
+    text-shadow:
+      0 0 7px #825902,
+      0 0 10px #ffffff,
+      0 0 21px #ffffff,
+      0 0 42px #ccc,
+      0 0 82px #ccc,
+      0 0 92px #ccc;
+}
