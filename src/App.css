@@ -1,5 +1,4 @@
 html{
     background-color: rgb(230, 221, 220);
     color: #766032;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
