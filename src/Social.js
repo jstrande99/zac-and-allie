@@ -147,15 +147,19 @@ export default function Social(props) {
 		return <div>Error: {error.message}</div>;
 	}
 
-	const handleClick = (index, len) => {
+	const handleClick = (index, len, direction) => {
 		if (clickedImg === index) {
-		  setClickedImgIndex((clickedImgIndex + 1) % len); 
+			if(direction === 1){
+				setClickedImgIndex((clickedImgIndex + 1) % len); 
+			}else{
+				setClickedImgIndex((clickedImgIndex - 1) % len); 
+			}
 		} else {
 		  setClickedImg(index); 
 		  setClickedImgIndex(0); 
 		}
 	  };
-
+	
 	  const handleDelete = async (postId) => {
 		if(isAdmin){
 			try {
@@ -179,10 +183,11 @@ export default function Social(props) {
 				<button className="submit postBtn" type="submit" disabled={isDisabled}>{createPost}</button>
 			</form>
 			{posts.map((post, index) => (
-				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''} onClick={() => handleClick(index, post.imageUrls.length)}>
+				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}>
 					<p className="creator">{post.creator}</p>
 					<div className="imgClick" >
-						{post.imageUrls && post.imageUrls.length > 1 && (<h1 className="nextBtn">&#8250;</h1>)}
+						{post.imageUrls && post.imageUrls.length > 1 && (<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}><h1 className="nextBtn arrowBtn">&#8250;</h1></div>)}
+						{post.imageUrls && post.imageUrls.length > 1 && (<div className="backdiv" onClick={() => handleClick(index, post.imageUrls.length, 0)}><h1 className="backBtn arrowBtn">&#8249;</h1></div>)}
 						{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
 							<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
