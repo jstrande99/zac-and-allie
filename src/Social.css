@@ -160,11 +160,7 @@ option{
     left: 0%;
     width: 100%;
 }
-.nextBtn{
-    font-family: 'Montserrat';
-    position: absolute;
-    right: 5%;
-    top: 35%;
+.arrowBtn{
     font-size: 80px;
     z-index: 99;
     color: #766032;
@@ -175,4 +171,31 @@ option{
       0 0 42px #ccc,
       0 0 82px #ccc,
       0 0 92px #ccc;
+    cursor: pointer;
+}
+.nextBtn{
+    font-family: 'Montserrat';
+    position: absolute;
+    right: 10%;
+    top: 35%;
+}
+.backBtn{
+    font-family: 'Montserrat';
+    position: absolute;
+    left: 10%;
+    top: 35%;
+}
+.nextdiv{
+    width: 50%;
+    height: 60%;
+    position: absolute;
+    right: 0%;
+    z-index: 100;
+}
+.backdiv{
+    width: 50%;
+    height: 60%;
+    position: absolute;
+    left: 0%;
+    z-index: 100;
 }
