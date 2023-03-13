@@ -149,14 +149,19 @@ export default function Social(props) {
 
 	const handleClick = (index, len, direction) => {
 		if (clickedImg === index) {
+			console.log("passed")
 			if(direction === 1){
 				setClickedImgIndex((clickedImgIndex + 1) % len); 
 			}else{
-				setClickedImgIndex((clickedImgIndex - 1) % len); 
+				setClickedImgIndex((clickedImgIndex - 1 + len) % len); 
 			}
 		} else {
-		  setClickedImg(index); 
-		  setClickedImgIndex(0); 
+			setClickedImg(index); 
+			if(direction === 1){
+				setClickedImgIndex(1); 
+			}else{
+				setClickedImgIndex(len - 1); 
+			} 
 		}
 	  };
 	
