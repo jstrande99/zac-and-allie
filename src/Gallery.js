@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
 import "./Gallery.css";
+import { Link } from "react-router-dom";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -46,6 +47,9 @@ export default function Gallery(){
     }
     return (
         <div className="container">
+            <Link to='/' className="nav-links">
+                <button className="submit gal">Back</button>
+            </Link>
             {showImage && (
             <div className="fullscreen-container" onClick={() => setShowImage(false)}>
             <img src={selectedImage} alt="fullscreen" className="fullscreen-image" />
