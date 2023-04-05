@@ -26,7 +26,7 @@ export default function Login(props){
                     <input type="text" className="form-control" onChange={HandleFirstName} placeholder="First Name" required/>
                 </div>
                 <div className="form-group">
-                    <input type="text" className="form-control" onChange={HandleLastName} placeholder="Last Name" required/>
+                    <input type="text" className="form-control" onChange={HandleLastName} placeholder="Last Name" required onKeyUp={(event) => { if (event.key === "Enter") { HandleSubmit() }}}/>
                 </div>
             </form>
             <button type="submit" className="btn" onClick={HandleSubmit} >Share the Love</button>

@@ -57,7 +57,7 @@ export default function Social(props) {
 			setTimeout(() => { // add delay here
 				setPosts(updatedPosts);
 				setLoading(false);
-			  }, 4000);
+			  }, 3700);
 		  }, error => {
 			setError(error);
 			setLoading(false);
