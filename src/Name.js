@@ -11,7 +11,9 @@ export default function Login(props){
     }
     function HandleSubmit(){
         if(props.firstName && props.lastName){
-            props.setName(props.firstName + " " + props.lastName);
+            const firstName = props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
+            const lastName = props.lastName.charAt(0).toUpperCase() + props.lastName.slice(1);
+            props.setName(firstName + " " + lastName);
         }else{
             alert("Please Fill Out Name Fields");
             return;
