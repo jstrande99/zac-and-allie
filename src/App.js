@@ -8,11 +8,11 @@ import Schedule from './Schedule';
 function App() {
   const [firstName, setFirstName] = useState(""); 
   const [lastName, setLastName] = useState("");
-  const [name, setName] = useState(false);
+  const [name, setName] = useState(null);
   return (
     <Router>
       <Routes>
-        <Route path='/' element={name ? <Social name={name} /> : < Name firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName} name={name} setName={setName}/> } />
+        <Route path='/' element={name ? <Social name={name} setName={setName}/> : < Name firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName} name={name} setName={setName}/> } />
         <Route path='/Gallery' element={<Gallery/>}/>
         <Route path='/Schedule' element={<Schedule/>}/>
       </Routes>
