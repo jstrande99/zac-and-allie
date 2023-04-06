@@ -4,8 +4,13 @@ export default function Login(props){
     
     useEffect(() => {
         const storedName = localStorage.getItem('name');
+        const firstTimeLogIn = localStorage.getItem('firstTimeLogIn');
         if (storedName) {
-        props.setName(storedName);
+            props.setName(storedName);
+            if(firstTimeLogIn){
+                props.setTimer(1500);
+            }
+            
         }
     }, [props]);
 
@@ -21,6 +26,8 @@ export default function Login(props){
             const firstName = props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
             const lastName = props.lastName.charAt(0).toUpperCase() + props.lastName.slice(1);
             localStorage.setItem('name', firstName + " " + lastName);
+            props.setTimer(3700);
+            localStorage.setItem('firstTimeLogIn', true);
             props.setName(firstName + " " + lastName);
         }else{
             alert("Please Fill Out Name Fields");
