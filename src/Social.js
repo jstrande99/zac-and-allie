@@ -43,7 +43,7 @@ export default function Social(props) {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [currentUsers, setCurrentUsers] = useState(0);
 	let activeUser = props.name;
-	
+
 	useEffect(() => {
 		const adminNames = ["zac strande", "allie strande", "jordan strande", "dae judd", "bill strande", "charlotte strande"];
 		setLoading(true);
@@ -57,19 +57,19 @@ export default function Social(props) {
 		});
 		firestore.collection('users').get().then(snap => setCurrentUsers(snap.size));
 		const unsubscribe = firestore.collection("posts")
-		  .orderBy(sortBy, "desc")
-		  .onSnapshot(snapshot => {
-			const updatedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-			setTimeout(() => { // add delay here
-				setPosts(updatedPosts);
+			.orderBy(sortBy, "desc")
+			.onSnapshot(snapshot => {
+				const updatedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+				setTimeout(() => { // add delay here
+					setPosts(updatedPosts);
+					setLoading(false);
+				}, 3700);
+			}, error => {
+				setError(error);
 				setLoading(false);
-			  }, 3700);
-		  }, error => {
-			setError(error);
-			setLoading(false);
-		  });
+		  	});
 		return unsubscribe;
-	  }, [activeUser]);
+	}, [activeUser]);
 
 	useEffect(() => {
 		firestore.collection("posts.text").onSnapshot(() => {
@@ -91,7 +91,7 @@ export default function Social(props) {
 		const options = {
 			maxSizeMB: 1,
 			maxWidthOrHeight: 1920
-		  }
+		}
 		if(imageFiles.length > 0){
 			for(let i = 0; i < imageFiles.length; i++){
 				let imageFile = imageFiles[i];
@@ -169,9 +169,9 @@ export default function Social(props) {
 				setClickedImgIndex(len - 1); 
 			} 
 		}
-	  };
+	};
 	
-	  const handleDelete = async (postId) => {
+	const handleDelete = async (postId) => {
 		if(isAdmin){
 			try {
 				await firestore.collection("posts").doc(postId).delete();
@@ -179,7 +179,11 @@ export default function Social(props) {
 				console.error("Error removing document: ", error);
 			  }
 		}
-	  };
+	};
+	const handleLogOut = () => {
+		localStorage.removeItem('name');
+		props.setName(null);
+	}
 
 	return (
 		<div className="body">
@@ -194,6 +198,7 @@ export default function Social(props) {
 					<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/></button>
 				</Link>
 				{isAdmin && (<p className="welcomings"><FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}</p>)}
+				<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={handleLogOut} />
 			</div>
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
