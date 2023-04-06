@@ -2,6 +2,20 @@
     font-family: 'Montserrat',sans-serif;
     color: #766032;
 }
+.userbar{
+    width: 100vw;
+    display: flex;
+    position: fixed;
+    justify-content: space-around;
+    background-color: rgb(230, 221, 220);
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #766032;
+    align-items: center;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -12,6 +26,7 @@ form {
     font-size: 15px;
     margin-bottom: 5%;
     color: #766032;
+    margin-top: 10vh;
 }
 .textBox {
     font-size: 16px;
@@ -159,6 +174,7 @@ option{
     position: relative;
     left: 0%;
     width: 100%;
+    border: none;
 }
 .arrowBtn{
     font-size: 80px;
