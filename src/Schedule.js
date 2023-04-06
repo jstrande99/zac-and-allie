@@ -2,6 +2,7 @@ import './Schedule.css';
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Signature from "./Signature";
 
 export default function Schedule(){
     const [ceremonyIsOpen, setCeremonyIsOpen] = useState(false);
@@ -43,6 +44,7 @@ export default function Schedule(){
                 <p>5:30 pm - 10:45 pm</p></>)}
                 
             </div>
+            <Signature/>
         </div>
     )
 }

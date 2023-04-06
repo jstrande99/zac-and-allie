@@ -6,6 +6,7 @@ import "firebase/compat/auth";
 import imageCompression from 'browser-image-compression';
 import heic2any from "heic2any";
 import { Link } from "react-router-dom";
+import Signature from "./Signature";
 
 import './Social.css';
 
@@ -208,6 +209,7 @@ export default function Social(props) {
 					{ isAdmin && (<button className="deleteBtn submit" onClick={() => handleDelete(post.id)}>Delete</button>)}
 				</div>
 			))}
+			<Signature/>
 		</div>
 	);
 }

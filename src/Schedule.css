@@ -1,5 +1,6 @@
 .body{
     position: relative;
+    overflow: hidden;
 }
 .backbtn{
     font-family: 'Montserrat';
@@ -17,7 +18,9 @@
     text-align: center;
 }
 .event{
+    background-color: rgb(224, 224, 224);
     border: 1px solid #766032;
+    border-radius: 10px;
     margin: 10px;
     text-align: center;
     align-items: center;
@@ -33,6 +36,7 @@
     border-right: 0;
     border-top: 0;
     padding: 10px;
+    border-radius: 10px;
 }
 .discription{
     padding: 10px;
