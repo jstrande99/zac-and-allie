@@ -180,6 +180,9 @@ export default function Social(props) {
 			{isAdmin && (<Link to='/Gallery' className="nav-links">
                 <button className="submit gal"> View Gallery</button>
             </Link>)}
+			<Link to='/Schedule' className="nav-links">
+                <button className="submit gal"> Schedule </button>
+            </Link>
 			{isAdmin && (<p className="welcoming">Active Users: {currentUsers}</p>)}
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
