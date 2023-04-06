@@ -63,13 +63,13 @@ export default function Social(props) {
 				setTimeout(() => { // add delay here
 					setPosts(updatedPosts);
 					setLoading(false);
-				}, 3700);
+				}, props.timer);
 			}, error => {
 				setError(error);
 				setLoading(false);
 		  	});
 		return unsubscribe;
-	}, [activeUser]);
+	}, [activeUser, props.timer]);
 
 	useEffect(() => {
 		firestore.collection("posts.text").onSnapshot(() => {
@@ -182,6 +182,7 @@ export default function Social(props) {
 	};
 	const handleLogOut = () => {
 		localStorage.removeItem('name');
+		localStorage.removeItem('firstTimeLogIn');
 		props.setName(null);
 	}
 
