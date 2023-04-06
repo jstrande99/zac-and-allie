@@ -7,8 +7,13 @@ import imageCompression from 'browser-image-compression';
 import heic2any from "heic2any";
 import { Link } from "react-router-dom";
 import Signature from "./Signature";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Social.css';
+
+library.add(fas);
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -178,13 +183,18 @@ export default function Social(props) {
 
 	return (
 		<div className="body">
-			{isAdmin && (<Link to='/Gallery' className="nav-links">
-                <button className="submit gal"> View Gallery</button>
-            </Link>)}
-			<Link to='/Schedule' className="nav-links">
-                <button className="submit gal"> Schedule </button>
-            </Link>
-			{isAdmin && (<p className="welcoming">Active Users: {currentUsers}</p>)}
+			<div className="userbar">
+				{isAdmin && (<Link to='/Gallery' className="nav-links">
+                	<button className="submit gal"><FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.5em"/></button>
+				</Link>)}
+				<Link to='/Schedule' className="nav-links">
+					<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/></button>
+				</Link>
+				<Link to='/' className="nav-links">
+					<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/></button>
+				</Link>
+				{isAdmin && (<p className="welcomings"><FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}</p>)}
+			</div>
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
 				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Write to the happy couple..."/>
