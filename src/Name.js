@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './Name.css'
 export default function Login(props){
     
+    useEffect(() => {
+        const storedName = localStorage.getItem('name');
+        if (storedName) {
+        props.setName(storedName);
+        }
+    }, [props]);
+
     const HandleFirstName = (event) => {
         props.setFirstName(event.target.value)
     }
@@ -13,6 +20,7 @@ export default function Login(props){
         if(props.firstName && props.lastName){
             const firstName = props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
             const lastName = props.lastName.charAt(0).toUpperCase() + props.lastName.slice(1);
+            localStorage.setItem('name', firstName + " " + lastName);
             props.setName(firstName + " " + lastName);
         }else{
             alert("Please Fill Out Name Fields");
