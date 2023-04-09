@@ -1,8 +1,8 @@
 import './Schedule.css';
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Signature from "./Signature";
+import Navbar from './Navbar';
 
 export default function Schedule(){
     const [ceremonyIsOpen, setCeremonyIsOpen] = useState(false);
@@ -10,9 +10,7 @@ export default function Schedule(){
     const [receptionIsOpen, setReceptionIsOpen] = useState(false); 
     return (
         <div className='body'> 
-            <Link to='/' className="nav-links">
-                <h1 className='backbtn'>&#8249;</h1>
-            </Link>
+            <Navbar/>
             <h2 className='schedule-ttl ttl-sched'>The Tenetive Schedule</h2>
             <p className='schedule-ttl'>click on each event to find out more!</p>
             <div className="event" onClick={()=> setWelcomeIsOpen(!welcomeIsOpen)}>
