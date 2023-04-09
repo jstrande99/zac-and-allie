@@ -14,8 +14,8 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={name ? <Social name={name} setName={setName} timer={timer}/> : < Name firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName} name={name} setName={setName} setTimer={setTimer}/> } />
-        <Route path='/Gallery' element={<Gallery/>}/>
-        <Route path='/Schedule' element={<Schedule/>}/>
+        <Route path='/Gallery' element={name && <Gallery/>}/>
+        <Route path='/Schedule' element={name && <Schedule/>}/>
       </Routes>
     </Router>
 
