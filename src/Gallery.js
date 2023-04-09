@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
 import "./Gallery.css";
-import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -47,19 +47,18 @@ export default function Gallery(){
     }
     return (
         <div className="container">
-            <Link to='/' className="nav-links">
-                <button className="submit gal">Back</button>
-            </Link>
+            <Navbar/>
+            <div className="spacer"></div>
             {showImage && (
-            <div className="fullscreen-container" onClick={() => setShowImage(false)}>
-            <img src={selectedImage} alt="fullscreen" className="fullscreen-image" />
-            </div>
-        )}
-        {images.map((imageUrl, index) => (
-            <div key={index} className="rowDiv" onClick={() => handleFullImage(imageUrl)}>
-            <img src={imageUrl} alt={`Images ${index}`} className='gallery'/>
-            </div>
-        ))}
+                <div className="fullscreen-container" onClick={() => setShowImage(false)}>
+                    <img src={selectedImage} alt="fullscreen" className="fullscreen-image" />
+                </div>
+            )}
+            {images.map((imageUrl, index) => (
+                <div key={index} className="rowDiv" onClick={() => handleFullImage(imageUrl)}>
+                    <img src={imageUrl} alt={`Images ${index}`} className='gallery'/>
+                </div>
+            ))}
         </div>
     );
 };
