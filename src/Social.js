@@ -109,13 +109,13 @@ export default function Social(props) {
 				try {
 					setCreatePost("Compressing...");
 					const compressedFile = await imageCompression(imageFile, options);
-					console.log(compressedFile.size/1024/1024);
+					// console.log(compressedFile.size/1024/1024);
 					const storageRef = storage.ref().child(`images/${compressedFile.name}`);
 					await storageRef.put(compressedFile);
 					const imageUrl = await storageRef.getDownloadURL();
 					imageUrls.push(imageUrl);
 				  } catch (error) {
-					console.log(error);
+					// console.log(error);
 				  }
 			}
 		}
@@ -155,7 +155,7 @@ export default function Social(props) {
 
 	const handleClick = (index, len, direction) => {
 		if (clickedImg === index) {
-			console.log("passed")
+			// console.log("passed")
 			if(direction === 1){
 				setClickedImgIndex((clickedImgIndex + 1) % len); 
 			}else{
