@@ -50,13 +50,28 @@ export default function Gallery(){
             <Navbar/>
             <div className="spacer"></div>
             {showImage && (
-                <div className="fullscreen-container" onClick={() => setShowImage(false)}>
-                    <img src={selectedImage} alt="fullscreen" className="fullscreen-image" />
+                <div 
+                    className="fullscreen-container" 
+                    onClick={() => setShowImage(false)}
+                >
+                    <img 
+                        src={selectedImage} 
+                        alt="fullscreen" 
+                        className="fullscreen-image" 
+                    />
                 </div>
             )}
             {images.map((imageUrl, index) => (
-                <div key={index} className="rowDiv" onClick={() => handleFullImage(imageUrl)}>
-                    <img src={imageUrl} alt={`Images ${index}`} className='gallery'/>
+                <div 
+                    key={index} 
+                    className="rowDiv" 
+                    onClick={() => handleFullImage(imageUrl)}
+                >
+                    <img 
+                        src={imageUrl} 
+                        alt={`Images ${index}`} 
+                        className='gallery'
+                    />
                 </div>
             ))}
         </div>

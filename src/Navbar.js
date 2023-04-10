@@ -10,10 +10,14 @@ export default function Navbar(){
     return (
         <div className="userbar">
 			<Link to='/Schedule' className="nav-links">
-				<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/></button>
+				<button className="submit gal">
+					<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
+				</button>
 			</Link>
 			<Link to='/' className="nav-links">
-				<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/></button>
+				<button className="submit gal">
+					<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
+				</button>
 			</Link>
 		</div>
     )

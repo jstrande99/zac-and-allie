@@ -183,6 +183,8 @@ export default function Social(props) {
 	const handleLogOut = () => {
 		localStorage.removeItem('name');
 		localStorage.removeItem('firstTimeLogIn');
+		props.setFirstName("");
+		props.setLastName("");
 		props.setName(null);
 	}
 
@@ -190,29 +192,70 @@ export default function Social(props) {
 		<div className="body">
 			<div className="userbar">
 				{isAdmin && (<Link to='/Gallery' className="nav-links">
-                	<button className="submit gal"><FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.5em"/></button>
+                	<button className="submit gal">
+						<FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.5em"/>
+					</button>
 				</Link>)}
 				<Link to='/Schedule' className="nav-links">
-					<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/></button>
+					<button className="submit gal">
+						<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
+					</button>
 				</Link>
 				<Link to='/' className="nav-links">
-					<button className="submit gal"><FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/></button>
+					<button className="submit gal">
+						<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
+					</button>
 				</Link>
-				{isAdmin && (<p className="welcomings"><FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}</p>)}
+				{isAdmin && 
+					(<p className="welcomings">
+						<FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}
+					</p>)}
 				<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={handleLogOut} />
 			</div>
 			<p className="welcoming">Welcome to the Party {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
-				<input className="textBox" type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Write to the happy couple..."/>
-				<input type="file" className="imgInput" name="imageFile" accept="image/* image/heic" onChange={handleImageChange} multiple/>
-				<button className="submit postBtn" type="submit" disabled={isDisabled}>{createPost}</button>
+				<input 
+					className="textBox" 
+					type="text" 
+					value={text} 
+					onChange={(e) => setText(e.target.value)} 
+					placeholder="Write to the happy couple..."
+				/>
+				<input 
+					type="file" 
+					className="imgInput" 
+					name="imageFile" 
+					accept="image/* image/heic" 
+					onChange={handleImageChange} multiple
+				/>
+				<button 
+					className="submit postBtn" 
+					type="submit"
+					disabled={isDisabled} 
+				>
+						{createPost}
+				</button>
 			</form>
 			{posts.map((post, index) => (
-				<div key={index} className="posts postText" data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}>
-					<p className="creator">{post.creator}</p>
+				<div 
+					key={index} 
+					className="posts postText" 
+					data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}
+				>
+					<p className="creator">
+						{post.creator}
+					</p>
 					<div className="imgClick" >
-						{post.imageUrls && post.imageUrls.length > 1 && (<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}><h1 className="nextBtn arrowBtn">&#8250;</h1></div>)}
-						{post.imageUrls && post.imageUrls.length > 1 && (<div className="backdiv" onClick={() => handleClick(index, post.imageUrls.length, 0)}><h1 className="backBtn arrowBtn">&#8249;</h1></div>)}
+						{post.imageUrls && post.imageUrls.length > 1 && 
+							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
+								<h1 className="nextBtn arrowBtn">&#8250;</h1>
+							</div>)
+						}
+						{post.imageUrls && post.imageUrls.length > 1 && 
+							(<div className="backdiv" onClick={() => handleClick(index, post.imageUrls.length, 0)}>
+								<h1 className="backBtn arrowBtn">&#8249;</h1>
+							</div>)
+						}
 						{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
 							<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
@@ -220,9 +263,17 @@ export default function Social(props) {
 							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
 					</div>
-					{post.imageUrls.length !== 0 && (<p className="indicator">{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}</p>)}
-					{post.text && <p className="textPost">{post.text}</p>}
-					{ isAdmin && (<button className="deleteBtn submit" onClick={() => handleDelete(post.id)}>Delete</button>)}
+					{post.imageUrls.length !== 0 && 
+						(<p className="indicator">
+							{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}
+						</p>)
+					}
+					{post.text && 
+						<p className="textPost">{post.text}</p>
+					}
+					{isAdmin && 
+						(<button className="deleteBtn submit" onClick={() => handleDelete(post.id)}>Delete</button>)
+					}
 				</div>
 			))}
 			<Signature/>
