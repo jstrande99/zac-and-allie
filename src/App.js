@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={name ? <Social name={name} setName={setName} timer={timer}/> : < Name firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName} name={name} setName={setName} setTimer={setTimer}/> } />
+        <Route path='/' element={name ? <Social name={name} setName={setName} timer={timer} setFirstName={setFirstName} setLastName={setLastName}/> : < Name firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName} name={name} setName={setName} setTimer={setTimer}/> } />
         <Route path='/Gallery' element={name && <Gallery/>}/>
         <Route path='/Schedule' element={name && <Schedule/>}/>
       </Routes>
