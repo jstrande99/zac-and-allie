@@ -40,13 +40,48 @@ export default function Login(props){
                 <h1>The</h1>
                 <h1 className="last">Strandes</h1>
                 <div className="form-group">
-                    <input type="text" className="form-control" onChange={HandleFirstName} placeholder="First Name" required/>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        onChange={HandleFirstName} onKeyDown={(event) => {
+                            if (event.key === " ") {
+                                event.preventDefault(); 
+                                document.querySelector("#lastName").focus();
+                            }
+                        }} 
+                        placeholder="First Name" 
+                        required
+                    />
                 </div>
                 <div className="form-group">
-                    <input type="text" className="form-control" onChange={HandleLastName} placeholder="Last Name" required onKeyUp={(event) => { if (event.key === "Enter") { HandleSubmit() }}}/>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        className="form-control" 
+                        onChange={HandleLastName} 
+                        placeholder="Last Name" 
+                        required 
+                        onKeyDown={(event) => {
+                            if (event.key === " ") {
+                                event.preventDefault(); 
+                                document.querySelector("#lastName").focus();
+                            }
+                        }} 
+                        onKeyUp={(event) => {
+                            if (event.key === "Enter") { 
+                                HandleSubmit(); 
+                            }
+                        }}
+                    />
                 </div>
             </form>
-            <button type="submit" className="btn" onClick={HandleSubmit} >Share the Love</button>
+            <button 
+                type="submit" 
+                className="btn" 
+                onClick={HandleSubmit} 
+            >
+                Share the Love
+            </button>
             <h2 className="est">EST. 2023</h2>
             <p className="about">Sign in to post about the happy couple!</p>
         </div>
