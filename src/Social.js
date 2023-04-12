@@ -212,7 +212,7 @@ export default function Social(props) {
 					</p>)}
 				<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={handleLogOut} />
 			</div>
-			<p className="welcoming">Welcome to the Party {activeUser}!</p>
+			<p className="welcoming">Welcome {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
 				<input 
 					className="textBox" 
