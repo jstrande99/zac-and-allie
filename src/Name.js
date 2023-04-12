@@ -80,7 +80,7 @@ export default function Login(props){
                 className="btn" 
                 onClick={HandleSubmit} 
             >
-                Share the Love
+                Sign In
             </button>
             <h2 className="est">EST. 2023</h2>
             <p className="about">Sign in to post about the happy couple!</p>
