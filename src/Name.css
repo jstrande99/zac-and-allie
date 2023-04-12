@@ -5,7 +5,7 @@ html{
 }
 h1{
     font-size: 70px;
-    font-family: Snell Roundhand, cursive;
+    font-family: 'Snell Roundhand', 'cursive';
     margin: -15px;
     position: relative;
     top: 0%;
@@ -29,16 +29,17 @@ h1{
   }
   
   .btn {
-    margin-top: 20px;
-    border: 2px solid #766032;
-    color: #766032;
-    background-color: transparent;
-    padding: 10px;
+    margin-top: 15px;
+    background-color: #766032;
+    color: rgb(230, 221, 220);
     border-radius: 5px;
+    width: 40vw;
+    font-size: 18px;
   }
   .btn:hover{
-    background-color: #766032;
-    color: white;
+    background-color: rgb(230, 221, 220);
+    color: #766032;
+    border: 2px solid #766032;
   }
   .form-control{
     margin: 10px;
