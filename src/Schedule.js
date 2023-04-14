@@ -4,15 +4,16 @@ import React, { useState } from "react";
 import Signature from "./Signature";
 import Navbar from './Navbar';
 
-export default function Schedule(){
+export default function Schedule(props){
     const [ceremonyIsOpen, setCeremonyIsOpen] = useState(false);
     const [welcomeIsOpen, setWelcomeIsOpen] = useState(false);
     const [receptionIsOpen, setReceptionIsOpen] = useState(false); 
+    props.setTimer(500);
     return (
         <div className='body'> 
             <Navbar/>
             <h2 className='schedule-ttl ttl-sched'>The Tenetive Schedule</h2>
-            <p className='schedule-ttl'>click on each event to find out more!</p>
+            {/* <p className='schedule-ttl'>click on each event to find out more!</p> */}
             <div className="event" onClick={()=> setWelcomeIsOpen(!welcomeIsOpen)}>
                 <h3 className='date'>Aug 17</h3>
                 {welcomeIsOpen ? 
@@ -31,6 +32,7 @@ export default function Schedule(){
                     (<>
                         <h2>Welcome Event</h2>
                         <p>5:30 pm - 9:30 pm</p>
+                        <p><u>more detail</u></p>
                     </>)
                 }
             </div>
@@ -52,6 +54,7 @@ export default function Schedule(){
                     (<>
                         <h2>Ceremony</h2>
                         <p>5:00 pm - 5:30 pm</p>
+                        <p><u>more detail</u></p>
                     </>)
                 }
             </div>
@@ -73,6 +76,7 @@ export default function Schedule(){
                     (<>
                         <h2>Reception</h2>
                         <p>5:30 pm - 10:45 pm</p>
+                        <p><u>more detail</u></p>
                     </>)
                 }
             </div>
