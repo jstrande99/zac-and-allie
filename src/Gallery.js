@@ -18,10 +18,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
-export default function Gallery(){
+export default function Gallery(props){
     const [images, setImages] = useState([]);
     const [showImage, setShowImage] = useState(false);
     const [selectedImage, setSelectedImage] = useState("");
+    props.setTimer(500);
 
     useEffect(() => {
         const fetchImages = async () => {
