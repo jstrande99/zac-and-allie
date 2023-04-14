@@ -44,8 +44,20 @@ export default function Social(props) {
 	const [currentUsers, setCurrentUsers] = useState(0);
 	let activeUser = props.name;
 
+	const [touchStart, setTouchStart] = useState(null);
+	const [touchEnd, setTouchEnd] = useState(null);
+
+	const minSwipeDistance = 50;
+
 	useEffect(() => {
-		const adminNames = ["zac strande", "allie strande", "jordan strande", "dae judd", "bill strande", "charlotte strande"];
+		const adminNames = [
+			"zac strande", 
+			"allie strande", 
+			"jordan strande", 
+			"dae judd", 
+			"bill strande",
+			 "charlotte strande"
+		];
 		setLoading(true);
 		adminNames.forEach((user) => {
 			if(activeUser.toLowerCase() === user){
@@ -109,13 +121,12 @@ export default function Social(props) {
 				try {
 					setCreatePost("Compressing...");
 					const compressedFile = await imageCompression(imageFile, options);
-					// console.log(compressedFile.size/1024/1024);
 					const storageRef = storage.ref().child(`images/${compressedFile.name}`);
 					await storageRef.put(compressedFile);
 					const imageUrl = await storageRef.getDownloadURL();
 					imageUrls.push(imageUrl);
 				  } catch (error) {
-					// console.log(error);
+					console.log(error);
 				  }
 			}
 		}
@@ -155,7 +166,6 @@ export default function Social(props) {
 
 	const handleClick = (index, len, direction) => {
 		if (clickedImg === index) {
-			// console.log("passed")
 			if(direction === 1){
 				setClickedImgIndex((clickedImgIndex + 1) % len); 
 			}else{
@@ -166,7 +176,7 @@ export default function Social(props) {
 			if(direction === 1){
 				setClickedImgIndex(1); 
 			}else{
-				setClickedImgIndex(len - 1); 
+				setClickedImgIndex(len - 1);  
 			} 
 		}
 	};
@@ -186,6 +196,37 @@ export default function Social(props) {
 		props.setFirstName("");
 		props.setLastName("");
 		props.setName(null);
+	}
+
+	const onTouchStart = (e) => {
+		setTouchEnd(null);
+		setTouchStart(e.targetTouches[0].clientX);
+	}
+
+	const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+	const onTouchEnd = (index, len) => {
+		if (!touchStart || !touchEnd) return;
+		if(len <= 1) return;
+		const distance = touchStart - touchEnd;
+		const isLeftSwipe = distance > minSwipeDistance;
+		const isRightSwipe = distance < -minSwipeDistance;
+		if (isLeftSwipe || isRightSwipe) {
+			if (clickedImg === index) {
+				if (isLeftSwipe ) {
+					setClickedImgIndex((clickedImgIndex + 1) % len); 
+				} else if (isRightSwipe) {
+					setClickedImgIndex((clickedImgIndex - 1 + len) % len); 
+				}
+			}else {
+				setClickedImg(index); 
+				if(isLeftSwipe){
+					setClickedImgIndex(1); 
+				}else{
+					setClickedImgIndex(len - 1);  
+				} 
+			}
+		}
 	}
 
 	return (
@@ -245,7 +286,7 @@ export default function Social(props) {
 					<p className="creator">
 						{post.creator}
 					</p>
-					<div className="imgClick" >
+					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
 								<h1 className="nextBtn arrowBtn">&#8250;</h1>
