@@ -10,7 +10,7 @@ import Signature from "./Signature";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { Logout } from "./Logout";
 import './Social.css';
 
 library.add(fas);
@@ -190,13 +190,6 @@ export default function Social(props) {
 			  }
 		}
 	};
-	const handleLogOut = () => {
-		localStorage.removeItem('name');
-		localStorage.removeItem('firstTimeLogIn');
-		props.setFirstName("");
-		props.setLastName("");
-		props.setName(null);
-	}
 
 	const onTouchStart = (e) => {
 		setTouchEnd(null);
@@ -251,7 +244,7 @@ export default function Social(props) {
 					(<p className="welcomings">
 						<FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}
 					</p>)}
-				<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={handleLogOut} />
+				<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={() => Logout({...props})} />
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
