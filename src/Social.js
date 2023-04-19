@@ -343,9 +343,6 @@ export default function Social(props) {
 								<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
 							</button>
 						}
-						{/* // <button onClick={() => handleLike(post) } className="deleteBtn">
-						// 	<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="1.5em"/> {post.likes} 
-						// </button> */}
 					</div>
 				</div>
 			))}
