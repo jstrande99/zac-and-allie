@@ -19,7 +19,9 @@ export default function Navbar(props){
 					<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
 				</button>
 			</Link>
-			<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={() => Logout({...props})} />
+			<button className="logout" onClick={() => Logout({...props})}>
+					<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" />
+			</button>
 		</div>
     )
 }
