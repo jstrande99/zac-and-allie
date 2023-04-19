@@ -24,7 +24,6 @@ h1{
 	align-items: center;
 }
 .btn {
-	margin-top: 15px;
 	background-color: #766032;
 	color: rgb(230, 221, 220);
 	border-radius: 5px;
@@ -54,4 +53,5 @@ h1{
 	text-align: center;
 	position: relative;
 	top: -2vh;
+	margin-bottom: 0;
 }
