@@ -10,9 +10,6 @@ h1{
     position: relative;
     top: 0%;
 }
-.last{
-    margin-bottom: 10px;
-}
 .login.body {
     display: flex;
     flex-direction: column;
@@ -55,9 +52,8 @@ h1{
   .form-control::placeholder{
     text-align: center;
   }
-  .est{
-    margin-top: 5vh;
-  }
-  .about{
-    text-align: center;
-  }
+.about{
+  text-align: center;
+  position: relative;
+  top: -2vh;
+}

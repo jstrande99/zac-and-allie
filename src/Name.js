@@ -39,6 +39,8 @@ export default function Login(props){
             <form className="inputs">
                 <h1>The</h1>
                 <h1 className="last">Strandes</h1>
+                <h2 className="est">EST. 2023</h2>
+                <p className="about">Sign in to post about the happy couple!</p>
                 <div className="form-group">
                     <input 
                         type="text" 
@@ -82,8 +84,6 @@ export default function Login(props){
             >
                 Sign In
             </button>
-            <h2 className="est">EST. 2023</h2>
-            <p className="about">Sign in to post about the happy couple!</p>
         </div>
     );
 };
