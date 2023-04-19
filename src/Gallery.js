@@ -22,7 +22,9 @@ export default function Gallery(props){
     const [images, setImages] = useState([]);
     const [showImage, setShowImage] = useState(false);
     const [selectedImage, setSelectedImage] = useState("");
-    props.setTimer(500);
+    useEffect(() => {
+        props.setTimer(500);
+    }, [props]);
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -48,7 +50,7 @@ export default function Gallery(props){
     }
     return (
         <div className="container">
-            <Navbar/>
+            <Navbar {...props}/>
             <div className="spacer"></div>
             {showImage && (
                 <div 
