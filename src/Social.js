@@ -9,11 +9,13 @@ import { Link } from "react-router-dom";
 import Signature from "./Signature";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Logout } from "./Logout";
 import './Social.css';
 
 library.add(fas);
+library.add(far);
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -136,6 +138,7 @@ export default function Social(props) {
 			imageUrls,
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 			creator: activeUser,
+			likes: 0,
 		}).then((docRef) => {
 			docRef.set({ id: docRef.id }, { merge: true });
 		});
@@ -222,6 +225,25 @@ export default function Social(props) {
 		}
 	}
 
+	const handleLike = async (post) => {
+		const postRef = firestore.collection("posts").doc(post.id);
+		const doc = await postRef.get();
+		if (doc.exists) {
+			if(post.clientLike && post.clientLike.includes(activeUser)){
+				return;
+			}
+			if(post.creator === activeUser){
+				return;
+			}
+			postRef.update({
+				likes: post.likes + 1,
+				clientLike: firebase.firestore.FieldValue.arrayUnion(activeUser),
+			});
+		} else {
+			console.log("Document does not exist!");
+		}
+	};
+
 	return (
 		<div className="body">
 			<div className="userbar">
@@ -305,9 +327,25 @@ export default function Social(props) {
 					{post.text && 
 						<p className="textPost">{post.text}</p>
 					}
-					{isAdmin && 
-						(<button className="deleteBtn submit" onClick={() => handleDelete(post.id)}>Delete</button>)
-					}
+					<div className="post-btns">
+						{isAdmin ? 
+							(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
+								<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
+							</button>) : 
+							(<button className="deleteBtn"></button>)
+						}
+						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? <button onClick={() => handleLike(post) } className="deleteBtn">
+							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
+						</button>
+						: 
+						<button onClick={() => handleLike(post) } className="deleteBtn">
+							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
+						</button>
+						}
+						{/* // <button onClick={() => handleLike(post) } className="deleteBtn">
+						// 	<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="1.5em"/> {post.likes} 
+						// </button> */}
+					</div>
 				</div>
 			))}
 			<Signature/>
