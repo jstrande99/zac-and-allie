@@ -215,3 +215,15 @@ option{
     left: 0%;
     z-index: 100;
 }
+.post-btns{
+    display: inline-flex;
+    justify-content: space-between;
+    /* z-index: 1000; */
+}
+.deleteBtn{
+    width: 10vh;
+    background: transparent;
+    border: none;
+    color: #766032;
+    text-align: center;
+}
