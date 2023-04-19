@@ -3,10 +3,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from "react-router-dom";
-
+import { Logout } from "./Logout";
 library.add(fas);
 
-export default function Navbar(){
+export default function Navbar(props){
     return (
         <div className="userbar">
 			<Link to='/Schedule' className="nav-links">
@@ -19,6 +19,7 @@ export default function Navbar(){
 					<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
 				</button>
 			</Link>
+			<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={() => Logout({...props})} />
 		</div>
     )
 }
