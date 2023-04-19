@@ -218,7 +218,6 @@ option{
 .post-btns{
     display: inline-flex;
     justify-content: space-between;
-    /* z-index: 1000; */
 }
 .deleteBtn{
     width: 10vh;
