@@ -334,13 +334,14 @@ export default function Social(props) {
 							</button>) : 
 							(<button className="deleteBtn"></button>)
 						}
-						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? <button onClick={() => handleLike(post) } className="deleteBtn">
-							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
-						</button>
-						: 
-						<button onClick={() => handleLike(post) } className="deleteBtn">
-							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
-						</button>
+						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
+							<button onClick={() => handleLike(post) } className="deleteBtn">
+								<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
+							</button>
+							: 
+							<button onClick={() => handleLike(post) } className="deleteBtn">
+								<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
+							</button>
 						}
 						{/* // <button onClick={() => handleLike(post) } className="deleteBtn">
 						// 	<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="1.5em"/> {post.likes} 
