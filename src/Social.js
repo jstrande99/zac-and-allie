@@ -263,10 +263,12 @@ export default function Social(props) {
 					</button>
 				</Link>
 				{isAdmin && 
-					(<p className="welcomings">
+					(<p>
 						<FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}
 					</p>)}
-				<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" onClick={() => Logout({...props})} />
+				<button className="logout" onClick={() => Logout({...props})}>
+					<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" />
+				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
 			<form onSubmit={handleSubmit}>
