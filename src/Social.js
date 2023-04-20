@@ -301,10 +301,20 @@ export default function Social(props) {
 					key={index} 
 					className="posts postText" 
 					data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}
-				>
+				>	<div className="post-btns">
 					<p className="creator">
 						{post.creator}
 					</p>
+					{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
+						<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
+							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
+						</button>
+						: 
+						<button onClick={() => handleLike(post) } className="deleteBtn">
+							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
+						</button>
+					}
+					</div>
 					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
@@ -323,31 +333,22 @@ export default function Social(props) {
 							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
 					</div>
-					{post.imageUrls.length !== 0 && 
+					{/* {post.imageUrls.length !== 0 && 
 						(<p className="indicator">
 							{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}
 						</p>)
-					}
-					{post.text && 
+					} */}
+					{post.text ?
 						<p className="textPost">{post.text}</p>
+						:
+						<p></p>
 					}
-					<div className="post-btns">
-						{isAdmin ? 
-							(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
-								<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
-							</button>) : 
-							(<button className="deleteBtn"></button>)
-						}
-						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
-							<button onClick={() => handleLike(post) } className="deleteBtn">
-								<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
-							</button>
-							: 
-							<button onClick={() => handleLike(post) } className="deleteBtn">
-								<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
-							</button>
-						}
-					</div>
+					{isAdmin ? 
+						(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
+							<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
+						</button>) : 
+						(<button className="deleteBtn"></button>)
+					}
 				</div>
 			))}
 			<Signature/>
