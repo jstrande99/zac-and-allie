@@ -66,8 +66,10 @@ export default function Social(props) {
 				setIsAdmin(true);
 			}
 		})
+		const accessTimes = new Date();
 		firestore.collection("users").doc(activeUser.toLowerCase()).set({
-			user: activeUser
+			user: activeUser,
+			accessTime: accessTimes, // TO BE REMOVED BEFORE RELEASE
 		});
 		firestore.collection('users').get().then(snap => setCurrentUsers(snap.size));
 		const unsubscribe = firestore.collection("posts")
