@@ -56,16 +56,16 @@ form {
     color: white;
 }
 .posts{
-    border-radius: 10px;
-    border: 2px solid #766032;
     padding: 10px;
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: -25px;
 }
 .creator{
-    font-size: 12px;
+    font-size: 20px;
+    font-family: auto;
+    font-weight: bolder;
 }
 .likes{
     position: absolute;
@@ -85,6 +85,66 @@ form {
     height: 5vh;
     padding: 10px;
 }
+.addPostButton{
+    background-color: rgb(230, 221, 220);
+    border-radius: 20px;
+    padding: 5px 7px;
+    color: #766032;
+    border: 2px solid #766032;
+    position: fixed; 
+    z-index: 1000;
+    bottom: 10vh;
+    right: 2.5vw;
+}
+.popupContainer{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(148, 148, 148, 0.619);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.popupForm{
+    background-color: rgb(230, 221, 220);
+    position: fixed;
+    top: 30vh;
+    left: 5vw;
+    z-index: 1000;
+    width: 90vw;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 15px;
+    text-align: center;
+    overflow: hidden;
+}
+.exitBtn{
+    position: relative;
+    right: -58vw;
+    top: 2vh;
+}
+.line{ 
+    width: 150%;
+    height: 5px;
+    background-color: #766032;
+    margin-bottom: 20px;
+    position: relative;
+    left: -16vw;
+}
+.postBtn{
+    margin-top: 50px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid #766032;
+    color: #766032;
+    font-size: 16px;
+    width: 50%;
+    position: relative;
+    left: 25%;
+}
 .btn:hover{
     background-color: transparent;
     color: black;
@@ -93,7 +153,7 @@ form {
 .postText:hover::after {
     content: attr(data-date);
     position: absolute;
-    top: -20px;
+    top: 45px;
     left: 50%;
     transform: translateX(-50%);
     padding: 5px;
@@ -133,7 +193,7 @@ form {
 .img{
     position: relative;
     top: -5px;
-    max-width: 90vw;
+    max-width: 70vw;
     max-height: 55vh; 
     object-fit: contain;
 }
@@ -177,16 +237,9 @@ option{
     border: none;
 }
 .arrowBtn{
-    font-size: 80px;
+    font-size: 65px;
     z-index: 99;
     color: #766032;
-    text-shadow:
-      0 0 7px #825902,
-      0 0 10px #ffffff,
-      0 0 21px #ffffff,
-      0 0 42px #ccc,
-      0 0 82px #ccc,
-      0 0 92px #ccc;
     cursor: pointer;
 }
 .nextBtn{
@@ -235,4 +288,8 @@ option{
     cursor: pointer;
     position: relative;
     text-align: center;
+}
+.heartBtn{
+    position: relative;
+    right: -5vw;
 }

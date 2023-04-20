@@ -49,6 +49,8 @@ export default function Social(props) {
 	const [touchStart, setTouchStart] = useState(null);
 	const [touchEnd, setTouchEnd] = useState(null);
 
+	const [addPostOpen, setAddPostOpen] = useState(false);
+
 	const minSwipeDistance = 50;
 
 	useEffect(() => {
@@ -133,6 +135,7 @@ export default function Social(props) {
 					console.log(error);
 				  }
 			}
+			setAddPostOpen(!addPostOpen);
 		}
 
 		firestore.collection("posts").add({
@@ -273,38 +276,66 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
-			<form onSubmit={handleSubmit}>
-				<input 
-					className="textBox" 
-					type="text" 
-					value={text} 
-					onChange={(e) => setText(e.target.value)} 
-					placeholder="Write to the happy couple..."
-				/>
-				<input 
-					type="file" 
-					className="imgInput" 
-					name="imageFile" 
-					accept="image/* image/heic" 
-					onChange={handleImageChange} multiple
-				/>
-				<button 
-					className="submit postBtn" 
-					type="submit"
-					disabled={isDisabled} 
+			{addPostOpen ? 
+				(<div className="popupContainer"><div  className="popupForm"> 
+					<form onSubmit={handleSubmit}>
+						<button 
+							onClick={()=> setAddPostOpen(!addPostOpen)}
+							className="exitBtn deleteBtn"
+						>
+							<FontAwesomeIcon icon="fa-solid fa-xmark" fontSize="2.5em" />
+						</button>
+						<h2>ADD POST</h2>
+						<div className="line"></div>
+						<input 
+							className="textBox" 
+							type="text" 
+							value={text} 
+							onChange={(e) => setText(e.target.value)} 
+							placeholder="Write to the happy couple..."
+						/>
+						<input 
+							type="file" 
+							className="imgInput" 
+							name="imageFile" 
+							accept="image/* image/heic" 
+							onChange={handleImageChange} multiple
+						/>
+						<button 
+							className=" postBtn" 
+							type="submit"
+							disabled={isDisabled} 
+						>
+								{createPost}
+						</button>
+					</form>
+				</div></div>) : 
+				(<button 
+					className="addPostButton" 
+					onClick={() => setAddPostOpen(!addPostOpen)}
 				>
-						{createPost}
-				</button>
-			</form>
+					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="2em"/>
+				</button>)
+			}
 			{posts.map((post, index) => (
 				<div 
 					key={index} 
 					className="posts postText" 
 					data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}
-				>
+				>	<div className="post-btns">
 					<p className="creator">
 						{post.creator}
 					</p>
+					{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
+						<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
+							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
+						</button>
+						: 
+						<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
+							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
+						</button>
+					}
+					</div>
 					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
@@ -323,31 +354,22 @@ export default function Social(props) {
 							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
 					</div>
-					{post.imageUrls.length !== 0 && 
+					{/* {post.imageUrls.length !== 0 && 
 						(<p className="indicator">
 							{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}
 						</p>)
-					}
-					{post.text && 
+					} */}
+					{post.text ?
 						<p className="textPost">{post.text}</p>
+						:
+						<p></p>
 					}
-					<div className="post-btns">
-						{isAdmin ? 
-							(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
-								<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
-							</button>) : 
-							(<button className="deleteBtn"></button>)
-						}
-						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
-							<button onClick={() => handleLike(post) } className="deleteBtn">
-								<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
-							</button>
-							: 
-							<button onClick={() => handleLike(post) } className="deleteBtn">
-								<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
-							</button>
-						}
-					</div>
+					{isAdmin ? 
+						(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
+							<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
+						</button>) : 
+						(<button className="deleteBtn"></button>)
+					}
 				</div>
 			))}
 			<Signature/>
