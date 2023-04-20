@@ -87,14 +87,14 @@ form {
 }
 .addPostButton{
     background-color: rgb(230, 221, 220);
-    border-radius: 20px;
+    border-radius: 30px;
     padding: 5px 7px;
     color: #766032;
     border: 2px solid #766032;
     position: fixed; 
     z-index: 1000;
-    bottom: 10vh;
-    right: 2.5vw;
+    bottom: 2vh;
+    right: 1vw;
 }
 .popupContainer{
     width: 100vw;
