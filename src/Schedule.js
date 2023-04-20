@@ -17,7 +17,10 @@ export default function Schedule(props){
             <h2 className='schedule-ttl ttl-sched'>The Tenetive Schedule</h2>
             <div className="event" onClick={()=> setWelcomeIsOpen(!welcomeIsOpen)}>
                 <h3 className='date'>Aug 17</h3>
-                {welcomeIsOpen ? 
+                <h2>Welcome Event</h2>
+                <p>5:30 pm - 9:30 pm</p>
+                <p><u>More info</u></p>
+                {welcomeIsOpen && 
                     (<>
                         <p className='discription'>
                             Casual<br/><br/>
@@ -29,17 +32,15 @@ export default function Schedule(props){
                         >
                             See Map
                         </h3>
-                    </>) :
-                    (<>
-                        <h2>Welcome Event</h2>
-                        <p>5:30 pm - 9:30 pm</p>
-                        <p><u>more detail</u></p>
                     </>)
                 }
             </div>
             <div className="event" onClick={()=> setCeremonyIsOpen(!ceremonyIsOpen)}>
                 <h3 className='date'>Aug 19</h3>
-                {ceremonyIsOpen ? 
+                <h2>Ceremony</h2>
+                <p>5:00 pm - 5:30 pm</p>
+                <p><u>More info</u></p>
+                {ceremonyIsOpen &&  
                     (<>
                         <p className='discription'>
                             We would like to invite you to sport your best semi-formal Cocktail attire for the night; Wear cocktail dresses, dressy jumpsuits, and/or suits, dark jackets and slacks. No jeans or sneakers please. Please keep in mind our ceremony will take place in a large groomed grassy area when considering shoes!<br/><br/>
@@ -51,17 +52,15 @@ export default function Schedule(props){
                         >
                             See Map
                         </h3>
-                    </>):
-                    (<>
-                        <h2>Ceremony</h2>
-                        <p>5:00 pm - 5:30 pm</p>
-                        <p><u>more detail</u></p>
                     </>)
                 }
             </div>
             <div className="event" onClick={()=>setReceptionIsOpen(!receptionIsOpen)}>
                 <h3 className='date'>Aug 19</h3>
-                {receptionIsOpen ? 
+                <h2>Reception</h2>
+                <p>5:30 pm - 10:45 pm</p>
+                <p><u>More info</u></p>
+                {receptionIsOpen &&
                     (<>
                         <p className='discription'>
                             Semi-formal/Cocktail attire requested<br/><br/>
@@ -73,11 +72,6 @@ export default function Schedule(props){
                         >
                             See Map
                         </h3>
-                    </>):
-                    (<>
-                        <h2>Reception</h2>
-                        <p>5:30 pm - 10:45 pm</p>
-                        <p><u>more detail</u></p>
                     </>)
                 }
             </div>
