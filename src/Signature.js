@@ -5,7 +5,9 @@ export default function Signature(){
         <p 
             style={
                 {textAlign: "center", 
-                fontSize: "12px"}
+                fontSize: "12px",
+                marginTop: "30px"
+                }
             }
         >
             Crafted with love by Jordan Strande
