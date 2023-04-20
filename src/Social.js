@@ -314,7 +314,7 @@ export default function Social(props) {
 					className="addPostButton" 
 					onClick={() => setAddPostOpen(!addPostOpen)}
 				>
-					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="2em"/>
+					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="3em"/>
 				</button>)
 			}
 			{posts.map((post, index) => (

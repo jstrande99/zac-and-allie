@@ -19,24 +19,24 @@
 }
 .event{
     background-color: rgb(224, 224, 224);
-    border: 1px solid #766032;
+    border: 2px solid #766032;
     border-radius: 10px;
     margin: 10px;
     text-align: center;
     align-items: center;
-    padding-top: 8vh;
-    padding-bottom: 8vh;
+    padding-top: 5vh;
     position: relative;
 }
 .date{
     position: absolute;
     top: -20px;
-    right: 0px;
-    border: 1px solid #766032;
-    border-right: 0;
+    border: 2px solid #766032;
     border-top: 0;
+    border-left: 0;
+    border-right: 0;
     padding: 10px;
     border-radius: 10px;
+    width: 94%;
 }
 .discription{
     padding: 10px;
