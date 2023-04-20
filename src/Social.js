@@ -49,6 +49,8 @@ export default function Social(props) {
 	const [touchStart, setTouchStart] = useState(null);
 	const [touchEnd, setTouchEnd] = useState(null);
 
+	const [addPostOpen, setAddPostOpen] = useState(false);
+
 	const minSwipeDistance = 50;
 
 	useEffect(() => {
@@ -133,6 +135,7 @@ export default function Social(props) {
 					console.log(error);
 				  }
 			}
+			setAddPostOpen(!addPostOpen);
 		}
 
 		firestore.collection("posts").add({
@@ -273,29 +276,47 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
-			<form onSubmit={handleSubmit}>
-				<input 
-					className="textBox" 
-					type="text" 
-					value={text} 
-					onChange={(e) => setText(e.target.value)} 
-					placeholder="Write to the happy couple..."
-				/>
-				<input 
-					type="file" 
-					className="imgInput" 
-					name="imageFile" 
-					accept="image/* image/heic" 
-					onChange={handleImageChange} multiple
-				/>
-				<button 
-					className="submit postBtn" 
-					type="submit"
-					disabled={isDisabled} 
+			{addPostOpen ? 
+				(<div className="popupContainer"><div  className="popupForm"> 
+					<form onSubmit={handleSubmit}>
+						<button 
+							onClick={()=> setAddPostOpen(!addPostOpen)}
+							className="exitBtn deleteBtn"
+						>
+							<FontAwesomeIcon icon="fa-solid fa-xmark" fontSize="2.5em" />
+						</button>
+						<h2>ADD POST</h2>
+						<div className="line"></div>
+						<input 
+							className="textBox" 
+							type="text" 
+							value={text} 
+							onChange={(e) => setText(e.target.value)} 
+							placeholder="Write to the happy couple..."
+						/>
+						<input 
+							type="file" 
+							className="imgInput" 
+							name="imageFile" 
+							accept="image/* image/heic" 
+							onChange={handleImageChange} multiple
+						/>
+						<button 
+							className=" postBtn" 
+							type="submit"
+							disabled={isDisabled} 
+						>
+								{createPost}
+						</button>
+					</form>
+				</div></div>) : 
+				(<button 
+					className="addPostButton" 
+					onClick={() => setAddPostOpen(!addPostOpen)}
 				>
-						{createPost}
-				</button>
-			</form>
+					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="2em"/>
+				</button>)
+			}
 			{posts.map((post, index) => (
 				<div 
 					key={index} 
@@ -310,7 +331,7 @@ export default function Social(props) {
 							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
 						</button>
 						: 
-						<button onClick={() => handleLike(post) } className="deleteBtn">
+						<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
 							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
 						</button>
 					}
