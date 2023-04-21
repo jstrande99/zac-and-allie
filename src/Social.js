@@ -97,6 +97,7 @@ export default function Social(props) {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		window.scrollTo(0, 0);
 		if(!text && !imageFiles.length){
 			alert("Please enter a memory or select an image!");
 			return;
@@ -109,6 +110,9 @@ export default function Social(props) {
 		const options = {
 			maxSizeMB: 1,
 			maxWidthOrHeight: 1920
+		}
+		if(imageFiles.length === 0 && text){
+			setAddPostOpen(!addPostOpen);
 		}
 		if(imageFiles.length > 0){
 			for(let i = 0; i < imageFiles.length; i++){
@@ -262,11 +266,18 @@ export default function Social(props) {
 						<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
 					</button>
 				</Link>
-				<Link to='/' className="nav-links">
+				{/* <Link to='/' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
+						<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="1.5em"/>
 					</button>
-				</Link>
+				</Link> */}
+				<button 
+					className="submit gal" 
+					onClick={() => setAddPostOpen(!addPostOpen)}
+				>
+					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="1.5em"/>
+				</button>
 				{isAdmin && 
 					(<p>
 						<FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}
@@ -276,7 +287,7 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
-			{addPostOpen ? 
+			{addPostOpen ?
 				(<div className="popupContainer"><div  className="popupForm"> 
 					<form onSubmit={handleSubmit}>
 						<button 
@@ -309,13 +320,7 @@ export default function Social(props) {
 								{createPost}
 						</button>
 					</form>
-				</div></div>) : 
-				(<button 
-					className="addPostButton" 
-					onClick={() => setAddPostOpen(!addPostOpen)}
-				>
-					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="3em"/>
-				</button>)
+				</div></div>) : (<div></div>)
 			}
 			{posts.map((post, index) => (
 				<div 
