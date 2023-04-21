@@ -9,11 +9,11 @@
     justify-content: space-around;
     background-color: rgb(230, 221, 220);
     z-index: 1000;
-    top: 0;
+    bottom: 0;
     left: 0;
     padding-top: 5px;
     padding-bottom: 5px;
-    border-bottom: 1px solid #766032;
+    border-top: 1px solid #766032;
     align-items: center;
 }
 form {
@@ -23,10 +23,14 @@ form {
 }
 .welcoming{
     text-align: center;
-    font-size: 15px;
-    margin-bottom: 5%;
+    font-family: Snell Roundhand, cursive;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 0vh;
     color: #766032;
-    margin-top: 10vh;
+    margin-top: 0vh;
+    border-bottom: 1px solid #766032;
+    padding-bottom: 1vh;
 }
 .textBox {
     font-size: 16px;
@@ -233,7 +237,7 @@ option{
 .gal{
     position: relative;
     left: 0%;
-    width: 100%;
+    width: auto;
     border: none;
 }
 .arrowBtn{

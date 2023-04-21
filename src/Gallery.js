@@ -4,6 +4,7 @@ import "firebase/compat/storage";
 import "firebase/compat/auth";
 import "./Gallery.css";
 import Navbar from "./Navbar";
+import Signature from "./Signature";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -49,6 +50,7 @@ export default function Gallery(props){
         setShowImage(true);
     }
     return (
+        <>
         <div className="container">
             <Navbar {...props}/>
             <div className="spacer"></div>
@@ -78,5 +80,7 @@ export default function Gallery(props){
                 </div>
             ))}
         </div>
+        <Signature/>
+        </>
     );
 };

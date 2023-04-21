@@ -6,7 +6,8 @@ export default function Signature(){
             style={
                 {textAlign: "center", 
                 fontSize: "12px",
-                marginTop: "30px"
+                marginTop: "30px",
+                marginBottom: "10vh",
                 }
             }
         >
