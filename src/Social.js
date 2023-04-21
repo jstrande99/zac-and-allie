@@ -266,17 +266,11 @@ export default function Social(props) {
 						<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
 					</button>
 				</Link>
-				{/* <Link to='/' className="nav-links">
-					<button className="submit gal">
-						<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
-						<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="1.5em"/>
-					</button>
-				</Link> */}
 				<button 
 					className="submit gal" 
 					onClick={() => setAddPostOpen(!addPostOpen)}
 				>
-					<FontAwesomeIcon icon="fa-solid fa-plus" fontSize="1.5em"/>
+					<FontAwesomeIcon icon="fa-regular fa-square-plus" fontSize="2em"/>
 				</button>
 				{isAdmin && 
 					(<p>
