@@ -249,24 +249,24 @@ option{
 .nextBtn{
     font-family: 'Montserrat';
     position: absolute;
-    right: 10%;
+    right: 55%;
     top: 35%;
 }
 .backBtn{
     font-family: 'Montserrat';
     position: absolute;
-    left: 10%;
+    left: 55%;
     top: 35%;
 }
 .nextdiv{
-    width: 50%;
+    width: 10%;
     height: 60%;
     position: absolute;
     right: 0%;
     z-index: 100;
 }
 .backdiv{
-    width: 50%;
+    width: 10%;
     height: 60%;
     position: absolute;
     left: 0%;
@@ -295,5 +295,5 @@ option{
 }
 .heartBtn{
     position: relative;
-    right: -5vw;
+    /* right: -5vw; */
 }
