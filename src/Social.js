@@ -341,9 +341,12 @@ export default function Social(props) {
 						</button>
 					}
 					</div>
-					<div onDoubleClickCapture={() => handleLike(post)}>
+					<div onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>
 					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
-						{isLiked && likedIndex === index && (<div className="popuplikecontainer"><p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p></div>)}
+						{isLiked && likedIndex === index && 
+							(<div className="popuplikecontainer">
+								<p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p>
+							</div>)}
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
 								<h1 className="nextBtn arrowBtn">&#8250;</h1>
