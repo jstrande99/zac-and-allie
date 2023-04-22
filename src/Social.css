@@ -297,3 +297,15 @@ option{
     position: relative;
     /* right: -5vw; */
 }
+.popuplikecontainer{
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.popupLike{
+    position: absolute;
+    color: rgb(230, 221, 220);
+    z-index: 100;
+}
