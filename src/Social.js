@@ -46,6 +46,9 @@ export default function Social(props) {
 	const [currentUsers, setCurrentUsers] = useState(0);
 	let activeUser = props.name;
 
+	const [isLiked, setIsLiked] = useState(false);
+	const [likedIndex, setLikedIndex] = useState(null);
+
 	const [touchStart, setTouchStart] = useState(null);
 	const [touchEnd, setTouchEnd] = useState(null);
 
@@ -251,6 +254,9 @@ export default function Social(props) {
 		} else {
 			console.log("Document does not exist!");
 		}
+		setTimeout(() => {
+			setIsLiked(false);
+		}, 1500);
 	};
 
 	return (
@@ -330,13 +336,14 @@ export default function Social(props) {
 							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
 						</button>
 						: 
-						<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
+						<button onClick={() => { setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);} } className="deleteBtn heartBtn">
 							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
 						</button>
 					}
 					</div>
 					<div onDoubleClickCapture={() => handleLike(post)}>
 					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
+						{isLiked && likedIndex === index && (<div className="popuplikecontainer"><p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p></div>)}
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
 								<h1 className="nextBtn arrowBtn">&#8250;</h1>
