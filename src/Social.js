@@ -335,6 +335,7 @@ export default function Social(props) {
 						</button>
 					}
 					</div>
+					<div onDoubleClickCapture={() => handleLike(post)}>
 					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
@@ -352,6 +353,7 @@ export default function Social(props) {
 						{post.imageUrls && post.imageUrls.length > 0 && clickedImg !== index && (
 							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
 						)}
+					</div>
 					</div>
 					{/* {post.imageUrls.length !== 0 && 
 						(<p className="indicator">
