@@ -242,9 +242,11 @@ export default function Social(props) {
 		const doc = await postRef.get();
 		if (doc.exists) {
 			if(post.clientLike && post.clientLike.includes(activeUser)){
+				setIsLiked(false);
 				return;
 			}
 			if(post.creator === activeUser){
+				setIsLiked(false);
 				return;
 			}
 			postRef.update({
