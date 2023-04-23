@@ -256,7 +256,8 @@ export default function Social(props) {
 		}
 		setTimeout(() => {
 			setIsLiked(false);
-		}, 1500);
+		}, 3000);
+
 	};
 
 	return (
@@ -346,6 +347,7 @@ export default function Social(props) {
 						{isLiked && likedIndex === index && 
 							(<div className="popuplikecontainer">
 								<p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p>
+								<p className="popupLike2"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="7em" beatFade/> </p>
 							</div>)}
 						{post.imageUrls && post.imageUrls.length > 1 && 
 							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
@@ -371,7 +373,7 @@ export default function Social(props) {
 						</p>)
 					} */}
 					{post.text ?
-						<p className="textPost">{post.text}</p>
+						<p className="textPost" onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>{post.text}</p>
 						:
 						<p></p>
 					}

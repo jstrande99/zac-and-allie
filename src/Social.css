@@ -309,3 +309,8 @@ option{
     color: rgb(230, 221, 220);
     z-index: 100;
 }
+.popupLike2 {
+    position: absolute;
+    color: #76613295;
+    z-index: 90;
+}
