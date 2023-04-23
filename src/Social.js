@@ -256,7 +256,7 @@ export default function Social(props) {
 		}
 		setTimeout(() => {
 			setIsLiked(false);
-		}, 3000);
+		}, 4000);
 
 	};
 
