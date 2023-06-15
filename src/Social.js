@@ -270,26 +270,41 @@ export default function Social(props) {
 			<div className="userbar">
 				{isAdmin && (<Link to='/Gallery' className="nav-links">
                 	<button className="submit gal">
-						<FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.5em"/>
+						<FontAwesomeIcon 
+							icon={["fas","fa-images"]} 
+							fontSize="1.5em"
+						/>
 					</button>
 				</Link>)}
 				<Link to='/Schedule' className="nav-links">
 					<button className="submit gal">
-						<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
+						<FontAwesomeIcon 
+							icon={['fas','fa-calendar-alt']} 
+							fontSize="1.5em"
+						/>
 					</button>
 				</Link>
 				<button 
 					className="submit gal" 
 					onClick={() => setAddPostOpen(!addPostOpen)}
 				>
-					<FontAwesomeIcon icon="fa-regular fa-square-plus" fontSize="2em"/>
+					<FontAwesomeIcon 
+						icon="fa-regular fa-square-plus" 
+						fontSize="2em"
+					/>
 				</button>
 				{isAdmin && 
 					(<p>
-						<FontAwesomeIcon icon={["fas", "fa-users"]} fontSize="1.5em"/> : {currentUsers}
+						<FontAwesomeIcon 
+							icon={["fas", "fa-users"]} 
+							fontSize="1.5em"
+						/> : {currentUsers}
 					</p>)}
 				<button className="logout" onClick={() => Logout({...props})}>
-					<FontAwesomeIcon icon={['fas','fa-right-from-bracket']} fontSize="1.5em" />
+					<FontAwesomeIcon 
+						icon={['fas','fa-right-from-bracket']} 
+						fontSize="1.5em" 
+					/>
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
@@ -301,7 +316,10 @@ export default function Social(props) {
 							onClick={()=> setAddPostOpen(!addPostOpen)}
 							className="exitBtn deleteBtn"
 						>
-							<FontAwesomeIcon icon="fa-solid fa-xmark" fontSize="2.5em" />
+							<FontAwesomeIcon 
+								icon="fa-solid fa-xmark" 
+								fontSize="2.5em" 
+							/>
 						</button>
 						<h2>ADD POST</h2>
 						<div className="line"></div>
@@ -341,38 +359,85 @@ export default function Social(props) {
 						</p>
 						{/** LIKING FEATURE */}
 						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
-							<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
-								<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
+							<button 
+								onClick={() => handleLike(post) } 
+								className="deleteBtn heartBtn"
+							>
+								<FontAwesomeIcon 
+									icon={{prefix: 'fas', iconName: 'heart'}} 
+									fontSize="2em"
+								/> {post.likes} 
 							</button>
 							: 
-							<button onClick={() => { setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);} } className="deleteBtn heartBtn">
-								<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
+							<button 
+								onClick={() => { setLikedIndex(index); setIsLiked(!isLiked); 
+								handleLike(post);} } 
+								className="deleteBtn heartBtn"
+							>
+								<FontAwesomeIcon 
+									icon={{prefix: 'far', iconName: 'heart'}} 
+									fontSize="2em" 
+								/> {post.likes} 
 							</button>
 						}
 					</div>
 					{/** DOUBLE CLICK AND MOBILE SCROLLING */}
-					<div onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>
-						<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
+					<div 
+						onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked);
+						handleLike(post);}}
+					>
+						<div 
+							className="imgClick" 
+							onTouchStart={onTouchStart} 
+							onTouchMove={onTouchMove} 
+							onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}
+						>
 							{isLiked && likedIndex === index && 
 								(<div className="popuplikecontainer">
-									<p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p>
-									<p className="popupLike2"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="7em" beatFade/> </p>
+									<p className="popupLike">
+										<FontAwesomeIcon 
+											icon={{prefix: 'fas', iconName: 'heart'}} 
+											fontSize="5em" 
+											beatFade
+										/> 
+									</p>
+									<p className="popupLike2">
+										<FontAwesomeIcon 
+											icon={{prefix: 'fas', iconName: 'heart'}} 
+											fontSize="7em" 
+											beatFade
+										/> 
+									</p>
 								</div>)}
 							{post.imageUrls && post.imageUrls.length > 1 && 
-								(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
+								(<div 
+									className="nextdiv" 
+									onClick={() => handleClick(index, post.imageUrls.length, 1)}
+								>
 									<h1 className="nextBtn arrowBtn">&#8250;</h1>
 								</div>)
 							}
 							{post.imageUrls && post.imageUrls.length > 1 && 
-								(<div className="backdiv" onClick={() => handleClick(index, post.imageUrls.length, 0)}>
+								(<div 
+									className="backdiv" 
+									onClick={() => handleClick(index, post.imageUrls.length, 0)}
+								>
 									<h1 className="backBtn arrowBtn">&#8249;</h1>
 								</div>)
 							}
 							{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
-								<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
+								<img 
+									src={post.imageUrls[clickedImgIndex]} 
+									alt={`Uploaded by ${post.creator}`} 
+									className="img"
+								/>
 							)}
 							{post.imageUrls && post.imageUrls.length > 0 && clickedImg !== index && (
-								<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
+								<img 
+									src={post.imageUrls[0]} 
+									alt={`Uploaded by ${post.creator}`} 
+									className="img"
+								/>
 							)}
 						</div>
 					</div>
@@ -393,13 +458,25 @@ export default function Social(props) {
 					</div>
 					{/** POST'S TEXT */}
 					{post.text ?
-						<p className="textPost" onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>{post.text}</p>
+						<p 
+							className="textPost" 
+							onDoubleClickCapture={() => {
+								setLikedIndex(index); 
+								setIsLiked(!isLiked); 
+								handleLike(post);
+							}}
+						>
+							{post.text}
+						</p>
 						:
 						<p></p>
 					}
 					{/** DELETE BUTTON ONLY FOR ADMIN */}
 					{isAdmin ? 
-						(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
+						(<button 
+							className="deleteBtn" 
+							onClick={() => handleDelete(post.id)}
+						>
 							<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
 						</button>) : 
 						(<button className="deleteBtn"></button>)
