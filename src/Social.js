@@ -72,9 +72,10 @@ export default function Social(props) {
 			}
 		})
 		const accessTimes = new Date();
+		//GET AND SET THE DATABASE INFORMATION
 		firestore.collection("users").doc(activeUser.toLowerCase()).set({
 			user: activeUser,
-			accessTime: accessTimes, // TO BE REMOVED BEFORE RELEASE
+			accessTime: accessTimes,
 		});
 		firestore.collection('users').get().then(snap => setCurrentUsers(snap.size));
 		const unsubscribe = firestore.collection("posts")
@@ -94,10 +95,11 @@ export default function Social(props) {
 
 	useEffect(() => {
 		firestore.collection("posts.text").onSnapshot(() => {
-		window.scrollTo(0, 0); //document.body.scrollHeight
+		window.scrollTo(0, 0);
 		});
 	}, []);
 
+	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		window.scrollTo(0, 0);
@@ -144,7 +146,7 @@ export default function Social(props) {
 			}
 			setAddPostOpen(!addPostOpen);
 		}
-
+		//ADDS NEW POST TO DATABASE
 		firestore.collection("posts").add({
 			text,
 			imageUrls,
@@ -163,7 +165,7 @@ export default function Social(props) {
 	const handleImageChange = (event) => {
 		setImageFiles(event.target.files);
 	};
-  
+	//LOADING SCREEN
 	if (loading) {
 		return (
 			<div className={`fullscreen-${loading}`}>
@@ -174,28 +176,28 @@ export default function Social(props) {
 			</div>
 		)
 	}
-
+	//LOGS IF ERROR OCCURED
 	if (error) {
 		return <div>Error: {error.message}</div>;
 	}
-
+	//HANDLES SWITCHING IMAGES IN THE ARRAY
 	const handleClick = (index, len, direction) => {
 		if (clickedImg === index) {
 			if(direction === 1){
-				setClickedImgIndex((clickedImgIndex + 1) % len); 
+				setClickedImgIndex((clickedImgIndex + 1) % len);		//FORWARD 1 IMG
 			}else{
-				setClickedImgIndex((clickedImgIndex - 1 + len) % len); 
+				setClickedImgIndex((clickedImgIndex - 1 + len) % len);	//BACKWARD 1 IMG
 			}
 		} else {
 			setClickedImg(index); 
 			if(direction === 1){
-				setClickedImgIndex(1); 
+				setClickedImgIndex(1);
 			}else{
 				setClickedImgIndex(len - 1);  
 			} 
 		}
 	};
-	
+	//HANDLES DELETION IF USER IS ADMIN
 	const handleDelete = async (postId) => {
 		if(isAdmin){
 			try {
@@ -205,7 +207,7 @@ export default function Social(props) {
 			  }
 		}
 	};
-
+	//COLLECTION OF MOBILE TOUCHES
 	const onTouchStart = (e) => {
 		setTouchEnd(null);
 		setTouchStart(e.targetTouches[0].clientX);
@@ -236,7 +238,7 @@ export default function Social(props) {
 			}
 		}
 	}
-
+	//HANDLES USER CLICK OF LIKE
 	const handleLike = async (post) => {
 		const postRef = firestore.collection("posts").doc(post.id);
 		const doc = await postRef.get();
@@ -264,6 +266,7 @@ export default function Social(props) {
 
 	return (
 		<div className="body">
+			{/** BOTTOM NAVBAR */}
 			<div className="userbar">
 				{isAdmin && (<Link to='/Gallery' className="nav-links">
                 	<button className="submit gal">
@@ -290,6 +293,7 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
+			{/** POP UP TO CREAT A POST */}
 			{addPostOpen ?
 				(<div className="popupContainer"><div  className="popupForm"> 
 					<form onSubmit={handleSubmit}>
@@ -325,50 +329,54 @@ export default function Social(props) {
 					</form>
 				</div></div>) : (<div></div>)
 			}
+			{/** MAP THROUGH ALL POSTS IN THE DATABASE */}
 			{posts.map((post, index) => (
 				<div 
 					key={index} 
 					className="posts postText" 
 					data-date={post.createdAt ? post.createdAt.toDate().toLocaleDateString() : ''}
 				>	<div className="post-btns">
-					<p className="creator">
-						{post.creator}
-					</p>
-					{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
-						<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
-							<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
-						</button>
-						: 
-						<button onClick={() => { setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);} } className="deleteBtn heartBtn">
-							<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
-						</button>
-					}
+						<p className="creator">
+							{post.creator}
+						</p>
+						{/** LIKING FEATURE */}
+						{(post.clientLike && post.clientLike.includes(activeUser)) || post.creator === activeUser ? 
+							<button onClick={() => handleLike(post) } className="deleteBtn heartBtn">
+								<FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="2em"/> {post.likes} 
+							</button>
+							: 
+							<button onClick={() => { setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);} } className="deleteBtn heartBtn">
+								<FontAwesomeIcon icon={{prefix: 'far', iconName: 'heart'}} fontSize="2em" /> {post.likes} 
+							</button>
+						}
 					</div>
+					{/** DOUBLE CLICK AND MOBILE SCROLLING */}
 					<div onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>
-					<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
-						{isLiked && likedIndex === index && 
-							(<div className="popuplikecontainer">
-								<p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p>
-								<p className="popupLike2"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="7em" beatFade/> </p>
-							</div>)}
-						{post.imageUrls && post.imageUrls.length > 1 && 
-							(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
-								<h1 className="nextBtn arrowBtn">&#8250;</h1>
-							</div>)
-						}
-						{post.imageUrls && post.imageUrls.length > 1 && 
-							(<div className="backdiv" onClick={() => handleClick(index, post.imageUrls.length, 0)}>
-								<h1 className="backBtn arrowBtn">&#8249;</h1>
-							</div>)
-						}
-						{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
-							<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
-						)}
-						{post.imageUrls && post.imageUrls.length > 0 && clickedImg !== index && (
-							<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
-						)}
+						<div className="imgClick" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={() => onTouchEnd(index, post.imageUrls.length)}>
+							{isLiked && likedIndex === index && 
+								(<div className="popuplikecontainer">
+									<p className="popupLike"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="5em" beatFade/> </p>
+									<p className="popupLike2"><FontAwesomeIcon icon={{prefix: 'fas', iconName: 'heart'}} fontSize="7em" beatFade/> </p>
+								</div>)}
+							{post.imageUrls && post.imageUrls.length > 1 && 
+								(<div className="nextdiv" onClick={() => handleClick(index, post.imageUrls.length, 1)}>
+									<h1 className="nextBtn arrowBtn">&#8250;</h1>
+								</div>)
+							}
+							{post.imageUrls && post.imageUrls.length > 1 && 
+								(<div className="backdiv" onClick={() => handleClick(index, post.imageUrls.length, 0)}>
+									<h1 className="backBtn arrowBtn">&#8249;</h1>
+								</div>)
+							}
+							{post.imageUrls && post.imageUrls.length > 0 && clickedImg === index && (
+								<img src={post.imageUrls[clickedImgIndex]} alt={`Uploaded by ${post.creator}`} className="img"/>
+							)}
+							{post.imageUrls && post.imageUrls.length > 0 && clickedImg !== index && (
+								<img src={post.imageUrls[0]} alt={`Uploaded by ${post.creator}`} className="img"/>
+							)}
+						</div>
 					</div>
-					</div>
+					{/** BUBBLE INDICATOR */}
 					<div className="indicator">
 						{post.imageUrls && post.imageUrls.length > 1 &&
 							post.imageUrls.map((_, imageIndex) => (
@@ -383,11 +391,13 @@ export default function Social(props) {
 							/>
 						))}
 					</div>
+					{/** POST'S TEXT */}
 					{post.text ?
 						<p className="textPost" onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>{post.text}</p>
 						:
 						<p></p>
 					}
+					{/** DELETE BUTTON ONLY FOR ADMIN */}
 					{isAdmin ? 
 						(<button className="deleteBtn" onClick={() => handleDelete(post.id)}>
 							<FontAwesomeIcon icon="fa-solid fa-trash" fontSize="1.5em"/>
