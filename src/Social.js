@@ -369,11 +369,20 @@ export default function Social(props) {
 						)}
 					</div>
 					</div>
-					{/* {post.imageUrls.length !== 0 && 
-						(<p className="indicator">
-							{clickedImg === index ? clickedImgIndex + 1 : 1} of {post.imageUrls ? post.imageUrls.length : 0}
-						</p>)
-					} */}
+					<div className="indicator">
+						{post.imageUrls && post.imageUrls.length > 1 &&
+							post.imageUrls.map((_, imageIndex) => (
+							<span
+								key={imageIndex}
+								className={`circle ${clickedImg === index ?
+									clickedImgIndex === imageIndex ? 
+										'solid' : 'open' 
+									: imageIndex === 0 ?
+										'solid' : 'open' 
+								}`}
+							/>
+						))}
+					</div>
 					{post.text ?
 						<p className="textPost" onDoubleClickCapture={() => {setLikedIndex(index); setIsLiked(!isLiked); handleLike(post);}}>{post.text}</p>
 						:
