@@ -13,6 +13,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Logout } from "./Logout";
 import './Social.css';
+import StrandeByMe from './Images/StrandeByMe.png';
 
 library.add(fas);
 library.add(far);
@@ -53,6 +54,7 @@ export default function Social(props) {
 	const [touchEnd, setTouchEnd] = useState(null);
 
 	const [addPostOpen, setAddPostOpen] = useState(false);
+	const [shareOpen, setShareOpen] = useState(false);
 
 	const minSwipeDistance = 50;
 
@@ -290,7 +292,7 @@ export default function Social(props) {
 				>
 					<FontAwesomeIcon 
 						icon="fa-regular fa-square-plus" 
-						fontSize="2em"
+						fontSize="1.5em"
 					/>
 				</button>
 				{isAdmin && 
@@ -300,6 +302,15 @@ export default function Social(props) {
 							fontSize="1.5em"
 						/> : {currentUsers}
 					</p>)}
+				<button 
+					className="submit gal"
+					onClick={() => setShareOpen(!shareOpen)}
+				>
+					<FontAwesomeIcon 
+						icon={['fas','fa-qrcode']} 
+						fontSize="1.5em" 
+					/>
+				</button>
 				<button className="logout" onClick={() => Logout({...props})}>
 					<FontAwesomeIcon 
 						icon={['fas','fa-right-from-bracket']} 
@@ -308,44 +319,63 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
-			{/** POP UP TO CREAT A POST */}
+			{/** POP UP TO CREATE A POST */}
 			{addPostOpen ?
-				(<div className="popupContainer"><div  className="popupForm"> 
-					<form onSubmit={handleSubmit}>
-						<button 
-							onClick={()=> setAddPostOpen(!addPostOpen)}
-							className="exitBtn deleteBtn"
-						>
-							<FontAwesomeIcon 
-								icon="fa-solid fa-xmark" 
-								fontSize="2.5em" 
+				(<div className="popupContainer">
+					<div  className="popupForm"> 
+						<form onSubmit={handleSubmit}>
+							<button 
+								onClick={()=> setAddPostOpen(!addPostOpen)}
+								className="exitBtn deleteBtn"
+							>
+								<FontAwesomeIcon 
+									icon="fa-solid fa-xmark" 
+									fontSize="2.5em" 
+								/>
+							</button>
+							<h2>ADD POST</h2>
+							<div className="line"></div>
+							<input 
+								className="textBox" 
+								type="text" 
+								value={text} 
+								onChange={(e) => setText(e.target.value)} 
+								placeholder="Write to the happy couple..."
 							/>
-						</button>
-						<h2>ADD POST</h2>
-						<div className="line"></div>
-						<input 
-							className="textBox" 
-							type="text" 
-							value={text} 
-							onChange={(e) => setText(e.target.value)} 
-							placeholder="Write to the happy couple..."
-						/>
-						<input 
-							type="file" 
-							className="imgInput" 
-							name="imageFile" 
-							accept="image/* image/heic" 
-							onChange={handleImageChange} multiple
-						/>
+							<input 
+								type="file" 
+								className="imgInput" 
+								name="imageFile" 
+								accept="image/* image/heic" 
+								onChange={handleImageChange} multiple
+							/>
+							<button 
+								className=" postBtn" 
+								type="submit"
+								disabled={isDisabled} 
+							>
+									{createPost}
+							</button>
+						</form>
+					</div>
+				</div>) : (<div></div>)
+			}
+			{shareOpen ?
+				(<div className="popupContainer">
+					<div  className="popupForm"> 
 						<button 
-							className=" postBtn" 
-							type="submit"
-							disabled={isDisabled} 
-						>
-								{createPost}
+								onClick={()=> setShareOpen(!shareOpen)}
+								className="shareExit"
+							>
+								<FontAwesomeIcon 
+									icon="fa-solid fa-xmark" 
+									fontSize="2.5em" 
+								/>
 						</button>
-					</form>
-				</div></div>) : (<div></div>)
+						<p className="shareWith">Share with a friend!</p>
+						<img src={StrandeByMe} alt="qr-code" className="qrcode"/>
+					</div>
+				</div>) : (<div></div>)
 			}
 			{/** MAP THROUGH ALL POSTS IN THE DATABASE */}
 			{posts.map((post, index) => (

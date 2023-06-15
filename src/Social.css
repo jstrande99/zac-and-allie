@@ -340,3 +340,19 @@ option{
 .open {
     border: 1px solid #000;
 }
+.shareWith{ 
+    padding: 0;
+    margin: 0;
+}
+.shareExit{
+    background-color: transparent;
+    border: transparent;
+    position: relative;
+    right: -35vw;
+    top: 1vh;
+}
+.qrcode{
+    object-fit: contain;
+    width: 80%;
+    height: 80%;
+}
