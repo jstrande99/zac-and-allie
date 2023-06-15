@@ -349,7 +349,8 @@ option{
     border: transparent;
     position: relative;
     right: -35vw;
-    top: 1vh;
+    top: 2vh;
+    color: #766032;
 }
 .qrcode{
     object-fit: contain;
