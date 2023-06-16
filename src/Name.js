@@ -25,10 +25,10 @@ export default function Login(props){
         if(props.firstName && props.lastName){
             const firstName = props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
             const lastName = props.lastName.charAt(0).toUpperCase() + props.lastName.slice(1);
-            localStorage.setItem('name', firstName + " " + lastName);
+            localStorage.setItem('name', firstName.trim() + " " + lastName.trim());
             props.setTimer(3700);
             localStorage.setItem('firstTimeLogIn', true);
-            props.setName(firstName + " " + lastName);
+            props.setName(firstName.trim() + " " + lastName.trim());
         }else{
             alert("Please Fill Out Name Fields");
             return;
