@@ -65,7 +65,7 @@ export default function Social(props) {
 			"jordan strande", 
 			"dae judd", 
 			"bill strande",
-			 "charlotte strande"
+			"charlotte strande"
 		];
 		setLoading(true);
 		adminNames.forEach((user) => {
@@ -295,13 +295,6 @@ export default function Social(props) {
 						fontSize="1.5em"
 					/>
 				</button>
-				{isAdmin && 
-					(<p>
-						<FontAwesomeIcon 
-							icon={["fas", "fa-users"]} 
-							fontSize="1.5em"
-						/> : {currentUsers}
-					</p>)}
 				<button 
 					className="submit gal"
 					onClick={() => setShareOpen(!shareOpen)}
@@ -311,6 +304,14 @@ export default function Social(props) {
 						fontSize="1.5em" 
 					/>
 				</button>
+				{isAdmin && activeUser === 'Jordan Strande' && 
+					(<p>
+						<FontAwesomeIcon 
+							icon={["fas", "fa-users"]} 
+							fontSize="1.5em"
+						/> : {currentUsers}
+					</p>)
+				}
 				<button className="logout" onClick={() => Logout({...props})}>
 					<FontAwesomeIcon 
 						icon={['fas','fa-right-from-bracket']} 
