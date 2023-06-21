@@ -11,11 +11,41 @@ export default function Schedule(props){
     useEffect(() => {
         props.setTimer(500);
     }, [props]);
+
+     const showNotification = (title, options) => {
+        if ('Notification' in window) {
+        if (Notification.permission === 'granted') {
+            new Notification(title, options);
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    new Notification(title, options);
+                }
+            });
+        }
+        }
+    };
+    const setReminderNotification = (eventTitle, eventTime) => {
+        const reminderTime = new Date(eventTime);
+        reminderTime.setMinutes(reminderTime.getMinutes() - 15); // Set notification 15 minutes before the event
+            console.log('setting reminder')
+            showNotification('Event Reminder', {
+            body: `Reminder for ${eventTitle}`,
+            });
+        if (Date.now() < reminderTime) {
+            setTimeout(() => {
+                showNotification('Event Reminder', {
+                body: `Reminder for ${eventTitle}`,
+                });
+            }, reminderTime - Date.now());
+        }
+    };
+
     return (
         <div className='body'> 
             <Navbar {...props}/>
             <h2 className='schedule-ttl ttl-sched'>The Tenetive Schedule</h2>
-            <div className="event" onClick={()=> setWelcomeIsOpen(!welcomeIsOpen)}>
+            <div className="event" onClick={()=> {setWelcomeIsOpen(!welcomeIsOpen); setReminderNotification('Welcome Event', '2023-08-17T17:30:00');}}>
                 <h3 className='date'>Aug 17</h3>
                 <h2>Welcome Event</h2>
                 <p>5:30 pm - 9:30 pm</p>
