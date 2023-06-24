@@ -47,15 +47,15 @@ export default function Gallery(props) {
     });
 
     // The topic name can be optionally prefixed with "/topics/".
-    const topic = "Hello World!";
+    // const topic = "Hello World!";
 
-    const message = {
-      data: {
-        'title': 'Hello Jordan!',
-        'body': 'You Did it!',
-      },
-      topic: `/topics/${topic}`
-    };
+    // const message = {
+    //   data: {
+    //     'title': 'Hello Jordan!',
+    //     'body': 'You Did it!',
+    //   },
+    //   topic: `/topics/${topic}`
+    // };
 
     try {
       const response = await fetch('https://fcm.googleapis.com/fcm/send', {
