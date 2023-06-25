@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Camera, FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
+import './Camera.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 export default function Cameras() {
   const [imageData, setImageData] = useState(null);
@@ -30,7 +33,9 @@ export default function Cameras() {
       isSilentMode = {false}
       isDisplayStartCameraError = {true}
       isFullscreen = {false} />
-      <button onClick={handleCameraToggle}>Toggle Camera</button>
+      <button onClick={handleCameraToggle} className='reverse'>
+        <FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} size='xl'/>
+      </button>
 
       {imageData && (
         <div>
