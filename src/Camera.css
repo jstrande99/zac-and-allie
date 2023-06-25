@@ -1,3 +1,6 @@
+.preview{ 
+    height: 90vh;
+}
 .reverse{ 
     position: absolute;
     height: 50px;
