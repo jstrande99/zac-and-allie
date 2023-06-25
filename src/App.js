@@ -4,7 +4,7 @@ import Social from './Social';
 import Name from './Name';
 import Gallery from './Gallery';
 import Schedule from './Schedule';
-import Camera from './Camera';
+import Camera from './Cameras';
 
 function App() {
   const [firstName, setFirstName] = useState(""); 
