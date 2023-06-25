@@ -1,6 +1,14 @@
-video {
-    width: 98vw;
-    position: relative;
-    left: -5px;
-    /* height: 70vh; */
+.reverse{ 
+    position: absolute;
+    height: 50px;
+    background: none;
+    border: none;
+    top: 10px;
+    right: 10px;
+}
+#inner-circle {
+    background: #766032;
+}
+#outer-circle { 
+    background: rgb(230, 221, 220);
 }
