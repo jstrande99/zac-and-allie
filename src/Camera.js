@@ -1,26 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./Camera.css";
 
 export default function Camera() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [imageData, setImageData] = useState(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const video = videoRef.current;
-      const { clientWidth } = document.documentElement;
-      video.style.width = `${clientWidth}px`;
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const startCamera = () => {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -36,6 +20,10 @@ export default function Camera() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
+
+    // Set the canvas dimensions to match the video
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
     // Draw the current video frame onto the canvas
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -55,12 +43,12 @@ export default function Camera() {
       {imageData && (
         <div>
           <h2>Captured Image:</h2>
-          <img src={imageData} alt="Captured" width='100%'/>
+          <img src={imageData} alt="Captured" style={{ width: "100%" }} />
         </div>
       )}
 
       <video ref={videoRef} autoPlay />
-      <canvas ref={canvasRef} width='100vw' height='100vh' style={{ display: "none" }} />
+      <canvas ref={canvasRef} style={{ display: "none" }} />
     </div>
   );
 }
