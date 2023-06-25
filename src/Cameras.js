@@ -34,7 +34,7 @@ export default function Cameras() {
       isDisplayStartCameraError = {true}
       isFullscreen = {false} />
       <button onClick={handleCameraToggle} className='reverse'>
-        <FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} size='xl'/>
+        <FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} size='2xl'/>
       </button>
 
       {imageData && (
