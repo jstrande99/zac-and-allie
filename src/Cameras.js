@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera } from 'react-html5-camera-photo';
+import { Camera, FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
 export default function Cameras() {
@@ -14,6 +14,7 @@ export default function Cameras() {
     <div>
       <Camera onTakePhoto={handleTakePhoto}
       // imageType = {IMAGE_TYPES.JPG}
+      idealFacingMode = {FACING_MODES.ENVIRONMENT}
       imageCompression = {0.97}
       isMaxResolution = {true}
       isImageMirror = {false}
