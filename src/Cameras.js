@@ -3,6 +3,7 @@ import { Camera, FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import './Camera.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Navbar from "./Navbar";
 
 
 export default function Cameras() {
@@ -43,6 +44,7 @@ export default function Cameras() {
           <img src={imageData} alt="Captured" style={{ width: '100%' }} />
         </div>
       )}
+      <Navbar/>
     </div>
   );
 }
