@@ -27,6 +27,17 @@ firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/firebase-messaging-sw.js")
+      .then(function(registration) {
+        console.log("Registration successful, scope is:", registration.scope);
+      })
+      .catch(function(err) {
+        console.log("Service worker registration failed, error:", err);
+      });
+  }
+
 // messaging.onBackgroundMessage(payload => {
 //   console.log('Received background message ', payload);
 //   const notificationTitle = payload.notification.title;
@@ -68,33 +79,35 @@ self.addEventListener('push', event => {
 
   // Handle custom data
   console.log('push Custom Value:', customValue);
-  // Perform actions based on the custom data
-  self.addEventListener('notificationclick', event => {
-    event.notification.close(); // Close the notification
-    if (url) {
-      event.waitUntil(
-        clients.openWindow(url) // Open the URL in a new window/tab
-      );
-    }
-  });
 });
 
-// self.addEventListener('backgroundmessage', event => {
-//   const payload = event.data.json();
-//   const notificationTitle = payload.notification.title;
-//   const notificationBody = payload.notification.body;
-//   const customValue = payload.data.customKey;
+self.addEventListener('notificationclick', event => {
+  event.notification.close(); // Close the notification
+  const url = event.notification.data.url;
+  if (url) {
+    event.waitUntil(
+      clients.openWindow(url) // Open the URL in a new window/tab
+    );
+  }
+});
 
-//   // Show background notification
-//   self.registration.showNotification(notificationTitle, {
-//     body: notificationBody,
-//     // Add any other notification options as needed
-//   });
+self.addEventListener('backgroundmessage', event => {
+  const payload = event.data.json();
+  const notificationTitle = payload.notification.title;
+  const notificationBody = payload.notification.body;
+  const customValue = payload.data.customKey;
 
-//   // Handle custom data
-//   console.log('bg Custom Value:', customValue);
-//   // Perform actions based on the custom data
-// });
+  // Show background notification
+  self.registration.showNotification(notificationTitle, {
+    body: notificationBody,
+    // Add any other notification options as needed
+  });
+
+  // Handle custom data
+  console.log('bg Custom Value:', customValue);
+  // Perform actions based on the custom data
+});
+
 messaging.onBackgroundMessage(payload => {
   const notificationTitle = payload.notification.title;
   const notificationBody = payload.notification.body;
@@ -106,4 +119,5 @@ messaging.onBackgroundMessage(payload => {
     body: notificationBody,
     // Add any other notification options as needed
   });
+  console.log('push Custom Value:', customValue);
 });
