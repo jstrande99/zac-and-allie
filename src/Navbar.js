@@ -14,6 +14,11 @@ export default function Navbar(props){
 					<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
 				</button>
 			</Link>
+			<Link to='/Camera' className="nav-links">
+				<button className="submit gal">
+					<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
+				</button>
+			</Link>
 			<Link to='/' className="nav-links">
 				<button className="submit gal">
 					<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.5em"/>
