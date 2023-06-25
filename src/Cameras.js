@@ -4,23 +4,33 @@ import 'react-html5-camera-photo/build/css/index.css';
 
 export default function Cameras() {
   const [imageData, setImageData] = useState(null);
+  const [isFrontCamera, setIsFrontCamera] = useState(FACING_MODES.ENVIRONMENT)
 
   const handleTakePhoto = (dataUri) => {
     // Set the captured image data
     setImageData(dataUri);
   };
 
+  const handleCameraToggle = () => {
+    if(isFrontCamera === FACING_MODES.ENVIRONMENT){
+      setIsFrontCamera(FACING_MODES.USER);
+    }else{
+      setIsFrontCamera(FACING_MODES.ENVIRONMENT);
+    }
+  };
+
   return (
     <div>
       <Camera onTakePhoto={handleTakePhoto}
       // imageType = {IMAGE_TYPES.JPG}
-      idealFacingMode = {FACING_MODES.ENVIRONMENT}
+      // idealFacingMode = {setIsFrontCamera}
       imageCompression = {0.97}
       isMaxResolution = {true}
       isImageMirror = {false}
       isSilentMode = {false}
       isDisplayStartCameraError = {true}
       isFullscreen = {false} />
+      <button onClick={handleCameraToggle}>Toggle Camera</button>
 
       {imageData && (
         <div>
