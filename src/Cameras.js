@@ -23,7 +23,7 @@ export default function Cameras() {
     <div>
       <Camera onTakePhoto={handleTakePhoto}
       // imageType = {IMAGE_TYPES.JPG}
-      // idealFacingMode = {setIsFrontCamera}
+      idealFacingMode = {isFrontCamera}
       imageCompression = {0.97}
       isMaxResolution = {true}
       isImageMirror = {false}
