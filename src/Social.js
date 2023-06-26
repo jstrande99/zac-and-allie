@@ -286,6 +286,11 @@ export default function Social(props) {
 						/>
 					</button>
 				</Link>
+				<Link to='/Camera' className="nav-links">
+					<button className="submit gal">
+						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
+					</button>
+				</Link>
 				<button 
 					className="submit gal" 
 					onClick={() => setAddPostOpen(!addPostOpen)}

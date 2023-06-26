@@ -1,0 +1,26 @@
+/* .react-html5-camera-photo>video {
+    width: 100vw;
+    height: 90vh;
+} */
+.cameraArea{ 
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+}
+.reverse{ 
+    position: absolute;
+    height: 50px;
+    background: none;
+    border: none;
+    top: 10px;
+    right: 10px;
+    color: #766032;
+}
+#inner-circle {
+    background: #766032;
+}
+#outer-circle { 
+    background: rgb(230, 221, 220);
+}

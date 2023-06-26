@@ -4,6 +4,7 @@ import Social from './Social';
 import Name from './Name';
 import Gallery from './Gallery';
 import Schedule from './Schedule';
+import Camera from './Cameras';
 
 function App() {
   const [firstName, setFirstName] = useState(""); 
@@ -47,6 +48,16 @@ function App() {
         <Route path='/Schedule' element={
           name ? 
             <Schedule 
+              setTimer={setTimer} 
+              setName={setName} 
+              setFirstName={setFirstName} 
+              setLastName={setLastName}
+            /> : 
+            <Navigate to="/" />
+        }/>
+        <Route path='/Camera' element={
+          name ? 
+            <Camera 
               setTimer={setTimer} 
               setName={setName} 
               setFirstName={setFirstName} 
