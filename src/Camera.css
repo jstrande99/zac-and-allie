@@ -1,14 +1,6 @@
-@media(max-width:768px) {
-
-    .react-html5-camera-photo>video,
-    .react-html5-camera-photo>img {
-        width: 100%;
-        height: 90%;
-    }
-
-    .react-html5-camera-photo>.display-error {
-        width: 100%;
-    }
+.react-html5-camera-photo>video {
+    width: 100vw;
+    height: 90vh;
 }
 .reverse{ 
     position: absolute;
