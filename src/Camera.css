@@ -3,7 +3,7 @@
     height: 90vh;
 } */
 .cameraArea{ 
-    height: 90vh;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
