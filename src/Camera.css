@@ -1,6 +1,13 @@
-.react-html5-camera-photo>video {
+/* .react-html5-camera-photo>video {
     width: 100vw;
     height: 90vh;
+} */
+.cameraArea{ 
+    height: 90vh;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .reverse{ 
     position: absolute;

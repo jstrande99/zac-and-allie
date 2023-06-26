@@ -25,6 +25,7 @@ export default function Cameras() {
 
   return (
     <div>
+      <div className='cameraArea'>
       <Camera onTakePhoto={handleTakePhoto}
       // imageType = {IMAGE_TYPES.JPG}
       idealFacingMode = {isFrontCamera}
@@ -39,6 +40,7 @@ export default function Cameras() {
       <button onClick={handleCameraToggle} className='reverse'>
         <FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} size='2xl'/>
       </button>
+      </div>
 
       {imageData && (
         <div>
