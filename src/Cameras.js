@@ -3,7 +3,7 @@ import { Camera, FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import './Camera.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
@@ -26,11 +26,9 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
 export default function Cameras(props) {
-	// const [imageData, setImageData] = useState(null);
 	const [isFrontCamera, setIsFrontCamera] = useState(FACING_MODES.ENVIRONMENT);
 	const [timer, setTimer] = useState(false);
 	const [allImages, setAllImages] = useState([]);
-	// const [showAllImages, setShowAllImages] = useState(false);
 	const [showGallery, setShowGallery] = useState(true);
 	let len = useRef(0);
 
@@ -69,21 +67,7 @@ export default function Cameras(props) {
 			const imagesList = await storage.ref().child(`Camera/${props.name}`).listAll();
 			const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
 			const imageUrls = await Promise.all(downloadURLPromises);
-			len.current = imageUrls.length;
-			// if(imageUrls.length === 10){
-			// 	setShowAllImages(true);
-			// 	// firestore
-			// 	// 	.collection("camera")
-			// 	// 	.doc(props.name)
-			// 	// 	.add({
-			// 	// 	imageUrls: [...imageUrls],
-			// 	// 	creator: props.name
-			// 	// 	}).then((docRef) => {
-			// 	// 		docRef.update({ id: docRef.id }, { merge: true });
-			// 	// 	});
-			// 		console.log('added to posts');
-			// }
-		
+			len.current = imageUrls.length;		
 		};
 		fetchImages();
 	}, [props.name, timer]);
@@ -174,7 +158,12 @@ export default function Cameras(props) {
 			<button className='gall' onClick={handleShowGallery}>
 				<FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.8em" />
 			</button>
-			<Navbar {...props}/>
+			<Link to='/'>
+				<button  className="gallHome">
+					<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.8em"/>
+				</button>
+			</Link>
+			{/* <Navbar {...props}/> */}
 		</div> 
 		:
 			<div>
