@@ -30,7 +30,7 @@ export default function Cameras(props) {
 	const [isFrontCamera, setIsFrontCamera] = useState(FACING_MODES.ENVIRONMENT);
 	const [timer, setTimer] = useState(false);
 	const [allImages, setAllImages] = useState([]);
-	const [showAllImages, setShowAllImages] = useState(false);
+	// const [showAllImages, setShowAllImages] = useState(false);
 	const [showGallery, setShowGallery] = useState(true);
 	let len = useRef(0);
 
@@ -70,19 +70,19 @@ export default function Cameras(props) {
 			const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
 			const imageUrls = await Promise.all(downloadURLPromises);
 			len.current = imageUrls.length;
-			if(imageUrls.length === 10){
-				setShowAllImages(true);
-				// firestore
-				// 	.collection("camera")
-				// 	.doc(props.name)
-				// 	.add({
-				// 	imageUrls: [...imageUrls],
-				// 	creator: props.name
-				// 	}).then((docRef) => {
-				// 		docRef.update({ id: docRef.id }, { merge: true });
-				// 	});
-					console.log('added to posts');
-			}
+			// if(imageUrls.length === 10){
+			// 	setShowAllImages(true);
+			// 	// firestore
+			// 	// 	.collection("camera")
+			// 	// 	.doc(props.name)
+			// 	// 	.add({
+			// 	// 	imageUrls: [...imageUrls],
+			// 	// 	creator: props.name
+			// 	// 	}).then((docRef) => {
+			// 	// 		docRef.update({ id: docRef.id }, { merge: true });
+			// 	// 	});
+			// 		console.log('added to posts');
+			// }
 		
 		};
 		fetchImages();
