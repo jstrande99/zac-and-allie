@@ -23,8 +23,18 @@
 .filter-vintage {
     filter: sepia(0.4) contrast(1.2) brightness(0.9) saturate(1.5);
 }
-.react-html5-camera-photo>video,
-.react-html5-camera-photo>img {
-    width: 100%;
-    height: 75vh;
+@media (orientation: portrait) {
+    .react-html5-camera-photo>video,
+    .react-html5-camera-photo>img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (orientation: landscape) {
+    .react-html5-camera-photo>video,
+    .react-html5-camera-photo>img {
+        width: 100%;
+        height: 75vh;
+    }
 }
