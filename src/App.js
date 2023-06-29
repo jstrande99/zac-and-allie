@@ -58,6 +58,7 @@ function App() {
         <Route path='/Camera' element={
           name ? 
             <Camera 
+              name={name}
               setTimer={setTimer} 
               setName={setName} 
               setFirstName={setFirstName} 
