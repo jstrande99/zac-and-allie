@@ -141,7 +141,7 @@ export default function Cameras(props) {
 				<img src={imageData} alt="Captured" style={{ width: '100%' }} className='filter-vintage'/>
 			</div>
 		}
-		<Navbar />
+		<Navbar {...props}/>
 		</div>
 	);
 	}
