@@ -65,16 +65,16 @@ export default function Cameras(props) {
 			canvas.height = image.height;
 			context.filter = 'sepia(0.4) contrast(1.2) brightness(0.9) saturate(1.5)';
 			context.drawImage(image, 0, 0);
-			context.font = 'bold 70px Arial';
+			context.font = 'bold 80px Arial';
 			context.fillStyle = 'rgb(213, 138, 0)';
 			context.textAlign = 'right';
-			context.fillText(timestamp, canvas.width - 10, 45);
+			context.fillText(timestamp, canvas.width - 10, 60);
 			context.fillStyle = 'rgb(213, 138, 0)';
 			context.textAlign = 'left';
 			// Add props.name to the upper left corner
 			const nameText = props.name;
 			const nameX = 10;
-			const nameY = 45;
+			const nameY = 60;
 			context.fillText(nameText, nameX, nameY);
 			const editedDataUri = canvas.toDataURL('image/jpeg');
 			setImageData(editedDataUri);
