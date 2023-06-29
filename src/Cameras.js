@@ -9,6 +9,7 @@ import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
 import imageCompression from 'browser-image-compression';
+import { Link } from "react-router-dom";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -30,6 +31,7 @@ export default function Cameras(props) {
 	const [timer, setTimer] = useState(false);
 	const [allImages, setAllImages] = useState([]);
 	const [showAllImages, setShowAllImages] = useState(false);
+	const [showGallery, setShowGallery] = useState(true);
 	let len = useRef(0);
 
 	useEffect(() => {
@@ -147,10 +149,13 @@ export default function Cameras(props) {
 	const handleCameraToggle = () => {
 		setIsFrontCamera(isFrontCamera === FACING_MODES.ENVIRONMENT ? FACING_MODES.USER : FACING_MODES.ENVIRONMENT);
 	};
-
+	const handleShowGallery = () => {
+		setShowGallery(!showGallery);
+	}
+	
 	return (
 		<div>
-		{len.current < 9 ?
+		{showGallery ?
 		<div className='cameraArea'>
 			<Camera
 				onTakePhoto={handleTakePhoto}
@@ -164,26 +169,41 @@ export default function Cameras(props) {
 				className='preview'
 			/>
 			<button onClick={handleCameraToggle} className='reverse'>
-			<FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} size='2xl' />
+				<FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} fontSize='1.8em' />
 			</button>
+			<button className='gall' onClick={handleShowGallery}>
+				<FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.8em" />
+			</button>
+			<Navbar {...props}/>
 		</div> 
 		:
 			<div>
+				<div className='gallNav'>
+					<button className='gallHomeLeft' onClick={handleShowGallery}>
+						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.8em"/>
+					</button>
+					<Link to='/'>
+						<button  className="gallHomeRight">
+							<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.8em"/>
+						</button>
+					</Link>
+				</div>
+				<div className='gallShow'></div>
 				{allImages.map((imageUrl, index) => (
-                <div 
-                    key={index} 
-                    className="rowDiv" 
-                >
-                    <img 
-                        src={imageUrl} 
-                        alt={`Images ${index}`} 
-                        className='gallery'
-                    />
-                </div>
-            ))}
+					<div 
+						key={index} 
+						className="rowDiv" 
+					>
+						<img 
+							src={imageUrl} 
+							alt={`Images ${index}`} 
+							className='gallery'
+						/>
+					</div>
+            	))}
+				<div className='gallShow'></div>
 			</div>
 		}
-		<Navbar {...props}/>
 		</div>
 	);
 	}
