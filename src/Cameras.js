@@ -95,19 +95,7 @@ export default function Cameras(props) {
 		image.onload = async () => {
 			canvas.width = image.width;
 			canvas.height = image.height;
-			context.filter = 'sepia(0.4) contrast(1.2) brightness(0.9) saturate(1.5)';
-			const grainSize = 1; // Adjust the grain size as needed
-			const grainAmount = 0.1; // Adjust the grain amount as needed
-			context.filter += `url('grain.png') ${grainSize}px / ${grainAmount}`;
-
-			// Apply color toning
-			const toningColor = '#a39a8b'; // Adjust the toning color as desired
-			const toningAmount = 0.2; // Adjust the toning amount as desired
-			context.filter += `url('toning.png') ${toningColor} ${toningAmount}`;
-
-			// Apply vignetting effect
-			const vignetteAmount = 0.8; // Adjust the vignette amount as needed
-			context.filter += `url('vignette.png') 0 0 100% ${vignetteAmount}`;
+			context.filter = 'sepia(0.5) contrast(1.2) brightness(0.9) saturate(1.7)';
 			context.drawImage(image, 0, 0);
 			context.font = 'bold 80px Arial';
 			context.fillStyle = 'rgb(213, 138, 0)';
