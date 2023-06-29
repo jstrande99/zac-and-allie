@@ -5,26 +5,27 @@
     align-items: center;
     object-fit: contain;
 }
-.reverse{ 
+.reverse, .gall, .gallHome{ 
     position: absolute;
     height: 50px;
-    background: none;
+    background: rgb(230, 221, 220);
+    border-radius: 25px;
     border: none;
     top: 10px;
-    right: 10px;
+    /* right: 10px; */
     color: #766032;
+}
+.gallHome{
+    right: 45vw;
+}
+.reverse{
+    right: 10px;
 }
 .gallNav{
     position: fixed;
 }
 .gall{
-    position: absolute;
-    height: 50px;
-    background: none;
-    border: none;
-    top: 10px;
     left: 10px;
-    color: #766032;
 }
 .gallHomeRight, .gallHomeLeft {
     position: absolute;
