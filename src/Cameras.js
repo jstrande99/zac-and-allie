@@ -60,7 +60,7 @@ export default function Cameras(props) {
 			setAllImages(allImageUrls)
 		}
 		fetchAllImages(); 
-	},[showAllImages]);
+	},[showGallery]);
 	console.log(allImages)
 
 	useEffect(() => {
