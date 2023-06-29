@@ -21,37 +21,69 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const firestore = firebase.firestore();
+// const firestore = firebase.firestore();
 const storage = firebase.storage();
 
 export default function Cameras(props) {
-	const [imageData, setImageData] = useState(null);
+	// const [imageData, setImageData] = useState(null);
 	const [isFrontCamera, setIsFrontCamera] = useState(FACING_MODES.ENVIRONMENT);
 	const [timer, setTimer] = useState(false);
+	const [allImages, setAllImages] = useState([]);
+	const [showAllImages, setShowAllImages] = useState(false);
 	let len = useRef(0);
 
 	useEffect(() => {
-		const fetchImages = async () =>{
-		const imagesList = await storage.ref().child(`Camera/${props.name}`).listAll();
-		const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
-		const imageUrls = await Promise.all(downloadURLPromises);
-		len.current = imageUrls.length;
-		if(imageUrls.length === 10){
-		firestore
-			.collection("camera")
-			.doc(props.name)
-			.add({
-			imageUrls: [...imageUrls],
-			creator: props.name
-			}).then((docRef) => {
-				docRef.update({ id: docRef.id }, { merge: true });
-			});
-			console.log('added to posts');
+		const fetchAllImages = async () => {
+			const getAllImages = async (ref, imageUrls = []) => {
+				const listResult = await ref.listAll();
+
+				for (const item of listResult.items) {
+					if (item instanceof firebase.storage.Reference) {
+					// Add download URL if the item is a file
+					const downloadURL = await item.getDownloadURL();
+					imageUrls.push(downloadURL);
+					}
+				}
+
+				for (const prefix of listResult.prefixes) {
+					// Recursive call for each subdirectory (prefix)
+					imageUrls = await getAllImages(prefix, imageUrls);
+				}
+
+				return imageUrls;
+			};
+
+			const storageRef = storage.ref().child("Camera");
+			const allImageUrls = await getAllImages(storageRef);
+			setAllImages(allImageUrls)
 		}
+		fetchAllImages(); 
+	},[showAllImages]);
+	console.log(allImages)
+
+	useEffect(() => {
+		const fetchImages = async () =>{
+			//Add to camera/name
+			const imagesList = await storage.ref().child(`Camera/${props.name}`).listAll();
+			const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
+			const imageUrls = await Promise.all(downloadURLPromises);
+			len.current = imageUrls.length;
+			if(imageUrls.length === 10){
+				setShowAllImages(true);
+				// firestore
+				// 	.collection("camera")
+				// 	.doc(props.name)
+				// 	.add({
+				// 	imageUrls: [...imageUrls],
+				// 	creator: props.name
+				// 	}).then((docRef) => {
+				// 		docRef.update({ id: docRef.id }, { merge: true });
+				// 	});
+					console.log('added to posts');
+			}
 		
 		};
 		fetchImages();
-		console.log(len.current);
 	}, [props.name, timer]);
 
 	const handleTakePhoto = async (dataUri) => {
@@ -79,7 +111,7 @@ export default function Cameras(props) {
 			// const nameY = 70;
 			context.fillText(nameText, nameX, nameY);
 			const editedDataUri = canvas.toDataURL('image/jpeg');
-			setImageData(editedDataUri);
+			// setImageData(editedDataUri);
 			
 			const options = {
 				maxSizeMB: 1,
@@ -137,8 +169,18 @@ export default function Cameras(props) {
 		</div> 
 		:
 			<div>
-				<h2>Captured Image:</h2>
-				<img src={imageData} alt="Captured" style={{ width: '100%' }} className='filter-vintage'/>
+				{allImages.map((imageUrl, index) => (
+                <div 
+                    key={index} 
+                    className="rowDiv" 
+                >
+                    <img 
+                        src={imageUrl} 
+                        alt={`Images ${index}`} 
+                        className='gallery'
+                    />
+                </div>
+            ))}
 			</div>
 		}
 		<Navbar {...props}/>
