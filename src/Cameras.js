@@ -65,11 +65,10 @@ export default function Cameras(props) {
 			canvas.height = image.height;
 			context.filter = 'sepia(0.4) contrast(1.2) brightness(0.9) saturate(1.5)';
 			context.drawImage(image, 0, 0);
-			context.font = 'bold 20px Arial';
+			context.font = 'bold 50px Arial';
 			context.fillStyle = 'rgb(213, 138, 0)';
 			context.textAlign = 'right';
 			context.fillText(timestamp, canvas.width - 10, 30);
-			context.font = 'bold 20px Arial';
 			context.fillStyle = 'rgb(213, 138, 0)';
 			context.textAlign = 'left';
 			// Add props.name to the upper left corner
