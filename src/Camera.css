@@ -14,6 +14,34 @@
     right: 10px;
     color: #766032;
 }
+.gallNav{
+    position: fixed;
+}
+.gall{
+    position: absolute;
+    height: 50px;
+    background: none;
+    border: none;
+    top: 10px;
+    left: 10px;
+    color: #766032;
+}
+.gallHomeRight, .gallHomeLeft {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background: rgb(230, 221, 220);
+    border: none;
+    top: 0px;
+    color: #766032;
+    border-radius: 25px;
+}
+.gallHomeRight{
+    right: -94vw;
+}
+.gallHomeLeft{
+    left: 2vw;
+}
 #inner-circle {
     background: #766032;
 }
