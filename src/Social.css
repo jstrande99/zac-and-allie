@@ -358,3 +358,18 @@ option{
     width: 80%;
     height: 80%;
 }
+.info{ 
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 100;
+}
+.infoText { 
+    text-decoration: none;
+    color: #766132;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+.inlineGal{
+    display: flex;
+}
