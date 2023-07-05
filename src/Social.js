@@ -45,6 +45,8 @@ export default function Social(props) {
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [currentUsers, setCurrentUsers] = useState(0);
+	const [numberOfPosts, setNumberOfPosts] = useState(0);
+	const [showInfo, setShowInfo] = useState(false);
 	let activeUser = props.name;
 
 	const [isLiked, setIsLiked] = useState(false);
@@ -80,6 +82,7 @@ export default function Social(props) {
 			accessTime: accessTimes,
 		});
 		firestore.collection('users').get().then(snap => setCurrentUsers(snap.size));
+		firestore.collection('posts').get().then(snap => setNumberOfPosts(snap.size));
 		const unsubscribe = firestore.collection("posts")
 			.orderBy(sortBy, "desc")
 			.onSnapshot(snapshot => {
@@ -270,14 +273,14 @@ export default function Social(props) {
 		<div className="body">
 			{/** BOTTOM NAVBAR */}
 			<div className="userbar">
-				{isAdmin && (<Link to='/Gallery' className="nav-links">
+				{/* {isAdmin && (<Link to='/Gallery' className="nav-links">
                 	<button className="submit gal">
 						<FontAwesomeIcon 
 							icon={["fas","fa-images"]} 
 							fontSize="1.5em"
 						/>
 					</button>
-				</Link>)}
+				</Link>)} */}
 				<Link to='/Schedule' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon 
@@ -309,14 +312,14 @@ export default function Social(props) {
 						fontSize="1.5em" 
 					/>
 				</button>
-				{isAdmin && activeUser === 'Jordan Strande' && 
+				{/* {isAdmin && activeUser === 'Jordan Strande' && 
 					(<p>
 						<FontAwesomeIcon 
 							icon={["fas", "fa-users"]} 
 							fontSize="1.5em"
 						/> : {currentUsers}
 					</p>)
-				}
+				} */}
 				<button className="logout" onClick={() => Logout({...props})}>
 					<FontAwesomeIcon 
 						icon={['fas','fa-right-from-bracket']} 
@@ -325,6 +328,9 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
+			<div className="info" onClick={() => setShowInfo(!showInfo)}>
+				<FontAwesomeIcon icon={["fa-solid", "fa-circle-info"]} fontSize="1.5em" />
+			</div>
 			{/** POP UP TO CREATE A POST */}
 			{addPostOpen ?
 				(<div className="popupContainer">
@@ -380,6 +386,45 @@ export default function Social(props) {
 						</button>
 						<p className="shareWith">Share with a friend!</p>
 						<img src={StrandeByMe} alt="qr-code" className="qrcode"/>
+					</div>
+				</div>) : (<div></div>)
+			}
+			{isAdmin && showInfo ?
+				(<div className="popupContainer">
+					<div  className="popupForm"> 
+						<button 
+							onClick={()=> setShowInfo(!showInfo)}
+							className="shareExit"
+						>
+							<FontAwesomeIcon 
+								icon="fa-solid fa-xmark" 
+								fontSize="2.5em" 
+							/>
+						</button>
+						{isAdmin && 
+							(<div className="inlineGal">
+							<Link to='/Gallery' className="nav-links">
+								<button className="submit gal">
+									<FontAwesomeIcon 
+										icon={["fas","fa-images"]} 
+										fontSize="1.5em"
+									/>
+								</button>
+							</Link>
+							<p className="infoText">
+								 : Memory gallery
+							</p>
+							</div>)
+						}
+						{isAdmin && 
+							(<p>
+								<FontAwesomeIcon 
+									icon={["fas", "fa-users"]} 
+									fontSize="1.5em"
+								/> : {currentUsers}
+							</p>)
+						}
+						{isAdmin && <p>Number of Posts: {numberOfPosts}</p>}
 					</div>
 				</div>) : (<div></div>)
 			}
