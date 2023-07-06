@@ -186,7 +186,7 @@ export default function Cameras(props) {
 						<img 
 							src={imageUrl} 
 							alt={`Images ${index}`} 
-							className='gallery'
+							className='gallery filter-vintage'
 						/>
 					</div>
             	))}
