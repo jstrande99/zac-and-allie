@@ -8,6 +8,7 @@
 .reverse, .gall, .gallHome{ 
     position: absolute;
     height: 50px;
+    width: 50px;
     background: rgb(230, 221, 220);
     border-radius: 25px;
     border: none;
@@ -23,6 +24,7 @@
 }
 .gallNav{
     position: fixed;
+    z-index: 20;
 }
 .gall{
     left: 10px;
