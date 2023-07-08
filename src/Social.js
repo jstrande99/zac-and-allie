@@ -105,6 +105,13 @@ export default function Social(props) {
 		window.scrollTo(0, 0);
 		});
 	}, []);
+	useEffect(() => {
+    if (seeCalender || showInfo || shareOpen || addPostOpen) {
+      document.body.style.position = "fixed";
+    } else {
+      document.body.style.position = "static";
+    }
+  }, [seeCalender, showInfo, shareOpen, addPostOpen]);
 
 	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
