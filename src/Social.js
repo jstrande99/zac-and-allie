@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Logout } from "./Logout";
 import './Social.css';
 import StrandeByMe from './Images/StrandeByMe.png';
+import Calendar from "./Popup/Calender";
 
 library.add(fas);
 library.add(far);
@@ -47,6 +48,7 @@ export default function Social(props) {
 	const [currentUsers, setCurrentUsers] = useState(0);
 	const [numberOfPosts, setNumberOfPosts] = useState(0);
 	const [showInfo, setShowInfo] = useState(false);
+	const [seeCalender, setSeeCalender] = useState(false);
 	let activeUser = props.name;
 
 	const [isLiked, setIsLiked] = useState(false);
@@ -281,14 +283,14 @@ export default function Social(props) {
 						/>
 					</button>
 				</Link>)} */}
-				<Link to='/Schedule' className="nav-links">
-					<button className="submit gal">
+				{/* <Link to='/Schedule' className="nav-links"> */}
+					<button className="submit gal" onClick={() => setSeeCalender(!seeCalender)}>
 						<FontAwesomeIcon 
 							icon={['fas','fa-calendar-alt']} 
 							fontSize="1.5em"
 						/>
 					</button>
-				</Link>
+				{/* </Link> */}
 				<Link to='/Camera' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
@@ -388,6 +390,12 @@ export default function Social(props) {
 						<img src={StrandeByMe} alt="qr-code" className="qrcode"/>
 					</div>
 				</div>) : (<div></div>)
+			}
+			{seeCalender  && 
+				<Calendar 
+					seeCalender={seeCalender} 
+					setSeeCalender={setSeeCalender}
+				/>
 			}
 			{isAdmin && showInfo ?
 				(<div className="popupContainer">
