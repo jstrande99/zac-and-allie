@@ -64,7 +64,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
             <div className="event" onClick={()=> {setReceptionIsOpen(!receptionIsOpen); setWelcomeIsOpen(false); setCeremonyIsOpen(false);}}>
                 <h3 className='date'>Aug 19</h3>
                 <h2>Reception</h2>
-                {receptionIsOpen || ceremonyIsOpen ? <div></div> : <div><p>5:30 pm - 10:45 pm</p>
+                {welcomeIsOpen || ceremonyIsOpen ? <div></div> : <div><p>5:30 pm - 10:45 pm</p>
                 <p><u>More info</u></p></div>}
                 {receptionIsOpen &&
                     (<>
