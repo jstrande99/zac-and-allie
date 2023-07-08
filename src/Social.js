@@ -337,9 +337,9 @@ export default function Social(props) {
 				</button>
 			</div>
 			<p className="welcoming">Welcome {activeUser}!</p>
-			<div className="info" onClick={() => setShowInfo(!showInfo)}>
+			{isAdmin && <div className="info" onClick={() => setShowInfo(!showInfo)}> 
 				<FontAwesomeIcon icon={["fa-solid", "fa-circle-info"]} fontSize="1.5em" />
-			</div>
+			</div>}
 			{/** POP UP TO CREATE A POST */}
 			{addPostOpen ?
 				(<div className="popupContainer">
