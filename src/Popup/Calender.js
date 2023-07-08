@@ -10,8 +10,8 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
     //     props.setTimer(500);
     // }, [props]);
     return (
-        <div className='calenderContainer body'> 
-            <h2 className='schedule-ttl ttl-sched'>The Tenetive Schedule</h2>
+        <div className='calenderContainer'> 
+            <h2 className='schedule-ttl ttl-sched'>The Tentative Schedule</h2>
             <button 
 				onClick={()=> setSeeCalender(!seeCalender)}
 				className="shareExitCalender"
@@ -21,7 +21,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
 					fontSize="2.5em" 
 				/>
 			</button>
-            <div className="event" onClick={()=> setWelcomeIsOpen(!welcomeIsOpen)}>
+            <div className="event" onClick={()=> {setWelcomeIsOpen(!welcomeIsOpen); setCeremonyIsOpen(false); setReceptionIsOpen(false);}}>
                 <h3 className='date'>Aug 17</h3>
                 <h2>Welcome Event</h2>
                 <p>5:30 pm - 9:30 pm</p>
@@ -41,7 +41,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
                     </>)
                 }
             </div>
-            <div className="event" onClick={()=> setCeremonyIsOpen(!ceremonyIsOpen)}>
+            <div className="event" onClick={()=> {setCeremonyIsOpen(!ceremonyIsOpen); setReceptionIsOpen(false); setWelcomeIsOpen(false);}}>
                 <h3 className='date'>Aug 19</h3>
                 <h2>Ceremony</h2>
                 <p>5:00 pm - 5:30 pm</p>
@@ -61,7 +61,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
                     </>)
                 }
             </div>
-            <div className="event" onClick={()=>setReceptionIsOpen(!receptionIsOpen)}>
+            <div className="event" onClick={()=> {setReceptionIsOpen(!receptionIsOpen); setWelcomeIsOpen(false); setCeremonyIsOpen(false);}}>
                 <h3 className='date'>Aug 19</h3>
                 <h2>Reception</h2>
                 <p>5:30 pm - 10:45 pm</p>
