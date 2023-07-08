@@ -104,7 +104,7 @@ form {
     bottom: 2vh;
     right: 1vw;
 }
-.popupContainer{
+.popupContainer, .calenderContainer{
     width: 100vw;
     height: 100vh;
     background-color: rgba(148, 148, 148, 0.619);
@@ -112,6 +112,10 @@ form {
     top: 0;
     left: 0;
     z-index: 1000;
+}
+.calenderContainer{
+    background-color: rgba(148, 148, 148, 0.9);
+    height: 100%;
 }
 .popupForm{
     background-color: rgb(230, 221, 220);
@@ -352,6 +356,15 @@ option{
     right: -35vw;
     top: 2vh;
     color: #766032;
+}
+.shareExitCalender{
+    background-color: transparent;
+    border: transparent;
+    color: #766032;
+    position: fixed;
+    right: 5vw;
+    top: 2.2vh;
+    z-index: 100;
 }
 .qrcode{
     object-fit: contain;
