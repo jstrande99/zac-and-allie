@@ -24,8 +24,8 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
             <div className="event" onClick={()=> {setWelcomeIsOpen(!welcomeIsOpen); setCeremonyIsOpen(false); setReceptionIsOpen(false);}}>
                 <h3 className='date'>Aug 17</h3>
                 <h2>Welcome Event</h2>
-                <p>5:30 pm - 9:30 pm</p>
-                <p><u>More info</u></p>
+                {receptionIsOpen || ceremonyIsOpen ? <div></div> : <div> <p>5:30 pm - 9:30 pm</p>
+                <p><u>More info</u></p> </div>}
                 {welcomeIsOpen && 
                     (<>
                         <p className='discription'>
@@ -44,8 +44,8 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
             <div className="event" onClick={()=> {setCeremonyIsOpen(!ceremonyIsOpen); setReceptionIsOpen(false); setWelcomeIsOpen(false);}}>
                 <h3 className='date'>Aug 19</h3>
                 <h2>Ceremony</h2>
-                <p>5:00 pm - 5:30 pm</p>
-                <p><u>More info</u></p>
+                {receptionIsOpen || welcomeIsOpen ? <div></div> : <div><p>5:00 pm - 5:30 pm</p>
+                <p><u>More info</u></p></div>}
                 {ceremonyIsOpen &&  
                     (<>
                         <p className='discription'>
@@ -64,8 +64,8 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
             <div className="event" onClick={()=> {setReceptionIsOpen(!receptionIsOpen); setWelcomeIsOpen(false); setCeremonyIsOpen(false);}}>
                 <h3 className='date'>Aug 19</h3>
                 <h2>Reception</h2>
-                <p>5:30 pm - 10:45 pm</p>
-                <p><u>More info</u></p>
+                {receptionIsOpen || ceremonyIsOpen ? <div></div> : <div><p>5:30 pm - 10:45 pm</p>
+                <p><u>More info</u></p></div>}
                 {receptionIsOpen &&
                     (<>
                         <p className='discription'>
