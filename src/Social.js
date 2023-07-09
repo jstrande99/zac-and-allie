@@ -15,6 +15,7 @@ import { Logout } from "./Logout";
 import './Social.css';
 import StrandeByMe from './Images/StrandeByMe.png';
 import Calendar from "./Popup/Calender";
+import CameraGallery from "./Gallery/CameraGallery";
 
 library.add(fas);
 library.add(far);
@@ -59,6 +60,7 @@ export default function Social(props) {
 
 	const [addPostOpen, setAddPostOpen] = useState(false);
 	const [shareOpen, setShareOpen] = useState(false);
+	const [isToggled, setIsToggled] = useState(true);
 
 	const minSwipeDistance = 50;
 
@@ -106,7 +108,7 @@ export default function Social(props) {
 		});
 	}, []);
 	useEffect(() => {
-    if (seeCalender || showInfo || shareOpen || addPostOpen) {
+    if (seeCalender || shareOpen || addPostOpen) {
       document.body.style.position = "fixed";
     } else {
       document.body.style.position = "static";
@@ -278,18 +280,14 @@ export default function Social(props) {
 
 	};
 
+	const handleToggle = () => {
+		setIsToggled(!isToggled);
+	};
+
 	return (
 		<div className="body">
 			{/** BOTTOM NAVBAR */}
 			<div className="userbar">
-				{/* {isAdmin && (<Link to='/Gallery' className="nav-links">
-                	<button className="submit gal">
-						<FontAwesomeIcon 
-							icon={["fas","fa-images"]} 
-							fontSize="1.5em"
-						/>
-					</button>
-				</Link>)} */}
 				{/* <Link to='/Schedule' className="nav-links"> */}
 					<button className="submit gal" onClick={() => setSeeCalender(!seeCalender)}>
 						<FontAwesomeIcon 
@@ -298,6 +296,17 @@ export default function Social(props) {
 						/>
 					</button>
 				{/* </Link> */}
+      			<button className="submit gal" onClick={handleToggle}>{isToggled ? 
+					<FontAwesomeIcon 
+						icon={['fas', 'fa-film']} 
+						fontSize="1.5em" 
+					/> : 
+					<FontAwesomeIcon 
+						icon={["fas","fa-images"]} 
+						fontSize="1.5em"
+					/>}
+				</button>
+
 				<Link to='/Camera' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
@@ -444,7 +453,7 @@ export default function Social(props) {
 				</div>) : (<div></div>)
 			}
 			{/** MAP THROUGH ALL POSTS IN THE DATABASE */}
-			{posts.map((post, index) => (
+			{isToggled  ? (<div>{posts.map((post, index) => (
 				<div 
 					key={index} 
 					className="posts postText" 
@@ -578,7 +587,7 @@ export default function Social(props) {
 						(<button className="deleteBtn"></button>)
 					}
 				</div>
-			))}
+			))}</div>) : (<CameraGallery activeUser={activeUser}/>)}
 			<Signature/>
 		</div>
 	);
