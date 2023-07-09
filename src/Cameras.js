@@ -59,7 +59,6 @@ export default function Cameras(props) {
 		}
 		fetchAllImages(); 
 	},[showGallery]);
-	console.log(allImages)
 
 	useEffect(() => {
 		const fetchImages = async () =>{
