@@ -378,7 +378,7 @@ option{
 .fixed-document{
     display: flex;
     justify-content: space-around;
-    z-index: 1000;
+    z-index: 999;
     text-align: center;
 }
 .fixed {
