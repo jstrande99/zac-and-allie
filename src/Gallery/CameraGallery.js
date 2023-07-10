@@ -20,60 +20,67 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
 const CameraGallery = () => {
-  const [allImages, setAllImages] = useState([]);
-  const [showFullImage, setShowFullImage] = useState(false);
-  const [imageSelected, setImageSelected] = useState("");
+    useEffect(() => {
+		if (showFullImage) {
+		document.body.style.position = "fixed";
+		} else {
+		document.body.style.position = "static";
+		}
+  	}, [showFullImage]);
+    const [allImages, setAllImages] = useState([]);
+    const [showFullImage, setShowFullImage] = useState(false);
+    const [imageSelected, setImageSelected] = useState("");
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      const storageRef = storage.ref();
-      const imageUrls = [];
+    useEffect(() => {
+        const fetchImages = async () => {
+        const storageRef = storage.ref();
+        const imageUrls = [];
 
-      const imageList = await storageRef.child('Camera').listAll();
+        const imageList = await storageRef.child('Camera').listAll();
 
-      imageList.items.forEach((item) => {
-        item.getDownloadURL().then((url) => {
-          imageUrls.push(url);
-          setAllImages([...imageUrls]);
+        imageList.items.forEach((item) => {
+            item.getDownloadURL().then((url) => {
+            imageUrls.push(url);
+            setAllImages([...imageUrls]);
+            });
         });
-      });
-    };
+        };
 
-    fetchImages();
-  }, []);
+        fetchImages();
+    }, []);
     const handleShowFullImage = (imageUrl) => {
         setImageSelected(imageUrl);
         setShowFullImage(true);
     }
-  return (
-    <div className="galleryContainer">
-        {showFullImage && (
-            <div 
-                className="fullscreen-container" 
-                onClick={() => setShowFullImage(false)}
-            >
-                <img 
-                    src={imageSelected} 
-                    alt="fullscreen" 
-                    className="fullscreen-image filter-vintage" 
-                />
-            </div>
-        )}
-        {allImages.map((imageUrl, index) => (
-            <div 
-                key={index} 
-                className="galleryItem"
-                onClick={() => handleShowFullImage(imageUrl)}
-            >
-                <img 
-                    src={imageUrl} 
-                    alt={`Images ${index}`} 
-                    className="galleryImage filter-vintage" 
-                />
-            </div>
-        ))}
-    </div>
-  );
+    return (
+        <div className="galleryContainer">
+            {showFullImage && (
+                <div 
+                    className="fullscreen-container" 
+                    onClick={() => setShowFullImage(false)}
+                >
+                    <img 
+                        src={imageSelected} 
+                        alt="fullscreen" 
+                        className="fullscreen-image filter-vintage" 
+                    />
+                </div>
+            )}
+            {allImages.map((imageUrl, index) => (
+                <div 
+                    key={index} 
+                    className="galleryItem"
+                    onClick={() => handleShowFullImage(imageUrl)}
+                >
+                    <img 
+                        src={imageUrl} 
+                        alt={`Images ${index}`} 
+                        className="galleryImage filter-vintage" 
+                    />
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default CameraGallery;
