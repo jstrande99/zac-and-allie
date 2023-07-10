@@ -55,7 +55,7 @@ const CameraGallery = () => {
         <div className="galleryContainer">
             {showFullImage && (
                 <div 
-                    className="fullscreen-container" 
+                    className="fullscreen-c" 
                     onClick={() => setShowFullImage(false)}
                 >
                     <img 
