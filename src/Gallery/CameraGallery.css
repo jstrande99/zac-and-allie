@@ -1,0 +1,14 @@
+.galleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.galleryItem {
+    flex: 1 0 33.33%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.galleryImage {
+    width: 100%;
+}
