@@ -20,53 +20,42 @@ firebase.initializeApp(firebaseConfig);
 // const firestore = firebase.firestore();
 const storage = firebase.storage();
 
-const CameraGallery = (activeUser) => {
-    const [allImages, setAllImages] = useState([]);
-    useEffect(() => {
-		const fetchAllImages = async () => {
-			const getAllImages = async (ref, imageUrls = []) => {
-				const listResult = await ref.listAll();
+const CameraGallery = () => {
+  const [allImages, setAllImages] = useState([]);
 
-				for (const item of listResult.items) {
-					if (item instanceof firebase.storage.Reference) {
-					// Add download URL if the item is a file
-					const downloadURL = await item.getDownloadURL();
-					imageUrls.push(downloadURL);
-					}
-				}
+  useEffect(() => {
+    const fetchImages = async () => {
+      const storageRef = storage.ref();
+      const imageUrls = [];
 
-				for (const prefix of listResult.prefixes) {
-					// Recursive call for each subdirectory (prefix)
-					imageUrls = await getAllImages(prefix, imageUrls);
-				}
+      const imageList = await storageRef.child('Camera').listAll();
 
-				return imageUrls;
-			};
+      imageList.items.forEach((item) => {
+        item.getDownloadURL().then((url) => {
+          imageUrls.push(url);
+          setAllImages([...imageUrls]);
+        });
+      });
+    };
 
-			const storageRef = storage.ref().child("Camera");
-			const allImageUrls = await getAllImages(storageRef);
-			setAllImages(allImageUrls)
-		}
-		fetchAllImages(); 
-	},[]);
-    
-    return (
-        <div>
-			<div className='gallShow'></div>
-			{allImages.map((imageUrl, index) => (
-				<div 
-					key={index} 
-					className="rowDiv" 
-				>
-					<img 
-						src={imageUrl} 
-						alt={`Images ${index}`} 
-						className='gallery filter-vintage'
-					/>
-				</div>
-        	))}
-			<div className='gallShow'></div>
-		</div>
-    )
-}
+    fetchImages();
+  }, []);
+
+  return (
+    <div className="galleryContainer">
+      {allImages.map((imageUrl, index) => (
+        <div 
+            key={index} 
+            className="galleryItem">
+            <img 
+                src={imageUrl} 
+                alt={`Images ${index}`} 
+                className="galleryImage filter-vintage" 
+            />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export default CameraGallery;
