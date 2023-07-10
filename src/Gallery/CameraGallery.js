@@ -61,7 +61,7 @@ const CameraGallery = () => {
                     <img 
                         src={imageSelected} 
                         alt="fullscreen" 
-                        className="fullscreen-image filter-vintage" 
+                        className="fullscreen filter-vintage" 
                     />
                 </div>
             )}
