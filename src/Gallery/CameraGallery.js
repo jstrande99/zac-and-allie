@@ -23,13 +23,13 @@ const CameraGallery = () => {
     const [allImages, setAllImages] = useState([]);
     const [showFullImage, setShowFullImage] = useState(false);
     const [imageSelected, setImageSelected] = useState("");
-    useEffect(() => {
-		if (showFullImage) {
-		document.body.style.position = "fixed";
-		} else {
-		document.body.style.position = "static";
-		}
-  	}, [showFullImage]);
+    // useEffect(() => {
+	// 	if (showFullImage) {
+	// 	document.body.style.position = "fixed";
+	// 	} else {
+	// 	document.body.style.position = "static";
+	// 	}
+  	// }, [showFullImage]);
     useEffect(() => {
         const fetchImages = async () => {
         const storageRef = storage.ref();
