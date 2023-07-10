@@ -164,19 +164,6 @@ form {
     color: black;
     border-radius: 10px;
 }
-/* .postText:hover::after {
-    content: attr(data-date);
-    position: absolute;
-    top: 45px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 5px;
-    background-color: transparent;
-    color: #766032;
-    border-radius: 5px;
-    font-size: 14px;
-    font-family: Arial;
-} */
 .dropdown-menu {
     position: relative;
 }
@@ -387,4 +374,31 @@ option{
 }
 .inlineGal{
     display: flex;
+}
+.fixed-document{
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    text-align: center;
+}
+.fixed {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+}
+.fixed-document p {
+    width: 50vw;
+    text-align: center;
+    border: 1px solid #766132;
+    border-top: none;
+    margin: 0;
+    padding: 5px 0px 5px 0px;
+}
+.darkBG{
+    background-color: #766132;
+    color: rgb(230, 221, 220);
+}
+.lightBG {
+    background-color: rgb(230, 221, 220);
+    color: #766132;
 }
