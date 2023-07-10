@@ -20,6 +20,9 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
 const CameraGallery = () => {
+    const [allImages, setAllImages] = useState([]);
+    const [showFullImage, setShowFullImage] = useState(false);
+    const [imageSelected, setImageSelected] = useState("");
     useEffect(() => {
 		if (showFullImage) {
 		document.body.style.position = "fixed";
@@ -27,10 +30,6 @@ const CameraGallery = () => {
 		document.body.style.position = "static";
 		}
   	}, [showFullImage]);
-    const [allImages, setAllImages] = useState([]);
-    const [showFullImage, setShowFullImage] = useState(false);
-    const [imageSelected, setImageSelected] = useState("");
-
     useEffect(() => {
         const fetchImages = async () => {
         const storageRef = storage.ref();
