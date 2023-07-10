@@ -25,9 +25,9 @@ const CameraGallery = () => {
     const [imageSelected, setImageSelected] = useState("");
     useEffect(() => {
 		if (showFullImage) {
-		document.body.style.position = "fixed";
+		document.body.style.overflow = "hidden";
 		} else {
-		document.body.style.position = "static";
+		document.body.style.overflow = "auto";
 		}
   	}, [showFullImage]);
     useEffect(() => {
