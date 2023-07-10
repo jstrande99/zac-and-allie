@@ -16,12 +16,12 @@
 
 .fullscreen {
     width: 96vw;
-    height: 80vh;
+    height: 90vh;
     object-fit: contain;
 }
 .fullscreen-c {
     position: fixed;
-    top: -7vh;
+    top: 0vh;
     left: 0;
     width: 100%;
     height: 100vh;
