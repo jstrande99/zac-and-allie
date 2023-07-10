@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
@@ -61,7 +61,8 @@ export default function Social(props) {
 	const [addPostOpen, setAddPostOpen] = useState(false);
 	const [shareOpen, setShareOpen] = useState(false);
 	const [isToggled, setIsToggled] = useState(true);
-
+	const [isFixed, setIsFixed] = useState(false);
+	const documentRef = useRef(null);
 	const minSwipeDistance = 50;
 
 	useEffect(() => {
@@ -104,16 +105,23 @@ export default function Social(props) {
 
 	useEffect(() => {
 		firestore.collection("posts.text").onSnapshot(() => {
-		window.scrollTo(0, 0);
+			window.scrollTo(0, 0);
 		});
+		const handleScroll = () => {
+			const { top } = documentRef.current.getBoundingClientRect();
+			setIsFixed(top < -40);
+		};
+		window.addEventListener('scroll', handleScroll);
+		return () => {window.removeEventListener('scroll', handleScroll)};
 	}, []);
+
 	useEffect(() => {
-    if (seeCalender || shareOpen || addPostOpen) {
-      document.body.style.position = "fixed";
-    } else {
-      document.body.style.position = "static";
-    }
-  }, [seeCalender, showInfo, shareOpen, addPostOpen]);
+		if (seeCalender || shareOpen || addPostOpen) {
+		document.body.style.position = "fixed";
+		} else {
+		document.body.style.position = "static";
+		}
+  	}, [seeCalender, showInfo, shareOpen, addPostOpen]);
 
 	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
@@ -280,10 +288,6 @@ export default function Social(props) {
 
 	};
 
-	const handleToggle = () => {
-		setIsToggled(!isToggled);
-	};
-
 	return (
 		<div className="body">
 			{/** BOTTOM NAVBAR */}
@@ -296,17 +300,6 @@ export default function Social(props) {
 						/>
 					</button>
 				{/* </Link> */}
-      			<button className="submit gal" onClick={handleToggle}>{isToggled ? 
-					<FontAwesomeIcon 
-						icon={['fas', 'fa-film']} 
-						fontSize="1.5em" 
-					/> : 
-					<FontAwesomeIcon 
-						icon={["fas","fa-images"]} 
-						fontSize="1.5em"
-					/>}
-				</button>
-
 				<Link to='/Camera' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
@@ -345,7 +338,7 @@ export default function Social(props) {
 					/>
 				</button>
 			</div>
-			<p className="welcoming">Welcome {activeUser}!</p>
+			<p className="welcoming" ref={documentRef}>Welcome {activeUser}!</p>
 			{isAdmin && <div className="info" onClick={() => setShowInfo(!showInfo)}> 
 				<FontAwesomeIcon icon={["fa-solid", "fa-circle-info"]} fontSize="1.5em" />
 			</div>}
@@ -413,6 +406,11 @@ export default function Social(props) {
 					setSeeCalender={setSeeCalender}
 				/>
 			}
+			{/* <div className="gallerySwitch" > */}
+			<div className={`fixed-document ${isFixed ? 'fixed' : ''}`}>
+				<p className={`${isToggled ? 'darkBG' : 'lightBG'}`} onClick={() => setIsToggled(!isToggled)}>Memory Gallery</p>
+				<p className={`${isToggled ? 'lightBG' : 'darkBG'}`} onClick={() => setIsToggled(!isToggled)}>Captured Gallery</p>
+			</div>
 			{isAdmin && showInfo ?
 				(<div className="popupContainer">
 					<div  className="popupForm"> 
