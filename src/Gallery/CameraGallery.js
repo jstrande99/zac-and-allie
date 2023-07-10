@@ -4,7 +4,6 @@ import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
 import "./CameraGallery.css"
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const firebaseConfig = {
@@ -18,11 +17,12 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// const firestore = firebase.firestore();
 const storage = firebase.storage();
 
 const CameraGallery = () => {
   const [allImages, setAllImages] = useState([]);
+  const [showFullImage, setShowFullImage] = useState(false);
+  const [imageSelected, setImageSelected] = useState("");
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -41,20 +41,37 @@ const CameraGallery = () => {
 
     fetchImages();
   }, []);
-
+    const handleShowFullImage = (imageUrl) => {
+        setImageSelected(imageUrl);
+        setShowFullImage(true);
+    }
   return (
     <div className="galleryContainer">
-      {allImages.map((imageUrl, index) => (
-        <div 
-            key={index} 
-            className="galleryItem">
-            <img 
-                src={imageUrl} 
-                alt={`Images ${index}`} 
-                className="galleryImage filter-vintage" 
-            />
-        </div>
-      ))}
+        {showFullImage && (
+            <div 
+                className="fullscreen-container" 
+                onClick={() => setShowFullImage(false)}
+            >
+                <img 
+                    src={imageSelected} 
+                    alt="fullscreen" 
+                    className="fullscreen-image filter-vintage" 
+                />
+            </div>
+        )}
+        {allImages.map((imageUrl, index) => (
+            <div 
+                key={index} 
+                className="galleryItem"
+                onClick={() => handleShowFullImage(imageUrl)}
+            >
+                <img 
+                    src={imageUrl} 
+                    alt={`Images ${index}`} 
+                    className="galleryImage filter-vintage" 
+                />
+            </div>
+        ))}
     </div>
   );
 };
