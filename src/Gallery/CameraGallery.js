@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import "./CameraGallery.css"
 
 
 const firebaseConfig = {
@@ -17,56 +17,69 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// const firestore = firebase.firestore();
 const storage = firebase.storage();
 
-const CameraGallery = (activeUser) => {
+const CameraGallery = () => {
     const [allImages, setAllImages] = useState([]);
+    const [showFullImage, setShowFullImage] = useState(false);
+    const [imageSelected, setImageSelected] = useState("");
     useEffect(() => {
-		const fetchAllImages = async () => {
-			const getAllImages = async (ref, imageUrls = []) => {
-				const listResult = await ref.listAll();
-
-				for (const item of listResult.items) {
-					if (item instanceof firebase.storage.Reference) {
-					// Add download URL if the item is a file
-					const downloadURL = await item.getDownloadURL();
-					imageUrls.push(downloadURL);
-					}
-				}
-
-				for (const prefix of listResult.prefixes) {
-					// Recursive call for each subdirectory (prefix)
-					imageUrls = await getAllImages(prefix, imageUrls);
-				}
-
-				return imageUrls;
-			};
-
-			const storageRef = storage.ref().child("Camera");
-			const allImageUrls = await getAllImages(storageRef);
-			setAllImages(allImageUrls)
+		if (showFullImage) {
+		document.body.style.overflow = "hidden";
+		} else {
+		document.body.style.overflow = "auto";
 		}
-		fetchAllImages(); 
-	},[]);
-    
+  	}, [showFullImage]);
+    useEffect(() => {
+        const fetchImages = async () => {
+        const storageRef = storage.ref();
+        const imageUrls = [];
+
+        const imageList = await storageRef.child('Camera').listAll();
+
+        imageList.items.forEach((item) => {
+            item.getDownloadURL().then((url) => {
+            imageUrls.push(url);
+            setAllImages([...imageUrls]);
+            });
+        });
+        };
+
+        fetchImages();
+    }, []);
+    const handleShowFullImage = (imageUrl) => {
+        setImageSelected(imageUrl);
+        setShowFullImage(true);
+    }
     return (
-        <div>
-			<div className='gallShow'></div>
-			{allImages.map((imageUrl, index) => (
-				<div 
-					key={index} 
-					className="rowDiv" 
-				>
-					<img 
-						src={imageUrl} 
-						alt={`Images ${index}`} 
-						className='gallery filter-vintage'
-					/>
-				</div>
-        	))}
-			<div className='gallShow'></div>
-		</div>
-    )
-}
+        <div className="galleryContainer">
+            {showFullImage && (
+                <div 
+                    className="fullscreen-c" 
+                    onClick={() => setShowFullImage(false)}
+                >
+                    <img 
+                        src={imageSelected} 
+                        alt="fullscreen" 
+                        className="fullscreen filter-vintage" 
+                    />
+                </div>
+            )}
+            {allImages.map((imageUrl, index) => (
+                <div 
+                    key={index} 
+                    className="galleryItem"
+                    onClick={() => handleShowFullImage(imageUrl)}
+                >
+                    <img 
+                        src={imageUrl} 
+                        alt={`Images ${index}`} 
+                        className="galleryImage filter-vintage" 
+                    />
+                </div>
+            ))}
+        </div>
+    );
+};
+
 export default CameraGallery;

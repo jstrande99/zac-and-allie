@@ -63,7 +63,7 @@ export default function Cameras(props) {
 	useEffect(() => {
 		const fetchImages = async () =>{
 			//Add to camera/name
-			const imagesList = await storage.ref().child(`Camera/${props.name}`).listAll();
+			const imagesList = await storage.ref().child(`Camera`).listAll();
 			const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
 			const imageUrls = await Promise.all(downloadURLPromises);
 			len.current = imageUrls.length;		
@@ -106,7 +106,7 @@ export default function Cameras(props) {
 				const blob = dataUriToBlob(editedDataUri);
 				const compressedFile = await imageCompression(blob, options);
 				const imageName = `${props.name}_${len.current}.jpg`;
-				const storageRef = storage.ref().child(`Camera/${props.name}/${imageName}`);
+				const storageRef = storage.ref().child(`Camera/${imageName}`);
 				await storageRef.put(compressedFile);
 				setTimer(!timer);
 			} catch (error) {
