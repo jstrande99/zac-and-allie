@@ -3,7 +3,6 @@ import { Camera, FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import './Camera.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import Navbar from "./Navbar";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
@@ -22,47 +21,15 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// const firestore = firebase.firestore();
 const storage = firebase.storage();
 
 export default function Cameras(props) {
 	const [isFrontCamera, setIsFrontCamera] = useState(FACING_MODES.ENVIRONMENT);
 	const [timer, setTimer] = useState(false);
-	const [allImages, setAllImages] = useState([]);
-	const [showGallery, setShowGallery] = useState(true);
 	let len = useRef(0);
 
 	useEffect(() => {
-		const fetchAllImages = async () => {
-			const getAllImages = async (ref, imageUrls = []) => {
-				const listResult = await ref.listAll();
-
-				for (const item of listResult.items) {
-					if (item instanceof firebase.storage.Reference) {
-					// Add download URL if the item is a file
-					const downloadURL = await item.getDownloadURL();
-					imageUrls.push(downloadURL);
-					}
-				}
-
-				for (const prefix of listResult.prefixes) {
-					// Recursive call for each subdirectory (prefix)
-					imageUrls = await getAllImages(prefix, imageUrls);
-				}
-
-				return imageUrls;
-			};
-
-			const storageRef = storage.ref().child("Camera");
-			const allImageUrls = await getAllImages(storageRef);
-			setAllImages(allImageUrls)
-		}
-		fetchAllImages(); 
-	},[showGallery]);
-
-	useEffect(() => {
 		const fetchImages = async () =>{
-			//Add to camera/name
 			const imagesList = await storage.ref().child(`Camera`).listAll();
 			const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
 			const imageUrls = await Promise.all(downloadURLPromises);
@@ -93,10 +60,8 @@ export default function Cameras(props) {
 			context.font = 'bold 90px Arial';
 			const nameText = props.name;
 			const nameX = 10;
-			// const nameY = 70;
 			context.fillText(nameText, nameX, nameY);
 			const editedDataUri = canvas.toDataURL('image/jpeg');
-			// setImageData(editedDataUri);
 			
 			const options = {
 				maxSizeMB: 1,
@@ -132,13 +97,8 @@ export default function Cameras(props) {
 	const handleCameraToggle = () => {
 		setIsFrontCamera(isFrontCamera === FACING_MODES.ENVIRONMENT ? FACING_MODES.USER : FACING_MODES.ENVIRONMENT);
 	};
-	const handleShowGallery = () => {
-		setShowGallery(!showGallery);
-	}
 	
 	return (
-		<div>
-		{showGallery ?
 		<div className='cameraArea'>
 			<Camera
 				onTakePhoto={handleTakePhoto}
@@ -154,44 +114,11 @@ export default function Cameras(props) {
 			<button onClick={handleCameraToggle} className='reverse'>
 				<FontAwesomeIcon icon={['fa-solid', 'fa-camera-rotate']} fontSize='1.8em' />
 			</button>
-			<button className='gall' onClick={handleShowGallery}>
-				<FontAwesomeIcon icon={["fas","fa-images"]} fontSize="1.8em" />
-			</button>
 			<Link to='/'>
 				<button  className="gallHome">
 					<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.8em"/>
 				</button>
 			</Link>
-			{/* <Navbar {...props}/> */}
 		</div> 
-		:
-			<div>
-				<div className='gallNav'>
-					<button className='gallHomeLeft' onClick={handleShowGallery}>
-						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.8em"/>
-					</button>
-					<Link to='/'>
-						<button  className="gallHomeRight">
-							<FontAwesomeIcon icon={['fas','fa-house']} fontSize="1.8em"/>
-						</button>
-					</Link>
-				</div>
-				<div className='gallShow'></div>
-				{allImages.map((imageUrl, index) => (
-					<div 
-						key={index} 
-						className="rowDiv" 
-					>
-						<img 
-							src={imageUrl} 
-							alt={`Images ${index}`} 
-							className='gallery filter-vintage'
-						/>
-					</div>
-            	))}
-				<div className='gallShow'></div>
-			</div>
-		}
-		</div>
 	);
-	}
+}
