@@ -6,9 +6,6 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
     const [ceremonyIsOpen, setCeremonyIsOpen] = useState(false);
     const [welcomeIsOpen, setWelcomeIsOpen] = useState(false);
     const [receptionIsOpen, setReceptionIsOpen] = useState(false); 
-    // useEffect(() => {
-    //     props.setTimer(500);
-    // }, [props]);
     return (
         <div className='calenderContainer'> 
             <h2 className='schedule-ttl ttl-sched'>The Tentative Schedule</h2>
