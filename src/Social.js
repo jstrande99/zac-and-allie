@@ -323,14 +323,6 @@ export default function Social(props) {
 						fontSize="1.5em" 
 					/>
 				</button>
-				{/* {isAdmin && activeUser === 'Jordan Strande' && 
-					(<p>
-						<FontAwesomeIcon 
-							icon={["fas", "fa-users"]} 
-							fontSize="1.5em"
-						/> : {currentUsers}
-					</p>)
-				} */}
 				<button className="logout" onClick={() => Logout({...props})}>
 					<FontAwesomeIcon 
 						icon={['fas','fa-right-from-bracket']} 
