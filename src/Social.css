@@ -126,7 +126,7 @@ form {
     left: 5vw;
     z-index: 1000;
     width: 90vw;
-    height: 40vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -400,4 +400,12 @@ option{
 .lightBG {
     background-color: rgb(230, 221, 220);
     color: #766132;
+}
+.shareContainer{
+    display: flex;
+    border: 1px solid #766032;
+}
+.websiteQR, .wifiQR{
+    padding-right: 10px;
+    padding-left: 10px;
 }
