@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Social from './Social';
 import Name from './Name';
 import Gallery from './Gallery';
-import Schedule from './Schedule';
+// import Schedule from './Schedule';
 import Camera from './Cameras';
 
 function App() {
@@ -45,7 +45,7 @@ function App() {
             <Navigate to="/" />
         }/>
 
-        <Route path='/Schedule' element={
+        {/* <Route path='/Schedule' element={
           name ? 
             <Schedule 
               setTimer={setTimer} 
@@ -54,7 +54,7 @@ function App() {
               setLastName={setLastName}
             /> : 
             <Navigate to="/" />
-        }/>
+        }/> */}
         <Route path='/Camera' element={
           name ? 
             <Camera 
