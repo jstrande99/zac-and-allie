@@ -1,4 +1,4 @@
-import '../Schedule.css';
+import './Schedule.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from "react";
 
@@ -22,7 +22,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
                 <h3 className='date'>Aug 17</h3>
                 <h2>Welcome Event</h2>
                 {receptionIsOpen || ceremonyIsOpen ? <div></div> : <div> <p>5:30 pm - 9:30 pm</p>
-                <p><u>More info</u></p> </div>}
+                <p><u>{welcomeIsOpen ? 'Less' : 'More'} info</u></p> </div>}
                 {welcomeIsOpen && 
                     (<>
                         <p className='discription'>
@@ -42,7 +42,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
                 <h3 className='date'>Aug 19</h3>
                 <h2>Ceremony</h2>
                 {receptionIsOpen || welcomeIsOpen ? <div></div> : <div><p>5:00 pm - 5:30 pm</p>
-                <p><u>More info</u></p></div>}
+                <p><u>{ceremonyIsOpen ? 'Less' : 'More'} info</u></p></div>}
                 {ceremonyIsOpen &&  
                     (<>
                         <p className='discription'>
@@ -62,7 +62,7 @@ const Calendar = ({seeCalender, setSeeCalender}) => {
                 <h3 className='date'>Aug 19</h3>
                 <h2>Reception</h2>
                 {welcomeIsOpen || ceremonyIsOpen ? <div></div> : <div><p>5:30 pm - 10:45 pm</p>
-                <p><u>More info</u></p></div>}
+                <p><u>{receptionIsOpen ? 'Less' : 'More'} info</u></p></div>}
                 {receptionIsOpen &&
                     (<>
                         <p className='discription'>

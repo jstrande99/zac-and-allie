@@ -3,8 +3,8 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
 import "./Gallery.css";
-import Navbar from "./Navbar";
-import Signature from "./Signature";
+import Navbar from "../Major/Navbar";
+import Signature from "../Major/Signature";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_KEY,
