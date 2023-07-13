@@ -406,7 +406,6 @@ export default function Social(props) {
 					setSeeCalender={setSeeCalender}
 				/>
 			}
-			{/* <div className="gallerySwitch" > */}
 			<div className={`fixed-document ${isFixed ? 'fixed' : ''}`}>
 				<p className={`${isToggled ? 'darkBG' : 'lightBG'}`} onClick={() => setIsToggled(!isToggled)}>Memory Gallery</p>
 				<p className={`${isToggled ? 'lightBG' : 'darkBG'}`} onClick={() => setIsToggled(!isToggled)}>Captured Gallery</p>

@@ -195,7 +195,6 @@ form {
     position: relative;
     top: -5px;
     max-width: 100vw;
-    /* max-height: 65vh;  */
     height: 65vh;
     object-fit: contain;
 }
@@ -293,7 +292,6 @@ option{
 }
 .heartBtn{
     position: relative;
-    /* right: -5vw; */
 }
 .popuplikecontainer{
     position: absolute;
