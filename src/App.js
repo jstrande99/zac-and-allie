@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Social from './Social';
-import Name from './Name';
-import Gallery from './Gallery';
-import Camera from './Cameras';
+import Social from './Major/Social';
+import Name from './Major/Name';
+import Gallery from './Gallery/Gallery';
+import Camera from './Camera/Cameras';
 
 function App() {
   const [firstName, setFirstName] = useState(""); 
