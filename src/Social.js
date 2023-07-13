@@ -295,14 +295,12 @@ export default function Social(props) {
 		<div className="body">
 			{/** BOTTOM NAVBAR */}
 			<div className="userbar">
-				{/* <Link to='/Schedule' className="nav-links"> */}
 					<button className="submit gal" onClick={() => setSeeCalender(!seeCalender)}>
 						<FontAwesomeIcon 
 							icon={['fas','fa-calendar-alt']} 
 							fontSize="1.5em"
 						/>
 					</button>
-				{/* </Link> */}
 				<Link to='/Camera' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
