@@ -9,11 +9,6 @@ library.add(fas);
 export default function Navbar(props){
     return (
         <div className="userbar">
-			<Link to='/Schedule' className="nav-links">
-				<button className="submit gal">
-					<FontAwesomeIcon icon={['fas','fa-calendar-alt']} fontSize="1.5em"/>
-				</button>
-			</Link>
 			<Link to='/Camera' className="nav-links">
 				<button className="submit gal">
 					<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
