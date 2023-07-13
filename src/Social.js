@@ -13,7 +13,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Logout } from "./Logout";
 import './Social.css';
-import StrandeByMe from './Images/strandebyme.png';
+import StrandeByMe from './Images/StrandeByMe.png';
 import CWWifi from './Images/CWqrcode.png';
 import Calendar from "./Popup/Calender";
 import CameraGallery from "./Gallery/CameraGallery";
