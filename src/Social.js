@@ -13,7 +13,8 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Logout } from "./Logout";
 import './Social.css';
-import StrandeByMe from './Images/StrandeByMe.png';
+import StrandeByMe from './Images/strandebyme.png';
+import CWWifi from './Images/CWqrcode.png';
 import Calendar from "./Popup/Calender";
 import CameraGallery from "./Gallery/CameraGallery";
 
@@ -64,6 +65,8 @@ export default function Social(props) {
 	const [isFixed, setIsFixed] = useState(false);
 	const documentRef = useRef(null);
 	const minSwipeDistance = 50;
+
+	const [QRsharing, setQRsharing] = useState(true);
 
 	useEffect(() => {
 		const adminNames = [
@@ -388,7 +391,14 @@ export default function Social(props) {
 								/>
 						</button>
 						<p className="shareWith">Share with a friend!</p>
-						<img src={StrandeByMe} alt="qr-code" className="qrcode"/>
+						<div className="shareContainer"> 
+							<p className={`shareWith websiteQR ${QRsharing ? 'darkBG' : 'lightBG'}`} onClick={()=> setQRsharing(!QRsharing)}>Website</p> 
+							<p className={`shareWith wifiQR ${QRsharing ? 'lightBG' : 'darkBG'}`} onClick={()=> setQRsharing(!QRsharing)}>WiFi</p>
+						</div>
+						{QRsharing ? 
+							<img src={StrandeByMe} alt="website-qr-code" className="qrcode"/>:
+							<img src={CWWifi} alt="wifi-qr-code" className="qrcode"/>
+						}
 					</div>
 				</div>) : (<div></div>)
 			}
