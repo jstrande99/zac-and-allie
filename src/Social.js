@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Logout } from "./Logout";
 import './Social.css';
 import StrandeByMe from './Images/StrandeByMe.png';
+import CWWifi from './Images/CWqrcode.png';
 import Calendar from "./Popup/Calender";
 import CameraGallery from "./Gallery/CameraGallery";
 
@@ -64,6 +65,8 @@ export default function Social(props) {
 	const [isFixed, setIsFixed] = useState(false);
 	const documentRef = useRef(null);
 	const minSwipeDistance = 50;
+
+	const [QRsharing, setQRsharing] = useState(true);
 
 	useEffect(() => {
 		const adminNames = [
@@ -292,14 +295,12 @@ export default function Social(props) {
 		<div className="body">
 			{/** BOTTOM NAVBAR */}
 			<div className="userbar">
-				{/* <Link to='/Schedule' className="nav-links"> */}
 					<button className="submit gal" onClick={() => setSeeCalender(!seeCalender)}>
 						<FontAwesomeIcon 
 							icon={['fas','fa-calendar-alt']} 
 							fontSize="1.5em"
 						/>
 					</button>
-				{/* </Link> */}
 				<Link to='/Camera' className="nav-links">
 					<button className="submit gal">
 						<FontAwesomeIcon icon={['fa-solid','fa-camera']} fontSize="1.5em"/>
@@ -388,7 +389,14 @@ export default function Social(props) {
 								/>
 						</button>
 						<p className="shareWith">Share with a friend!</p>
-						<img src={StrandeByMe} alt="qr-code" className="qrcode"/>
+						<div className="shareContainer"> 
+							<p className={`shareWith websiteQR ${QRsharing ? 'darkBG' : 'lightBG'}`} onClick={()=> setQRsharing(!QRsharing)}>Website</p> 
+							<p className={`shareWith wifiQR ${QRsharing ? 'lightBG' : 'darkBG'}`} onClick={()=> setQRsharing(!QRsharing)}>WiFi</p>
+						</div>
+						{QRsharing ? 
+							<img src={StrandeByMe} alt="website-qr-code" className="qrcode"/>:
+							<img src={CWWifi} alt="wifi-qr-code" className="qrcode"/>
+						}
 					</div>
 				</div>) : (<div></div>)
 			}
@@ -398,7 +406,6 @@ export default function Social(props) {
 					setSeeCalender={setSeeCalender}
 				/>
 			}
-			{/* <div className="gallerySwitch" > */}
 			<div className={`fixed-document ${isFixed ? 'fixed' : ''}`}>
 				<p className={`${isToggled ? 'darkBG' : 'lightBG'}`} onClick={() => setIsToggled(!isToggled)}>Memory Gallery</p>
 				<p className={`${isToggled ? 'lightBG' : 'darkBG'}`} onClick={() => setIsToggled(!isToggled)}>Captured Gallery</p>
