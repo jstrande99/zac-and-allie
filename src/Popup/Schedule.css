@@ -1,0 +1,46 @@
+.body{
+    position: relative;
+    overflow: hidden;
+}
+.backbtn{
+    font-family: 'Montserrat';
+    position: absolute;
+    left: 8vw;
+    top: 6vh;
+    font-size: 50px;
+    color: #766032;
+}
+.schedule-ttl{
+    width: 100vw;
+    text-align: center;
+}
+.event{
+    background-color: rgb(224, 224, 224);
+    border: 2px solid #766032;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+    align-items: center;
+    padding-top: 5vh;
+    position: relative;
+}
+.date{
+    position: absolute;
+    top: -20px;
+    border: 2px solid #766032;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    padding: 10px;
+    border-radius: 10px;
+    width: 94%;
+}
+.discription{
+    padding: 10px;
+}
+.maps{
+    border: 1px solid #766032;
+    border-radius: 5px;
+    width: 50vw;
+    margin-left: 20vw;
+}
