@@ -120,11 +120,11 @@ export default function Social(props) {
 
 	useEffect(() => {
 		if (seeCalender || shareOpen || addPostOpen) {
-		document.body.style.position = "fixed";
+		 	document.body.style.overflow = "hidden";
 		} else {
-		document.body.style.position = "static";
+			document.body.style.overflow = "auto";
 		}
-  	}, [seeCalender, showInfo, shareOpen, addPostOpen]);
+  	}, [seeCalender, shareOpen, addPostOpen]);
 
 	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
