@@ -440,11 +440,10 @@ export default function Social(props) {
 							</div>)
 						}
 						{isAdmin && 
-							(<p>
+							(<p onClick={() => setShowAllUsers(!showAllUsers)}>
 								<FontAwesomeIcon 
 									icon={["fas", "fa-users"]} 
 									fontSize="1.5em"
-									onClick={() => setShowAllUsers(!showAllUsers)}
 								/> : {currentUsers}
 							</p>)
 						}
