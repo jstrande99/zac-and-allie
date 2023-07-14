@@ -17,6 +17,7 @@ import StrandeByMe from '../Images/StrandeByMe.png';
 import CWWifi from '../Images/CWqrcode.png';
 import Calendar from "../Popup/Calender";
 import CameraGallery from "../Gallery/CameraGallery";
+import AllUsers from "../Popup/AllUsers";
 
 library.add(fas);
 library.add(far);
@@ -67,6 +68,7 @@ export default function Social(props) {
 	const minSwipeDistance = 50;
 
 	const [QRsharing, setQRsharing] = useState(true);
+	const [showAllUsers, setShowAllUsers] = useState(false);
 
 	useEffect(() => {
 		const adminNames = [
@@ -119,12 +121,12 @@ export default function Social(props) {
 	}, []);
 
 	useEffect(() => {
-		if (seeCalender || shareOpen || addPostOpen) {
+		if (seeCalender || shareOpen || addPostOpen || showInfo) {
 		 	document.body.style.overflow = "hidden";
 		} else {
 			document.body.style.overflow = "auto";
 		}
-  	}, [seeCalender, shareOpen, addPostOpen]);
+  	}, [seeCalender, shareOpen, addPostOpen, showInfo]);
 
 	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
@@ -412,7 +414,7 @@ export default function Social(props) {
 			</div>
 			{isAdmin && showInfo ?
 				(<div className="popupContainer">
-					<div  className="popupForm"> 
+					<div  className={`popupForm ${showAllUsers ? 'moveUp' : ''}`}> 
 						<button 
 							onClick={()=> setShowInfo(!showInfo)}
 							className="shareExit"
@@ -438,13 +440,14 @@ export default function Social(props) {
 							</div>)
 						}
 						{isAdmin && 
-							(<p>
+							(<p onClick={() => setShowAllUsers(!showAllUsers)}>
 								<FontAwesomeIcon 
 									icon={["fas", "fa-users"]} 
 									fontSize="1.5em"
 								/> : {currentUsers}
 							</p>)
 						}
+						{showAllUsers && <AllUsers/>}
 						{isAdmin && <p>Number of Posts: {numberOfPosts}</p>}
 					</div>
 				</div>) : (<div></div>)

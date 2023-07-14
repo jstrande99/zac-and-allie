@@ -135,6 +135,9 @@ form {
     text-align: center;
     overflow: hidden;
 }
+.moveUp{
+    top: 20vh !important;
+}
 .exitBtn{
     position: relative;
     right: -58vw;
