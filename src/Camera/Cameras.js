@@ -33,10 +33,11 @@ export default function Cameras(props) {
 			const imagesList = await storage.ref().child(`Camera`).listAll();
 			const downloadURLPromises = imagesList.items.map((item) => item.getDownloadURL());
 			const imageUrls = await Promise.all(downloadURLPromises);
-			len.current = imageUrls.length;		
+			len.current = imageUrls.length;	
+			props.setTimer(0);	
 		};
 		fetchImages();
-	}, [props.name, timer]);
+	}, [props, timer]);
 
 	const handleTakePhoto = async (dataUri) => {
 		const timestamp = new Date().toLocaleString();
