@@ -1,0 +1,11 @@
+.AllUsers{
+    height: 250px;
+    width: 50%;
+    overflow: auto;
+}
+.individualUsers{
+    background-color: #766032;
+    color: rgb(230, 221, 220);
+    margin: 5px;
+    padding: 3px;
+}
