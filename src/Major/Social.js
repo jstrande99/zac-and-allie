@@ -15,6 +15,7 @@ import { Logout } from "./Logout";
 import './Social.css';
 import StrandeByMe from '../Images/StrandeByMe.png';
 import CWWifi from '../Images/CWqrcode.png';
+import EVqrcode from '../Images/EVqrcode.png';
 import Calendar from "../Popup/Calender";
 import CameraGallery from "../Gallery/CameraGallery";
 import AllUsers from "../Popup/AllUsers";
@@ -69,6 +70,7 @@ export default function Social(props) {
 
 	const [QRsharing, setQRsharing] = useState(true);
 	const [showAllUsers, setShowAllUsers] = useState(false);
+	const [dateShowQR, setDateShowQR] = useState(false);
 
 	useEffect(() => {
 		const adminNames = [
@@ -109,6 +111,11 @@ export default function Social(props) {
 	}, [activeUser, props.timer]);
 
 	useEffect(() => {
+		const expirationDate = new Date(2023,7,18,10,30,0);
+		const currentDate = new Date();
+		if(expirationDate <= currentDate){
+			setDateShowQR(true);
+		}
 		firestore.collection("posts.text").onSnapshot(() => {
 			window.scrollTo(0, 0);
 		});
@@ -396,8 +403,11 @@ export default function Social(props) {
 							<p className={`shareWith wifiQR ${QRsharing ? 'lightBG' : 'darkBG'}`} onClick={()=> setQRsharing(!QRsharing)}>WiFi</p>
 						</div>
 						{QRsharing ? 
-							<img src={StrandeByMe} alt="website-qr-code" className="qrcode"/>:
-							<img src={CWWifi} alt="wifi-qr-code" className="qrcode"/>
+							<img src={StrandeByMe} alt="website-qr-code" className="qrcode"/> :
+							(dateShowQR ? 
+								<img src={CWWifi} alt="wifi-qr-code" className="qrcode"/> : 
+								<img src={EVqrcode} alt="wifi-qr-code" className="qrcode"/> 
+							)
 						}
 					</div>
 				</div>) : (<div></div>)
