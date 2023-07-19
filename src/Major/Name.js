@@ -22,7 +22,7 @@ export default function Login(props){
 
     }
     function HandleNameCheck(userName){
-        const allowedNames = process.env.REACT_APP_NAMES.split(",");
+        const allowedNames = process.env.REACT_APP_LAST_NAME.split(",");
         let matchFound = false;
         allowedNames.forEach(allowedName => {
             if(allowedName === userName){
@@ -36,7 +36,7 @@ export default function Login(props){
             const firstName = props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
             const lastName = props.lastName.charAt(0).toUpperCase() + props.lastName.slice(1);
             const fullName = firstName.trim() + " " + lastName.trim();
-            if(HandleNameCheck(fullName)){
+            if(HandleNameCheck(lastName.trim())){
                 localStorage.setItem('name', fullName);
                 props.setTimer(3700);
                 localStorage.setItem('firstTimeLogIn', true);
