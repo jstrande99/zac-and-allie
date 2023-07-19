@@ -111,7 +111,7 @@ export default function Social(props) {
 	}, [activeUser, props.timer]);
 
 	useEffect(() => {
-		const expirationDate = new Date(2023,7,18,10,30,0);
+		const expirationDate = new Date(2023,6,18,18,50,0);
 		const currentDate = new Date();
 		if(expirationDate <= currentDate){
 			setDateShowQR(true);
