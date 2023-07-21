@@ -162,7 +162,7 @@ export default function Social(props) {
 		}else{
 			document.body.style.position = "static";
 		}
-  	}, [seeCalender, shareOpen, addPostOpen, showInfo, firstTimer]);
+  	}, [seeCalender, shareOpen, addPostOpen, showInfo, firstTimer, loading]);
 
 	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
