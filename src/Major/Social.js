@@ -156,7 +156,7 @@ export default function Social(props) {
 		} else {
 			document.body.style.overflow = "auto";
 		}
-		if(firstTimer){
+		if(firstTimer && !loading){
 			document.body.style.position = "fixed";
 			document.body.style.left = "-8px";
 		}else{
