@@ -9,7 +9,7 @@
 }
 .helperContainer{
     position: absolute;
-    bottom: 15%;
+    bottom: 25%;
     text-align: center;
     align-items: flex-end;
     border: none;
@@ -42,10 +42,4 @@
     left: 42%;
     top: 40%;
     font-size: 25px;
-}
-
-.fullscreen-true {
-    align-items: center;
-    text-align: center;
-    height: 90vh;
 }
