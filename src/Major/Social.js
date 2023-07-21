@@ -19,6 +19,7 @@ import EVqrcode from '../Images/EVqrcode.png';
 import Calendar from "../Popup/Calender";
 import CameraGallery from "../Gallery/CameraGallery";
 import AllUsers from "../Popup/AllUsers";
+import './Guide.css'
 
 library.add(fas);
 library.add(far);
@@ -72,6 +73,28 @@ export default function Social(props) {
 	const [showAllUsers, setShowAllUsers] = useState(false);
 	const [dateShowQR, setDateShowQR] = useState(false);
 
+	const [firstTimer, setFirstTimer] = useState(true);
+
+	useEffect(() => {
+		firestore.collection('users').get().then((snap) => {
+			const users = snap.docs.map((doc) => doc.data().user.toLowerCase());
+
+			if (users.includes(activeUser.toLowerCase())) {
+				console.log('User already exists in the collection.');
+				setFirstTimer(false);
+			} 
+			else {
+				console.log('User does not exist in the collection.');
+				setFirstTimer(true);
+				const accessTimes = new Date();
+				firestore.collection("users").doc(activeUser.toLowerCase()).set({
+					user: activeUser,
+					accessTime: accessTimes,
+				});
+			}
+		});
+	}, [activeUser]);
+
 	useEffect(() => {
 		const adminNames = [
 			"zac strande", 
@@ -87,12 +110,12 @@ export default function Social(props) {
 				setIsAdmin(true);
 			}
 		})
-		const accessTimes = new Date();
+		// const accessTimes = new Date();
 		//GET AND SET THE DATABASE INFORMATION
-		firestore.collection("users").doc(activeUser.toLowerCase()).set({
-			user: activeUser,
-			accessTime: accessTimes,
-		});
+		// firestore.collection("users").doc(activeUser.toLowerCase()).set({
+		// 	user: activeUser,
+		// 	accessTime: accessTimes,
+		// });
 		firestore.collection('users').get().then(snap => setCurrentUsers(snap.size));
 		firestore.collection('posts').get().then(snap => setNumberOfPosts(snap.size));
 		const unsubscribe = firestore.collection("posts")
@@ -133,7 +156,13 @@ export default function Social(props) {
 		} else {
 			document.body.style.overflow = "auto";
 		}
-  	}, [seeCalender, shareOpen, addPostOpen, showInfo]);
+		if(firstTimer && !loading){
+			document.body.style.position = "fixed";
+			document.body.style.left = "-8px";
+		}else{
+			document.body.style.position = "static";
+		}
+  	}, [seeCalender, shareOpen, addPostOpen, showInfo, firstTimer, loading]);
 
 	//USER SUBMISSION HANDLER THAT COMPRESSES IMAGES AND LOCKS SUBMIT BTN TILL DONE
 	const handleSubmit = async (event) => {
@@ -461,6 +490,43 @@ export default function Social(props) {
 						{isAdmin && <p>Number of Posts: {numberOfPosts}</p>}
 					</div>
 				</div>) : (<div></div>)
+			}
+			{firstTimer ? 
+				<div className="helpGuide" onClick={() => setFirstTimer(false)}>
+					<div className="helperContainer userbar">
+						<div>
+							<p>See<br/>Calendar</p>
+						</div>
+						<div className="addPhotos">
+							<p>Snap<br/>A<br/>Photo</p>
+						</div>
+						<div className="addMemory">
+							<p>Share<br/>A<br/>Memory</p>
+						</div>
+						<div>
+							<p>Share<br/>Site/WiFi</p>
+						</div>
+						<div>
+							<p>Logout</p>
+						</div>
+					</div>
+					<div>
+						<div className="fixed-document topHelper">
+								<p>Past Memories of the couple</p>
+								<p>Tonight's Memories of the couple</p>
+						</div>
+						<button 
+							onClick={()=> setFirstTimer(false)}
+							className="exitGuide"
+						>
+							<FontAwesomeIcon 
+								icon="fa-solid fa-xmark" 
+								fontSize="2.5em" 
+							/>
+						</button>
+					</div>
+				</div>:
+				<div></div>
 			}
 			{/** MAP THROUGH ALL POSTS IN THE DATABASE */}
 			{isToggled  ? (<div>{posts.map((post, index) => (

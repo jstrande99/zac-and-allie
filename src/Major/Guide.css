@@ -1,0 +1,45 @@
+.helpGuide{
+    background-color: rgba(148, 148, 148, 0.85);
+    height: 90vh;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    z-index: 999;
+    color: white;
+}
+.helperContainer{
+    position: absolute;
+    bottom: 20%;
+    text-align: center;
+    align-items: flex-end;
+    border: none;
+    background-color: transparent;
+}
+.helperContainer div{
+    border: 1px solid white;
+    padding: 0px 4px 0px 4px;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+}
+.helperContainer p{
+    margin: 0;
+}
+.topHelper{
+    border: none;
+    position: relative;
+    top: 1vh;
+}
+.topHelper p {
+    border: 1px solid white;
+    width: 45%;
+}
+.exitGuide{
+    background-color: transparent;
+    border: none;
+    color: white;
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    font-size: 25px;
+}
