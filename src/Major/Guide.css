@@ -9,7 +9,7 @@
 }
 .helperContainer{
     position: absolute;
-    bottom: 25%;
+    bottom: 20%;
     text-align: center;
     align-items: flex-end;
     border: none;
@@ -39,7 +39,7 @@
     border: none;
     color: white;
     position: absolute;
-    left: 42%;
+    left: 40%;
     top: 40%;
     font-size: 25px;
 }
